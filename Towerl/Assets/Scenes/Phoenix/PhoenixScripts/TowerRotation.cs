@@ -16,7 +16,5 @@ public class TowerRotation : MonoBehaviour {
 	void Update ()
     {
         transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
-
-        //Debug.Log(transform.eulerAngles.y);
     }
 }

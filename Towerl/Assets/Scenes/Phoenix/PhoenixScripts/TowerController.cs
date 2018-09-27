@@ -6,7 +6,7 @@ public class TowerController : MonoBehaviour
 {
 
     [Header("Level Data")]
-    public int levels = 5;
+    public int tiers = 5;
     public int[,] data = new int[5, 12]
     {
         // 0 = a gap (nothing there)
@@ -17,7 +17,7 @@ public class TowerController : MonoBehaviour
         {1,1,1,1,0,0,0,0,1,1,0,0 },
         {1,1,1,1,0,0,0,0,1,1,1,1 },
         {0,0,1,1,0,0,1,1,1,1,1,1 },
-        {1,1,0,0,0,1,0,0,1,1,1,1 }
+        {1,1,1,1,1,1,1,1,1,1,1,1 }
     };
 
 
@@ -36,7 +36,7 @@ public class TowerController : MonoBehaviour
     {
         // make column
         clone = (Transform)Instantiate(column, new Vector3(0, 0, 0), Quaternion.identity);
-        clone.transform.localScale = new Vector3(1.0f, levels * segmentspace / 2.0f, 1.0f);
+        clone.transform.localScale = new Vector3(1.0f, tiers * segmentspace / 2.0f, 1.0f);
         towerHeight = clone.GetComponent<MeshRenderer>().bounds.size.y;
         clone.transform.position += new Vector3(0, (towerHeight / 2.0f) + segmentspace, 0);
 

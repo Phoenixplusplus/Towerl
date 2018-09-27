@@ -8,8 +8,7 @@ public class BallPhysics : MonoBehaviour {
     public float Gravity = -10.0f;
 
     private float startHeight, segmentHeight, towerRotation;
-    private int maxBounceHeight, level, maxLevel;
-    private bool[] levelBools;
+    private int halfBounceHeight, maxTier;
     private Vector3 Speed = new Vector3(0, 0, 0);
     private GameObject Tower;
     private TowerController TowerController;
@@ -21,52 +20,101 @@ public class BallPhysics : MonoBehaviour {
         TowerController = Tower.GetComponent<TowerController>();
 
             // ball calculations
-            maxBounceHeight = TowerController.segmentspace;
-            startHeight = TowerController.towerHeight + maxBounceHeight;
+            halfBounceHeight = TowerController.segmentspace;
+            startHeight = TowerController.towerHeight + halfBounceHeight;
             segmentHeight = TowerController.segmentHeight;
 
             // level calculations
-            maxLevel = TowerController.levels;
-            level = 0;
-            levelBools = new bool[maxLevel];
-
-            for (int i = level; i < maxLevel; i++)
-            {
-                if (i == 0) levelBools[i] = true;
-                else levelBools[i] = false;
-            }
+            maxTier = TowerController.tiers;
 
         // start position
         transform.position = new Vector3(transform.position.x, startHeight, transform.position.z);
+        Debug.Log((startHeight - halfBounceHeight) + (segmentHeight * 2.0f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        // get tower rotation to determine if ball should boucne back
+        transform.position += Speed * Time.fixedDeltaTime;
+
+        // get tower rotation to determine if ball should bounce back
         towerRotation = TowerController.clone.transform.eulerAngles.y;
 
-        if (levelBools[0] == true)
+        // apply gravity
+        Speed.y += Gravity * Time.deltaTime;
+
+        // check for bounce
+        ApplyBounceForce();
+
+        Debug.Log(CheckTier());
+    }
+
+
+    // Functions
+    public void ApplyBounceForce()
+    {
+        if (CheckTier() == "Tier0")
         {
-            if (towerRotation < 120 || towerRotation > 180)
+            if (transform.position.y <= (startHeight - halfBounceHeight) + (segmentHeight * 2.0f))
             {
-                //Debug.Log("Yes");
-                if (transform.position.y <= (startHeight - maxBounceHeight) + (segmentHeight * 2.0f))
+                if (towerRotation < 120 || towerRotation > 180)
                 {
-                    Speed.y *= -1;
+                    Speed.y = halfBounceHeight * 2;
                 }
             }
         }
 
-        // perfectly elastic ball based on maxBounceHeight and height of flood below it
-        transform.position += Speed * Time.fixedDeltaTime;
-
-
-
-        if (transform.position.y >= (startHeight - maxBounceHeight) + (segmentHeight * 2.0f))
+        if (CheckTier() == "Tier1")
         {
-            Speed.y += Gravity * Time.fixedDeltaTime;
+            if (transform.position.y <= (startHeight - halfBounceHeight * 2) + (segmentHeight * 2.0f))
+            {
+                if (towerRotation > 60 && towerRotation < 120 || towerRotation > 240)
+                {
+                    Speed.y = halfBounceHeight * 2;
+                }
+            }
         }
 
+        if (CheckTier() == "Tier2")
+        {
+            if (transform.position.y <= (startHeight - halfBounceHeight * 3) + (segmentHeight * 2.0f))
+            {
+                if (towerRotation < 120 || towerRotation > 240)
+                {
+                    Speed.y = halfBounceHeight * 2;
+                }
+            }
+        }
+
+        if (CheckTier() == "Tier3")
+        {
+            if (transform.position.y <= (startHeight - halfBounceHeight * 4) + (segmentHeight * 2.0f))
+            {
+                if (towerRotation < 180 || towerRotation > 240 && towerRotation < 300)
+                {
+                    Speed.y = halfBounceHeight * 2;
+                }
+            }
+        }
+
+        if (CheckTier() == "Tier4")
+        {
+            if (transform.position.y <= (startHeight - halfBounceHeight * 5) + (segmentHeight * 2.0f))
+            {
+                Speed.y = halfBounceHeight * 2;
+            }
+        }
+    }
+
+    public string CheckTier()
+    {
+        string localString = "null";
+
+        if (transform.position.y >= (startHeight - halfBounceHeight) + segmentHeight) return localString = "Tier0";
+        else if (transform.position.y >= (startHeight - halfBounceHeight * 2) + segmentHeight) return localString = "Tier1";
+        else if (transform.position.y >= (startHeight - halfBounceHeight * 3) + segmentHeight) return localString = "Tier2";
+        else if (transform.position.y >= (startHeight - halfBounceHeight * 4) + segmentHeight) return localString = "Tier3";
+        else if (transform.position.y >= (startHeight - halfBounceHeight * 5) + segmentHeight) return localString = "Tier4";
+        else return localString;
     }
 }
