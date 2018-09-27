@@ -236,10 +236,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c9ea78a4709a74dbc9a20aacf07632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segment: {fileID: 4055942892056274, guid: c6627a3e2c384594eac7c12168d80c50, type: 2}
+  levels: 5
+  segment: {fileID: 4725561117629552, guid: 5a4e648fe9b05e245aa79bb1e41f320a, type: 2}
   column: {fileID: 4121608938616256, guid: 50002c82d340e284bb2a6c740980a0e6, type: 2}
+  clone: {fileID: 0}
   segmentspace: 2
-  segHeight: 0
+  segmentHeight: 0
   towerHeight: 0
 --- !u!4 &1347778133
 Transform:
@@ -358,6 +360,11 @@ Prefab:
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114685213341908934, guid: 232e7b4f39609d940a3233648a93df2d,
+        type: 2}
+      propertyPath: Gravity
+      value: -10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
