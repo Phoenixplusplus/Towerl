@@ -219,12 +219,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: 5
   SegmentScale: {x: 3, y: 1, z: 3}
-  ColumnScale: {x: 0.1, y: 2.5, z: 0.1}
-  BallScale: {x: 0.1, y: 0.1, z: 0.1}
+  ColumnScale: {x: 0.3, y: 2.5, z: 0.3}
+  BallScale: {x: 0.2, y: 0.2, z: 0.2}
+  SegmentBaseRotation: 150
   TierHeight: 1
   BallHeight: 0
-  BallRadius: 0.05
-  BallOffset: 0.5
+  BallRadius: 0.1
+  BallOffset: 0.7
   BallStartHeightRatio: 0.75
   BallMaxVelocity: 2
   TowerAngle: 0

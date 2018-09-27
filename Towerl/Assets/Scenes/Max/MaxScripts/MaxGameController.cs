@@ -13,23 +13,24 @@ public class MaxGameController : MonoBehaviour {
     // 2+ = TBA (and currently won't do shit) 
     public int[,] data = new int[5, 12]
     {
+        {1,1,1,1,1,1,0,0,1,1,1,1 }, // Bottom Tier
+        {1,1,1,1,1,1,1,1,1,1,0,0 },
         {1,1,1,1,1,1,0,0,1,1,1,1 },
-        {1,1,1,1,0,0,1,1,1,1,0,0 },
-        {1,1,1,1,1,1,0,0,1,1,1,1 },
-        {0,0,1,1,0,0,1,1,1,1,1,1 },
-        {1,1,0,0,1,1,0,0,1,1,1,1 }
+        {0,0,1,1,1,1,1,1,1,1,1,1 },
+        {1,0,0,0,0,0,0,0,0,0,0,0 } // Top Tier
     };
 
     [Header("Object Scales")]
     public Vector3 SegmentScale = new Vector3(3f, 1f, 3f);
-    public Vector3 ColumnScale = new Vector3(0.1f, 2.5f, 0.1f);
-    public Vector3 BallScale = new Vector3(0.1f, 0.1f, 0.1f);
+    public Vector3 ColumnScale = new Vector3(0.3f, 2.5f, 0.3f);
+    public Vector3 BallScale = new Vector3(0.2f, 0.2f, 0.2f);
+    public float SegmentBaseRotation = 150f;
     public float TierHeight = 1f;
 
     [Header("Game Play Details")]
     public float BallHeight;
-    public float BallRadius = 0.05f;
-    public float BallOffset = 0.5f;
+    public float BallRadius = 0.1f;
+    public float BallOffset = 0.7f;
     public float BallStartHeightRatio = 0.75f;
     public float BallMaxVelocity = 2f;
     public float TowerAngle;

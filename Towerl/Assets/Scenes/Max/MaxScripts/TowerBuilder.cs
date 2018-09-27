@@ -32,7 +32,7 @@ public class TowerBuilder : MonoBehaviour {
                 {
                     //Transform clone = (Transform)Instantiate(segment, new Vector3(0, 1, 0), Quaternion.identity);
                     //clone.Rotate(Vector3.up * i * 30);
-                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, level * MGC.TierHeight, 0), Quaternion.Euler(0, (i * 30), 0));
+                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, level * MGC.TierHeight, 0), Quaternion.Euler(0, (i * 30) + MGC.SegmentBaseRotation, 0));
                     segClone.gameObject.tag = level.ToString();
                     segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale , MGC.SegmentScale);
                     segClone.transform.parent = clone.transform;
