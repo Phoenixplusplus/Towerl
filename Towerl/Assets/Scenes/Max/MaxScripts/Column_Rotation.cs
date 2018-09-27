@@ -8,7 +8,7 @@ public class Column_Rotation : MonoBehaviour {
     MaxGameController MGC;
 
     [Header("Control Variables")]
-    private float RotationSpeed = 90.0f;
+    private float RotationSpeed = 25.0f;
 
 	// Use this for initialization
 	void Start () {
