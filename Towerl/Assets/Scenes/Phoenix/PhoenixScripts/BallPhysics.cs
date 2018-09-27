@@ -13,15 +13,16 @@ public class BallPhysics : MonoBehaviour {
     private GameObject Tower;
 
     // Use this for initialization
-    void Start()
+    public void Init()
     {
         GameObject Tower = GameObject.Find("Tower");
         TowerController TowerController = Tower.GetComponent<TowerController>();
 
+        segHeight = TowerController.segHeight;
         MaxBounceHeight = TowerController.segmentspace;
         //StartHeight = TowerController.clone.GetComponent<MeshRenderer>().bounds.size.y;
-        StartHeight = TowerController.clone.transform.localScale.y + MaxBounceHeight;
-        segHeight = TowerController.segHeight;
+        StartHeight = TowerController.towerHeight + MaxBounceHeight;
+        
 
         transform.position = new Vector3(transform.position.x, StartHeight, transform.position.z);
     }
@@ -32,7 +33,7 @@ public class BallPhysics : MonoBehaviour {
         Speed.y += Gravity * Time.fixedDeltaTime;
         transform.position += Speed * Time.fixedDeltaTime;
 
-        if (transform.position.y <= StartHeight - MaxBounceHeight + segHeight && Speed.y < 0)
+        if (transform.position.y <= StartHeight - MaxBounceHeight && Speed.y < 0)
         {
             Speed.y *= -1;
         }

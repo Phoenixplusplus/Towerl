@@ -24,15 +24,16 @@ public class TowerController : MonoBehaviour
     [Header("Level Attributes")]
     public int segmentspace;
 
-        public Transform clone;
-        public float segHeight;
+        public float segHeight, towerHeight;
 
     // Use this for initialization
     void Start()
     {
         // make column
-        clone = (Transform)Instantiate(column, new Vector3(0, (float)levels / 2, 0), Quaternion.identity);
-        clone.transform.localScale = new Vector3(1.0f, 10.0f, 1.0f);
+        Transform clone = (Transform)Instantiate(column, new Vector3(0, 0, 0), Quaternion.identity);
+        clone.transform.localScale = new Vector3(1.0f, levels * segmentspace / 2.0f, 1.0f);
+        towerHeight = clone.GetComponent<MeshRenderer>().bounds.size.y;
+        clone.transform.position += new Vector3(0, (towerHeight / 2.0f) + segmentspace, 0);
 
         // make each layer
         for (int level = 4; level >= 0; level--)
@@ -41,7 +42,7 @@ public class TowerController : MonoBehaviour
             {
                 if (data[level, i] == 1)
                 {
-                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, clone.transform.localScale.y - level * segmentspace, 0), Quaternion.Euler(0, i * 30, 0));
+                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, towerHeight - level * segmentspace, 0), Quaternion.Euler(0, i * 30, 0));
                     segClone.transform.localScale = new Vector3(300.0f, 10.0f, 300.0f);
                     segHeight = segClone.GetComponent<MeshRenderer>().bounds.size.y;
                     segClone.gameObject.tag = level.ToString();
@@ -50,11 +51,14 @@ public class TowerController : MonoBehaviour
             }
         }
 
+        BallPhysics BallPhysics = GameObject.Find("Ball").GetComponent<BallPhysics>();
+        BallPhysics.Init();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 }
