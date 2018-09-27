@@ -24,7 +24,7 @@ public class TowerBuilder : MonoBehaviour {
         clone.transform.localScale = Vector3.Scale(clone.transform.localScale, MGC.ColumnScale);
 
         // make each layer (Apply MCG Scale factors and append to column)
-        for (int level = MGC.levels -1; level >= 0; level--)
+        for (int level = 0; level < MGC.levels; level++)
         {
             for (int i = 0; i < 12; i++)
             {
@@ -32,7 +32,7 @@ public class TowerBuilder : MonoBehaviour {
                 {
                     //Transform clone = (Transform)Instantiate(segment, new Vector3(0, 1, 0), Quaternion.identity);
                     //clone.Rotate(Vector3.up * i * 30);
-                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, level * MGC.TierHeight, 0), Quaternion.Euler(0, (i * 30) - 15, 0));
+                    Transform segClone = (Transform)Instantiate(segment, new Vector3(0, level * MGC.TierHeight, 0), Quaternion.Euler(0, (i * 30), 0));
                     segClone.gameObject.tag = level.ToString();
                     segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale , MGC.SegmentScale);
                     segClone.transform.parent = clone.transform;
@@ -41,8 +41,11 @@ public class TowerBuilder : MonoBehaviour {
         }
 
         // create the ball
+        Transform NewBall = (Transform)Instantiate(ball, new Vector3(MGC.BallOffset, (MGC.levels + MGC.BallStartHeightRatio - 1f) * MGC.TierHeight), Quaternion.identity);
+        NewBall.transform.localScale = Vector3.Scale(NewBall.transform.localScale, MGC.BallScale);
 
-
+        // Relay info to Game Controller
+        MGC.BallHeight = transform.position.x;
 
     }
 

@@ -218,14 +218,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels: 5
-  SegmentScale: {x: 2, y: 2, z: 2}
+  SegmentScale: {x: 3, y: 1, z: 3}
   ColumnScale: {x: 0.1, y: 2.5, z: 0.1}
-  BallScale: {x: 1, y: 1, z: 1}
+  BallScale: {x: 0.1, y: 0.1, z: 0.1}
   TierHeight: 1
   BallHeight: 0
+  BallRadius: 0.05
+  BallOffset: 0.5
+  BallStartHeightRatio: 0.75
+  BallMaxVelocity: 2
   TowerAngle: 0
   CurrentTier: 0
-  Gravity: -5
+  Gravity: -3
 --- !u!4 &507706071
 Transform:
   m_ObjectHideFlags: 0
@@ -347,3 +351,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segment: {fileID: 400000, guid: bfe99d2fefe2ac246b9edeb2cf183891, type: 3}
   column: {fileID: 4591683186242562, guid: db9c4ecdbb3b3a94b8f9cb94617854ad, type: 2}
+  ball: {fileID: 4341350130266342, guid: 9ce34803c2325634295c00f203877e4c, type: 2}
