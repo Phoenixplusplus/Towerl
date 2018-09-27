@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4055942892056274}
+  - component: {fileID: 33295952101763010}
   - component: {fileID: 23851853417383674}
   m_Layer: 0
   m_Name: Segment
@@ -141,7 +142,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1069707837354146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -176,4 +177,11 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1189524731059168}
+  m_Mesh: {fileID: 4300000, guid: bfe99d2fefe2ac246b9edeb2cf183891, type: 3}
+--- !u!33 &33295952101763010
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1069707837354146}
   m_Mesh: {fileID: 4300000, guid: bfe99d2fefe2ac246b9edeb2cf183891, type: 3}
