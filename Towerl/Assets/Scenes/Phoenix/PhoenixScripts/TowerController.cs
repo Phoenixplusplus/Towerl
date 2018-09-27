@@ -24,7 +24,7 @@ public class TowerController : MonoBehaviour
     [Header("Level Attributes")]
     public int segmentspace;
 
-        public float segHeight, towerHeight;
+        public float segmentHeight, towerHeight;
 
     // Use this for initialization
     void Start()
@@ -44,7 +44,7 @@ public class TowerController : MonoBehaviour
                 {
                     Transform segClone = (Transform)Instantiate(segment, new Vector3(0, towerHeight - level * segmentspace, 0), Quaternion.Euler(0, i * 30, 0));
                     segClone.transform.localScale = new Vector3(300.0f, 10.0f, 300.0f);
-                    segHeight = segClone.GetComponent<MeshRenderer>().bounds.size.y;
+                    segmentHeight = segClone.GetComponent<MeshRenderer>().bounds.size.y;
                     segClone.gameObject.tag = level.ToString();
                     segClone.transform.parent = clone.transform;
                 }
@@ -53,7 +53,6 @@ public class TowerController : MonoBehaviour
 
         BallPhysics BallPhysics = GameObject.Find("Ball").GetComponent<BallPhysics>();
         BallPhysics.Init();
-
     }
 
     // Update is called once per frame
