@@ -21,8 +21,8 @@ public class MaxGameController : MonoBehaviour {
     };
 
     [Header("Object Scales")]
-    public Vector3 SegmentScale = new Vector3(3f, 1f, 3f);
-    public Vector3 ColumnScale = new Vector3(0.3f, 2.5f, 0.3f);
+    public Vector3 SegmentScale = new Vector3(4f, 4f, 4f);
+    public Vector3 ColumnScale = new Vector3(1f, 2.5f, 1f);
     public Vector3 BallScale = new Vector3(0.2f, 0.2f, 0.2f);
     public float SegmentBaseRotation = 150f;
     public float TierHeight = 1f;
@@ -30,7 +30,7 @@ public class MaxGameController : MonoBehaviour {
     [Header("Game Play Details")]
     public float BallHeight;
     public float BallRadius = 0.1f;
-    public float BallOffset = 0.7f;
+    public float BallOffset = 0.8f;
     public float BallStartHeightRatio = 0.75f;
     public float BallMaxVelocity = 2f;
     public float TowerAngle;
