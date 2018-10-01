@@ -19,7 +19,8 @@ public class Column_Rotation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
+        //transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * RotationSpeed * Time.deltaTime);
         MGC.TowerAngle = transform.eulerAngles.y;
 
 	}

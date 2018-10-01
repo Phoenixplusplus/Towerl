@@ -39,7 +39,7 @@ public class BallScript : MonoBehaviour {
         {
             int segment = (int)Mathf.Floor(MGC.TowerAngle / 30);
             // Bounce if he have to .....
-            Debug.Log("data reads[ " + currTier.ToString() + " , " + segment.ToString() + "] = " + MGC.data[currTier, segment].ToString());
+            Debug.Log("data reads[ " + currTier.ToString() + " , " + segment.ToString() + "] = " + MGC.data[currTier, segment].ToString() + " TAngle: " + MGC.TowerAngle.ToString());
 
     
             if (MGC.data[currTier, segment] != 0 || currTier == 0)

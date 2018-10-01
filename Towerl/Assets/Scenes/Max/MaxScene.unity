@@ -219,9 +219,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: 5
   SegmentScale: {x: 4, y: 4, z: 4}
-  ColumnScale: {x: 1, y: 2.5, z: 1}
+  ColumnScale: {x: 0.8, y: 2.5, z: 0.8}
   BallScale: {x: 0.2, y: 0.2, z: 0.2}
-  SegmentBaseRotation: 180
+  SegmentBaseRotation: 0
   TierHeight: 1
   BallHeight: 0
   BallRadius: 0.1
@@ -350,6 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ee688b6b1a97f42ae5a72ca695a137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segment: {fileID: 400000, guid: bfe99d2fefe2ac246b9edeb2cf183891, type: 3}
+  segment: {fileID: 400000, guid: 85720bd4135376a4a9b72307ae3da668, type: 3}
   column: {fileID: 4591683186242562, guid: db9c4ecdbb3b3a94b8f9cb94617854ad, type: 2}
   ball: {fileID: 4341350130266342, guid: 9ce34803c2325634295c00f203877e4c, type: 2}
