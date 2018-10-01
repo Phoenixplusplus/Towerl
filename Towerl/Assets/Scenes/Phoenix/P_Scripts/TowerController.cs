@@ -6,7 +6,7 @@ public class TowerController : MonoBehaviour
 {
 
     [Header("Level Data")]
-    public int levels = 5;
+    public int tiers = 5;
     public int[,] data = new int[5, 12]
     {
         // 0 = a gap (nothing there)
@@ -17,7 +17,7 @@ public class TowerController : MonoBehaviour
         {1,1,1,1,0,0,0,0,1,1,0,0 },
         {1,1,1,1,0,0,0,0,1,1,1,1 },
         {0,0,1,1,0,0,1,1,1,1,1,1 },
-        {1,1,0,0,0,1,0,0,1,1,1,1 }
+        {1,1,1,1,1,1,1,1,1,1,1,1 }
     };
 
 
@@ -29,14 +29,14 @@ public class TowerController : MonoBehaviour
     [Header("Level Attributes")]
     public int segmentspace;
 
-        public float segmentHeight, towerHeight;
+        public float segmentHalfHeight, towerHeight;
 
     // Use this for initialization
     void Start()
     {
         // make column
         clone = (Transform)Instantiate(column, new Vector3(0, 0, 0), Quaternion.identity);
-        clone.transform.localScale = new Vector3(1.0f, levels * segmentspace / 2.0f, 1.0f);
+        clone.transform.localScale = new Vector3(1.0f, tiers * segmentspace / 2.0f, 1.0f);
         towerHeight = clone.GetComponent<MeshRenderer>().bounds.size.y;
         clone.transform.position += new Vector3(0, (towerHeight / 2.0f) + segmentspace, 0);
 
@@ -49,10 +49,10 @@ public class TowerController : MonoBehaviour
                 {
                     Transform segClone = (Transform)Instantiate(segment, new Vector3(0, towerHeight - level * segmentspace, 0), Quaternion.Euler(0, i * 30, 0));
                     segClone.transform.localScale = new Vector3(300.0f, 10.0f, 300.0f);
-                    segmentHeight = segClone.GetComponent<MeshRenderer>().bounds.size.y;
+                    segmentHalfHeight = segClone.transform.localScale.y / 50.0f;
                     segClone.gameObject.tag = level.ToString();
                     segClone.transform.parent = clone.transform;
-                    Debug.Log(segmentHeight);
+                    Debug.Log(segmentHalfHeight);
                 }
             }
         }

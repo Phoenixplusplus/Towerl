@@ -236,12 +236,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c9ea78a4709a74dbc9a20aacf07632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels: 5
-  segment: {fileID: 4725561117629552, guid: 5a4e648fe9b05e245aa79bb1e41f320a, type: 2}
+  tiers: 5
+  segment: {fileID: 4964718181914006, guid: c3953c20a128faf46bfce87c8f67b0ca, type: 2}
   column: {fileID: 4121608938616256, guid: 50002c82d340e284bb2a6c740980a0e6, type: 2}
   clone: {fileID: 0}
   segmentspace: 2
-  segmentHeight: 0
+  segmentHalfHeight: 0
   towerHeight: 0
 --- !u!4 &1347778133
 Transform:
@@ -250,11 +250,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1347778131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6945646, y: 2.0612855, z: -3.518196}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639660784
 GameObject:
@@ -331,15 +331,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.6234808
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.15
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -359,12 +359,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4707236186828088, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114685213341908934, guid: 232e7b4f39609d940a3233648a93df2d,
         type: 2}
       propertyPath: Gravity
-      value: -10
+      value: -12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 232e7b4f39609d940a3233648a93df2d, type: 2}
