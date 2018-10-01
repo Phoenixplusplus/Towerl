@@ -29,7 +29,7 @@ public class TowerController : MonoBehaviour
     [Header("Level Attributes")]
     public int segmentspace;
 
-        public float segmentHeight, towerHeight;
+        public float segmentHalfHeight, towerHeight;
 
     // Use this for initialization
     void Start()
@@ -49,10 +49,10 @@ public class TowerController : MonoBehaviour
                 {
                     Transform segClone = (Transform)Instantiate(segment, new Vector3(0, towerHeight - level * segmentspace, 0), Quaternion.Euler(0, i * 30, 0));
                     segClone.transform.localScale = new Vector3(300.0f, 10.0f, 300.0f);
-                    segmentHeight = segClone.GetComponent<MeshRenderer>().bounds.size.y;
+                    segmentHalfHeight = segClone.transform.localScale.y / 50.0f;
                     segClone.gameObject.tag = level.ToString();
                     segClone.transform.parent = clone.transform;
-                    Debug.Log(segmentHeight);
+                    Debug.Log(segmentHalfHeight);
                 }
             }
         }
