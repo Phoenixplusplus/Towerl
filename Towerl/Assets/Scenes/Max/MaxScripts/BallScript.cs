@@ -41,15 +41,21 @@ public class BallScript : MonoBehaviour {
             // Bounce if he have to .....
             Debug.Log("data reads[ " + currTier.ToString() + " , " + segment.ToString() + "] = " + MGC.data[currTier, segment].ToString() + " TAngle: " + MGC.TowerAngle.ToString());
 
-    
             if (MGC.data[currTier, segment] != 0 || currTier == 0)
             {
                 // here we have a tier barrier hit
                 vel.y = MGC.BallMaxVelocity;
             }
+            if (MGC.data[currTier, segment] == 0 && currTier != 0)
+            {
+                // fall through
+                MGC.CurrentTier -= 1;
+            }
+
         }
 
-
+        MGC.CurrentBallVelocity = vel;
+        MGC.BallHeight = transform.position.y;
 
 
 	}
