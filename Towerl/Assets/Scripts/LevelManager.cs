@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 struct LevelData
 {
@@ -88,7 +88,12 @@ public class LevelManager : MonoBehaviour
            // Debug.Log("Level: " + i + " " + m_levelData[i].highScoreString + " " + m_levelData[i].highScore + " " + m_levelData[i].starsString + " " + m_levelData[i].stars);
         }
     }
-    
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("P_Scene");
+    }
+
     // Just for testing purpose - Reset to 0 and print highscores and stars
     public void ClearHighScores()
     { 
