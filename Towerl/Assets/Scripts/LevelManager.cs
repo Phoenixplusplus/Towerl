@@ -59,84 +59,18 @@ public class LevelManager : MonoBehaviour
             m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
         }
     }
+
     void Awake()
     {
         _instance = this;
         LoadLevelData();
     }
-
-    // Just for testing purpose - Print highscores and stars
-    public void PrintHighScores()
-    {
-        // Just for testing purpose - Print highscores and stars
-        for (int i = 0; i < NUMBER_OF_LEVELS; i++) Debug.Log("Level: " + i + " " + m_levelData[i].highScoreString + " " + m_levelData[i].highScore + " " + m_levelData[i].starsString + " " + m_levelData[i].stars);
-    }
     
-    // Just for testing purpose - Set and print highscores and stars
-    public void SetNewHigschores()
-    {
-        // Just for testing purpose - Set and print highscores and stars
-        for (int i = 0; i < NUMBER_OF_LEVELS; i++)
-        {
-            PlayerPrefs.SetInt(m_levelData[i].highScoreString, i);
-            PlayerPrefs.SetInt(m_levelData[i].starsString,  i * 2);
-            PlayerPrefs.SetInt(m_levelData[i].levelLockString, i * 3);
-
-            m_levelData[i].highScore = PlayerPrefs.GetInt(m_levelData[i].highScoreString);
-            m_levelData[i].stars = PlayerPrefs.GetInt(m_levelData[i].starsString);
-            m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
-           // Debug.Log("Level: " + i + " " + m_levelData[i].highScoreString + " " + m_levelData[i].highScore + " " + m_levelData[i].starsString + " " + m_levelData[i].stars);
-        }
-    }
 
     public void PlayGame()
     {
         SceneManager.LoadScene("P_Scene");
-    }
-
-    // Just for testing purpose - Reset to 0 and print highscores and stars
-    public void ClearHighScores()
-    { 
-        // Just for testing purpose - Reset to 0 and print highscores and stars
-        for (int i = 0; i < NUMBER_OF_LEVELS; i++)
-        {
-            PlayerPrefs.SetInt(m_levelData[i].highScoreString, 0);
-            PlayerPrefs.SetInt(m_levelData[i].starsString, 0);
-            PlayerPrefs.SetInt(m_levelData[i].levelLockString, 0);
-            m_levelData[i].highScore = PlayerPrefs.GetInt(m_levelData[i].highScoreString);
-            m_levelData[i].stars = PlayerPrefs.GetInt(m_levelData[i].starsString);
-            m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
-           // Debug.Log("Level: " + i + " " + m_levelData[i].highScoreString + " " + m_levelData[i].highScore + " " + m_levelData[i].starsString + " " + m_levelData[i].stars);
-        }     
-    }
-
-    // Testing stufss DELETEEEEE
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.P)) PrintHighScores();
-        if (Input.GetKeyUp(KeyCode.S)) SetNewHigschores();
-        if (Input.GetKeyUp(KeyCode.R)) ClearHighScores();
-    }
-
-    // Just for testing DELETEEEEE
-    void OnGUI()
-    {
-
-       // ShowLevelGraphics();
-
-    }
-
-    // Just for testing purpose DELETEEEEE
-    public void ShowLevelGraphics()
-    {
-        for (int i = 0; i < NUMBER_OF_LEVELS; i++)
-        {
-            GUI.Box(new Rect(50, (50 * i) + 10, 500, 50),   "Level " + i + " HS: " + m_levelData[i].highScore +
-                                                            " Stars: " + m_levelData[i].stars +
-                                                            " IsUnlocked?: " + m_levelData[i].IsUnlocked);
-        }
-    }
-    
+    } 
 
     // Set new level highscore
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
@@ -215,5 +149,4 @@ public class LevelManager : MonoBehaviour
     {
         return m_ThreeStarSprite;
     }
-
 }
