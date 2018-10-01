@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f02feae594d14f34eb29e0cc7320d9e1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_OneStarSprite: {fileID: 21300000, guid: 5f94339b9d0aa7d418b905e186187564, type: 3}
+  - m_TwoStarSprite: {fileID: 21300000, guid: 4578fd04269bc6b4bbc501a0c15b88ac, type: 3}
+  - m_ThreeStarSprite: {fileID: 21300000, guid: 50e59d246d416e442b905e0059ef2205,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
