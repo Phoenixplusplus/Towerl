@@ -11,6 +11,7 @@ public class TierData : MonoBehaviour
     //List<int[]> list = new List<int[]>();
     //List.Add({ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 });
     // NOTE: Will get back to making use of Lists and Dictionaries .... but I'm missing something ....
+    // so here's a multi-dimensional array (until we get around to dynamically building them) 
 
 private int[,] data = { {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
@@ -137,6 +138,11 @@ private int[,] data = { {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
             ret[i] = data[number, i];
         }
         return ret;
+    }
+
+    public int GetPossibleTierCount ()
+    {
+        return data.GetLength(0);
     }
 
 }

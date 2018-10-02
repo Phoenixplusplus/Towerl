@@ -23,19 +23,21 @@ public class TierScript : MonoBehaviour {
         {
             transform.localScale = Controller.SegmentScale;
         }
+        transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + rotation, 0);
 	}
 
     int ReportType(float angle)
     {
-        if (angle + rotation < 0)
+        float R = angle + rotation;
+        if (R < 0)
         {
-            angle += 360;
+            while (R < 0) { R += 360f; }
         }
-        else if (angle + rotation > 360)
+        else if (R > 360)
         {
-            angle -= 360;
+            while (R > 360) { R -= 360f; }
         }
-        return myData[(int)Mathf.Floor(angle / 24)];
+        return myData[(int)Mathf.Floor(R / 24)];
     }
 
 }
