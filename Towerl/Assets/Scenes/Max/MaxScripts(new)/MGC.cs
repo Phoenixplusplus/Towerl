@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MGC : MonoBehaviour {
 
-    private int TiersPerLevel;
+    public int TiersPerLevel = 35;
 
     [Header("Object & Game Scales")]
-    public Vector3 SegmentScale = new Vector3(4f, 4f, 4f);
+    public Vector3 SegmentScale = new Vector3(4f, 0.5f, 4f);
     public Vector3 ColumnScale = new Vector3(0.8f, 7.5f, 0.8f);
     public Vector3 BallScale = new Vector3(0.2f, 0.2f, 0.2f);
     public float SegmentBaseRotation = 0f;
