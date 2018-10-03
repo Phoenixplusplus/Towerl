@@ -39,19 +39,20 @@ public class LevelBuilder : MonoBehaviour {
 
     private void MakeTier (int Height, int TierCode, float Rotation)
     {
-
+        // go get the tier data (an int [24]) from the "Tier Data" object
         int[] data = TD.GetTierData(TierCode);
 
-        // instantiate primary section = this will have the Tag and control script
+        // instantiate primary section = this will have the Tag and control script (further segments are childed to it)
         // IMPORTANT ... Segment 0 ALWAYS should be 1 (a solid vanilla platform)
         Transform Seg0 = (Transform)Instantiate(Seg15, new Vector3(0, Height, 0), Quaternion.Euler(0, Rotation, 0));
-        Seg0.gameObject.tag = Height.ToString();
-        Seg0.transform.localScale = Controller.SegmentScale;
-        Seg0.gameObject.AddComponent<TierScript>();
+        Seg0.gameObject.tag = Height.ToString(); // set tag
+        Seg0.transform.localScale = Controller.SegmentScale; // set scale
+        Seg0.gameObject.AddComponent<TierScript>(); // add tier control script (and configure it)
         Seg0.gameObject.GetComponent<TierScript>().myData = data;
         Seg0.gameObject.GetComponent<TierScript>().rotation = Rotation;
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = Color.green;
 
+        // make each 15 degree segment fanning around the 
         for (int i = 1; i < 24; i++)
         {
             if (data[i] > 0)
@@ -61,7 +62,7 @@ public class LevelBuilder : MonoBehaviour {
             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = Color.green;
                 if (data[i] == 2)
                 {
-                    segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, new Vector3(1f,1.1f,1f));
+                    segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, new Vector3(1.1f,1.1f,1.1f));
                     segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
                 }
             segClone.transform.parent = Seg0.transform;
