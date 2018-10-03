@@ -40,6 +40,8 @@ TagManager:
   - 33
   - 34
   - 35
+  - Column
+  - Ball
   layers:
   - Default
   - TransparentFX

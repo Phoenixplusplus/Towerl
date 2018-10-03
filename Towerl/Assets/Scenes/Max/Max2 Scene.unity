@@ -144,14 +144,15 @@ MonoBehaviour:
   SegmentScale: {x: 80, y: 10, z: 80}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}
   BallScale: {x: 0.2, y: 0.2, z: 0.2}
-  Ball: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+  Ball: {fileID: 1678990485}
+  camera: {fileID: 1192086656}
   SegmentBaseRotation: 0
   TierHeight: 1
   BallRadius: 0.1
   BallOffset: 0.8
   BallStartHeightRatio: 0.75
   BallMaxVelocity: 2
-  Gravity: -3
+  Gravity: {x: 0, y: -3, z: 0}
   KeyboardControlSensetivity: 30
   TouchControlSensetivity: 30
   BallHeight: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   CurrentTier: 0
   CurrentLevel: 0
   CurrentGameMode: 1
+  BallFalling: 0
 --- !u!4 &452659519
 Transform:
   m_ObjectHideFlags: 0
@@ -368,6 +370,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f52cecca2065a3c48b126887c6650da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1678990484
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293613983596868, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!4 &1678990485 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1678990484}
 --- !u!1 &1689114759
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,11 +21,19 @@ public class LevelBuilder : MonoBehaviour {
         TierCount = Controller.TiersPerLevel;
 
         MakeColumn();
-
-        for (int i = 0; i < TierCount ; i++)
+        // Make Tiers
+        // Top Tier ... Orientation -7.5 to ensure bounce on a platform
+        MakeTier(TierCount-1, 1, -7.5f);
+        //Remaining Middle Tiers
+        for (int i = TierCount - 2; i > 0  ; i--)
         {
             MakeTier(i, Random.Range(0, TD.GetPossibleTierCount() - 1), Random.Range(-180f, 180f));
         }
+        // Bottom "Home" Tier
+        MakeTier(0, 0, 0);
+
+        // Get Controller to make ball
+        Controller.ResetBall();
     }
 
     private void MakeColumn ()
@@ -33,8 +41,7 @@ public class LevelBuilder : MonoBehaviour {
         // make column (and Apply Controller scale factors)
         Transform clone = (Transform)Instantiate(Column, new Vector3(0f, (float)Controller.TiersPerLevel / 2, 0), Quaternion.identity);
         clone.transform.localScale = Vector3.Scale(clone.transform.localScale, Controller.ColumnScale);
-
-
+        clone.gameObject.tag = "Column";
     }
 
     private void MakeTier (int Height, int TierCode, float Rotation)

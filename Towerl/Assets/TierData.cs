@@ -13,7 +13,9 @@ public class TierData : MonoBehaviour
     // NOTE: Will get back to making use of Lists and Dictionaries .... but I'm missing something ....
     // so here's a multi-dimensional array (until we get around to dynamically building them) 
 
-private int[,] data = { {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+private int[,] data = {
+                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, // USED FOR BOTTOM SUCCESS TIER
+                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0}, // DEFAULT 1st Tier
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
