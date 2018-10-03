@@ -28,7 +28,7 @@ public class TierScript : MonoBehaviour {
 
     public int ReportType(float angle)
     {
-        float R = angle + rotation;
+        float R = angle - rotation;
         if (R < 0)
         {
             while (R < 0) { R += 360f; }

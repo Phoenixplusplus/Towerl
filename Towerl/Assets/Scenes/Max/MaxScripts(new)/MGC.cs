@@ -92,9 +92,9 @@ public class MGC : MonoBehaviour {
             // At this stage we are able to detect tier transitions
             // Can compare where the Ball WAS (stored in BallHeight) against the New Height
             float NewBallHeight = Ball.transform.position.y;
-            if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight))
+            if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight) && CurrentBallVelocity.y < 0)
             {
-                // DO NOTHING .. Are on same Tier between frames
+                // DO NOTHING .. Are on same Tier between frames OR Ball moving upwards
             }
             else // here's the Ball Mechanics, folks.  Hang onto your hats
             {
@@ -106,7 +106,7 @@ public class MGC : MonoBehaviour {
                 }
                 else
                 {
-                    int TierToCheck = (int)Mathf.Floor(NewBallHeight );
+                    int TierToCheck = (int)Mathf.Floor(NewBallHeight +1);
                     int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
                     switch (SurfaceHit)
                     {
