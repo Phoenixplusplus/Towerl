@@ -142,18 +142,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TiersPerLevel: 35
   SegmentScale: {x: 80, y: 10, z: 80}
+  HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}
-  BallScale: {x: 0.2, y: 0.2, z: 0.2}
+  BallScale: {x: 0.18, y: 0.18, z: 0.18}
   Ball: {fileID: 1678990485}
   camera: {fileID: 1192086656}
   SegmentBaseRotation: 0
   TierHeight: 1
   BallRadius: 0.1
-  BallOffset: 0.8
+  BallOffset: 1
   BallStartHeightRatio: 0.75
   BallMaxVelocity: 2
-  Gravity: {x: 0, y: -3, z: 0}
-  KeyboardControlSensetivity: 30
+  Gravity: -3
+  KeyboardControlSensetivity: 80
   TouchControlSensetivity: 30
   BallHeight: 0
   CurrentBallVelocity: {x: 0, y: 0, z: 0}

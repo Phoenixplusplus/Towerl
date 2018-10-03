@@ -26,7 +26,7 @@ public class TierScript : MonoBehaviour {
         transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + rotation, 0);
 	}
 
-    int ReportType(float angle)
+    public int ReportType(float angle)
     {
         float R = angle + rotation;
         if (R < 0)

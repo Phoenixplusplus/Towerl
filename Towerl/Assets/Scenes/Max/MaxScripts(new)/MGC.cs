@@ -8,6 +8,7 @@ public class MGC : MonoBehaviour {
 
     [Header("Object & Game Scales")]
     public Vector3 SegmentScale = new Vector3(80f, 10f, 80f);
+    public Vector3 HazardScaleModifier = new Vector3(1.1f, 1.1f, 1.1f);
     public Vector3 ColumnScale = new Vector3(0.8f, 17.5f, 0.8f);
     public Vector3 BallScale = new Vector3(0.18f, 0.18f, 0.18f);
     public Transform Ball;
@@ -18,8 +19,8 @@ public class MGC : MonoBehaviour {
     public float BallOffset = 1f;
     public float BallStartHeightRatio = 0.75f;
     public float BallMaxVelocity = 2f;
-    public Vector3 Gravity = new Vector3 (0,-3f,0);
-    public float KeyboardControlSensetivity = 30f;
+    public float Gravity = -3f;
+    public float KeyboardControlSensetivity = 80f;
     public float TouchControlSensetivity = 30f;
 
     [Header("Game Play Details")]
@@ -84,13 +85,14 @@ public class MGC : MonoBehaviour {
                 while (TowerAngle > 360) { TowerAngle -= 360; }
             }
 
+
             // MOVE THE BALL
-            CurrentBallVelocity += Gravity * Time.deltaTime;
+            CurrentBallVelocity += Vector3.up * Gravity * Time.deltaTime;
             Ball.transform.position += CurrentBallVelocity * Time.deltaTime;
             // At this stage we are able to detect tier transitions
             // Can compare where the Ball WAS (stored in BallHeight) against the New Height
             float NewBallHeight = Ball.transform.position.y;
-            if (Mathf.Floor(NewBallHeight) != Mathf.Floor(BallHeight))
+            if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight))
             {
                 // DO NOTHING .. Are on same Tier between frames
             }
@@ -98,9 +100,31 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <=0) // Have Reached the bottom
                 {
-                    // Add Game Over complete code here
+                    // Add Game Over (Win) complete code here ... or call a function ;p
                     // but for our purposes now
                     ResetBall();
+                }
+                else
+                {
+                    int TierToCheck = (int)Mathf.Floor(NewBallHeight );
+                    int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
+                    switch (SurfaceHit)
+                    {
+                        case 0: // 0 = gap -- FALL THROUGH
+                            BallFalling = true;
+                            break;
+                        case 1: // 1 = normal platform --- BOUNCE
+                            BallFalling = false;
+                            camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
+                            CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                            break;
+                        case 2: // 2 = Hazard ---- GAME OVER (will just reset)
+                            GameRunning = false;
+                            ResetBall();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -111,6 +135,16 @@ public class MGC : MonoBehaviour {
 
             
         }
+    }
+
+    public int GetTierSegmentType(int TierToCheck, float TowerAngle)
+    {
+        // find the relevant Tier Object
+        Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString()+ " Ball Height: " + BallHeight.ToString());
+        GameObject Tier = GameObject.FindWithTag(TierToCheck.ToString());
+        int answer = Tier.GetComponent<TierScript>().ReportType(TowerAngle);
+        Debug.Log("Returning " + answer.ToString());
+        return answer;
     }
 
 

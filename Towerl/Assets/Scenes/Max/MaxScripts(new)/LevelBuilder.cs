@@ -69,7 +69,7 @@ public class LevelBuilder : MonoBehaviour {
             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = Color.green;
                 if (data[i] == 2)
                 {
-                    segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, new Vector3(1.1f,1.1f,1.1f));
+                    segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
                     segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = Color.red;
                 }
             segClone.transform.parent = Seg0.transform;
