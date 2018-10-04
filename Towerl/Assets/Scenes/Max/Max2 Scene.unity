@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657642, g: 0.49641162, b: 0.5748184, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641216, b: 0.5748184, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -165,6 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 452659519}
   - component: {fileID: 452659518}
+  - component: {fileID: 452659520}
   m_Layer: 0
   m_Name: MGC
   m_TagString: Untagged
@@ -187,7 +188,7 @@ MonoBehaviour:
   Ball: {fileID: 1678990485}
   camera: {fileID: 1192086656}
   levelBuilder: {fileID: 1689114760}
-  SegmentScale: {x: 80, y: 10, z: 80}
+  SegmentScale: {x: 100, y: 10, z: 100}
   HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}
   BallScale: {x: 0.18, y: 0.18, z: 0.18}
@@ -219,6 +220,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452659520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 452659517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939a8dde1404a1944af44e48c5a3f095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchRotation: {x: 0, y: 0}
+  touchEnabled: 0
 --- !u!1 &457281586
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +318,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

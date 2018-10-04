@@ -11,7 +11,7 @@ public class MGC : MonoBehaviour {
     public LevelBuilder levelBuilder;
 
     [Header("Object & Game Scales")]
-    public Vector3 SegmentScale = new Vector3(80f, 10f, 80f);
+    public Vector3 SegmentScale = new Vector3(100f, 10f, 100f);
     public Vector3 HazardScaleModifier = new Vector3(1.1f, 1.1f, 1.1f);
     public Vector3 ColumnScale = new Vector3(0.8f, 17.5f, 0.8f);
     public Vector3 BallScale = new Vector3(0.18f, 0.18f, 0.18f);
@@ -22,7 +22,7 @@ public class MGC : MonoBehaviour {
     public float BallMaxVelocity = 2f;
     public float Gravity = -3f;
     public float KeyboardControlSensetivity = 80f;
-    public float TouchControlSensetivity = 30f;
+    public float TouchControlSensetivity = 2f;
 
     [Header("Game In-Play Details")]
     public float BallHeight;
@@ -36,8 +36,6 @@ public class MGC : MonoBehaviour {
     public int CurrentLevel;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
-
-
 
     // --------------------//
     // establish Singelton //

@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class TouchController : MonoBehaviour {
 
-    Touch userTouch;
-    Vector2 userRotation;
-    int userSensitivity = 1;
+    private MGC Controller;
+
+    private Touch userTouch;
+    public Vector2 touchRotation;
+    public bool touchEnabled = false;
+
+    void Start()
+    {
+        Controller = GameObject.Find("MGC").GetComponent<MGC>();
+    }
 
 	// Update is called once per frame
 	void Update ()
     {
-        userTouch = Input.GetTouch(0);
-        userRotation = userTouch.deltaPosition * userTouch.deltaTime * userSensitivity;
-	}
+        // if there's a touch detected
+        if (Input.touchCount > 0)
+        {
+            touchEnabled = true;
+            userTouch = Input.GetTouch(0);
+            if (userTouch.phase == TouchPhase.Moved)
+            {
+                // get movement since last frame
+                Controller.TowerAngle -= userTouch.deltaPosition.x / 2;
+            }
+            // do other events based on touch below
+        }
+    }
 }
