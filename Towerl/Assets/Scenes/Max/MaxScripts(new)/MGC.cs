@@ -17,7 +17,7 @@ public class MGC : MonoBehaviour {
     public Vector3 BallScale = new Vector3(0.18f, 0.18f, 0.18f);
     public float SegmentBaseRotation = 0f;
     public float BallRadius = 0.1f;
-    public float BallOffset = 1f;
+    public float BallOffset = 0.8f;
     public float BallStartHeightRatio = 0.75f;
     public float BallMaxVelocity = 2f;
     public float Gravity = -3f;

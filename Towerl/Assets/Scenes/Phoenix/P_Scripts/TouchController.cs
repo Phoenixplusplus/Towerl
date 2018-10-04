@@ -25,10 +25,33 @@ public class TouchController : MonoBehaviour {
             userTouch = Input.GetTouch(0);
             if (userTouch.phase == TouchPhase.Moved)
             {
-                // get movement since last frame
+                // get movement since last frame, apply to MGC
                 Controller.TowerAngle -= userTouch.deltaPosition.x / 2;
             }
             // do other events based on touch below
+
+            //// Handle finger movements based on TouchPhase
+            //switch (touch.phase)
+            //{
+            //    //When a touch has first been detected, change the message and record the starting position
+            //    case TouchPhase.Began:
+            //        // Record initial touch position.
+            //        startPos = touch.position;
+            //        message = "Begun ";
+            //        break;
+
+            //    //Determine if the touch is a moving touch
+            //    case TouchPhase.Moved:
+            //        // Determine direction by comparing the current touch position with the initial one
+            //        direction = touch.position - startPos;
+            //        message = "Moving ";
+            //        break;
+
+            //    case TouchPhase.Ended:
+            //        // Report that the touch has ended when it ends
+            //        message = "Ending ";
+            //        break;
+            //}
         }
     }
 }

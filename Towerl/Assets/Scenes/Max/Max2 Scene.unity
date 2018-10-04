@@ -194,7 +194,7 @@ MonoBehaviour:
   BallScale: {x: 0.18, y: 0.18, z: 0.18}
   SegmentBaseRotation: 0
   BallRadius: 0.1
-  BallOffset: 1
+  BallOffset: 0.8
   BallStartHeightRatio: 0.75
   BallMaxVelocity: 2
   Gravity: -3
