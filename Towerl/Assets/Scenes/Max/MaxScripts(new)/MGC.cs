@@ -5,16 +5,17 @@ using UnityEngine;
 public class MGC : MonoBehaviour {
 
     public int TiersPerLevel = 35;
+    [Header("Necessary Scene Object/Camera References")]
+    public Transform Ball;
+    public Camera camera;
+    public LevelBuilder levelBuilder;
 
     [Header("Object & Game Scales")]
     public Vector3 SegmentScale = new Vector3(80f, 10f, 80f);
     public Vector3 HazardScaleModifier = new Vector3(1.1f, 1.1f, 1.1f);
     public Vector3 ColumnScale = new Vector3(0.8f, 17.5f, 0.8f);
     public Vector3 BallScale = new Vector3(0.18f, 0.18f, 0.18f);
-    public Transform Ball;
-    public Camera camera;
     public float SegmentBaseRotation = 0f;
-    public float TierHeight = 1f;
     public float BallRadius = 0.1f;
     public float BallOffset = 1f;
     public float BallStartHeightRatio = 0.75f;
@@ -23,16 +24,19 @@ public class MGC : MonoBehaviour {
     public float KeyboardControlSensetivity = 80f;
     public float TouchControlSensetivity = 30f;
 
-    [Header("Game Play Details")]
+    [Header("Game In-Play Details")]
     public float BallHeight;
     public Vector3 CurrentBallVelocity;
     public float TowerAngle;
     public int CurrentTier;
+    public bool BallFalling = false;
+    private bool GameRunning = true;
+
+    [Header ("Global Game Control Flags/States")]
     public int CurrentLevel;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
-    public bool BallFalling = false;
-    private bool GameRunning = true;
+
 
 
     // --------------------//
@@ -66,6 +70,9 @@ public class MGC : MonoBehaviour {
     {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
+
+        //levelBuilder.BuildRandomLevel();
+        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
     }
 
     // Update is called once per frame
@@ -85,61 +92,59 @@ public class MGC : MonoBehaviour {
             {
                 while (TowerAngle > 360f) { TowerAngle -= 360f; }
             }
+            MoveTheBall();
+        }
+    }
 
+    public void MoveTheBall()
+    {
+        // MOVE THE BALL
+        CurrentBallVelocity += Vector3.up * Gravity * Time.deltaTime;
+        Ball.transform.position += CurrentBallVelocity * Time.deltaTime;
+        // At this stage we are able to detect tier transitions
+        // Can compare where the Ball WAS (stored in BallHeight) against the New Height
+        float NewBallHeight = Ball.transform.position.y;
 
-            // MOVE THE BALL
-            CurrentBallVelocity += Vector3.up * Gravity * Time.deltaTime;
-            Ball.transform.position += CurrentBallVelocity * Time.deltaTime;
-            // At this stage we are able to detect tier transitions
-            // Can compare where the Ball WAS (stored in BallHeight) against the New Height
-            float NewBallHeight = Ball.transform.position.y;
-
-            if (CurrentBallVelocity.y < 0) // Only need ANY checking if ball is moving downwards
+        if (CurrentBallVelocity.y < 0) // Only need ANY checking if ball is moving downwards
+        {
+            if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight))
             {
-                if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight))
+                // DO NOTHING .. Are on same Tier between frames
+            }
+            else // here's the Ball Mechanics, folks.  Hang onto your hats
+            {
+                if (NewBallHeight <= 0) // Have Reached the bottom
                 {
-                    // DO NOTHING .. Are on same Tier between frames
+                    // Add Game Over (Win) complete code here ... or call a function ;p
+                    // but for our purposes now
+                    ResetBall();
                 }
-                else // here's the Ball Mechanics, folks.  Hang onto your hats
+                else
                 {
-                    if (NewBallHeight <= 0) // Have Reached the bottom
+                    int TierToCheck = (int)Mathf.Floor(NewBallHeight + 1);
+                    int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
+                    switch (SurfaceHit)
                     {
-                        // Add Game Over (Win) complete code here ... or call a function ;p
-                        // but for our purposes now
-                        ResetBall();
-                    }
-                    else
-                    {
-                        int TierToCheck = (int)Mathf.Floor(NewBallHeight + 1);
-                        int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
-                        switch (SurfaceHit)
-                        {
-                            case 0: // 0 = gap -- FALL THROUGH
-                                BallFalling = true;
-                                break;
-                            case 1: // 1 = normal platform --- BOUNCE
-                                BallFalling = false;
-                                camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
-                                CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
-                                break;
-                            case 2: // 2 = Hazard ---- GAME OVER (will just reset)
-                                GameRunning = false;
-                                ResetBall();
-                                break;
-                            default:
-                                break;
-                        }
+                        case 0: // 0 = gap -- FALL THROUGH
+                            BallFalling = true;
+                            break;
+                        case 1: // 1 = normal platform --- BOUNCE
+                            BallFalling = false;
+                            camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
+                            CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                            break;
+                        case 2: // 2 = Hazard ---- GAME OVER (will just reset)
+                            GameRunning = false;
+                            ResetBall();
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
-
-
-            BallHeight = Ball.transform.position.y;
-            if (BallHeight < 0) { ResetBall(); }
-
-
-            
         }
+        BallHeight = Ball.transform.position.y; // IMPORTANT - this gives us frame to frame comparison
+        if (BallHeight < 0) { ResetBall(); }
     }
 
     public int GetTierSegmentType(int TierToCheck, float TowerAngle)
@@ -169,11 +174,6 @@ public class MGC : MonoBehaviour {
         Ball.transform.localScale = BallScale;
         camera.gameObject.GetComponent<CameraController2>().ResetCameraToTop();
         GameRunning = true;
-    }
-
-    void SetBallToTop ()
-    {
-
     }
 
 }

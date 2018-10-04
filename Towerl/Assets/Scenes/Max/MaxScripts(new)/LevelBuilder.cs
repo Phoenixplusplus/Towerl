@@ -19,9 +19,16 @@ public class LevelBuilder : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         // Get Game Controller reference
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+    }
+
+    public void BuildRandomLevel()
+    {
+        if (Controller == null) // just incase we don't have a reference fron the "Start()"
+        {
+            Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        }
         Level = Controller.CurrentLevel;
         TierCount = Controller.TiersPerLevel;
 
@@ -39,6 +46,36 @@ public class LevelBuilder : MonoBehaviour {
         {
             MakeTier(i, Random.Range(1, TD.GetPossibleTierCount()), Random.Range(-180f, 180f));
             //MakeTier(i, 1, 0); // SAfety development tier build for debugging // CAN DELETE LATER
+        }
+        // Bottom "Home" Tier
+        MakeTier(0, 0, 0);
+
+        // Get Controller to make ball
+        Controller.ResetBall();
+    }
+
+    public void BuildLevel(int [] tierData, float [] tierRotation)
+    {
+        if (Controller == null) // just incase we don't have a reference fron the "Start()"
+        {
+            Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        }
+        Level = Controller.CurrentLevel;
+        TierCount = Controller.TiersPerLevel;
+
+        MakeColumn();
+
+        // Get random pair of colours for Tier segments
+        baseColour = PickColour();
+        contrastColour = baseColour + 1;
+ 
+        // Make Tiers
+        // Top Tier ... Orientation -7.5 to ensure bounce on a platform
+        MakeTier(TierCount - 1, 1, -7.5f);
+        //Remaining Middle Tiers
+        for (int i = TierCount - 2; i > 0; i--)
+        {
+            MakeTier(i, tierData[i - 1], tierRotation[i - 1]);
         }
         // Bottom "Home" Tier
         MakeTier(0, 0, 0);
@@ -72,7 +109,7 @@ public class LevelBuilder : MonoBehaviour {
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
 
-        // make each 15 degree segment fanning around the 
+        // make each 15 degree segment fanning around from the "base segement .. (above)"
         for (int i = 1; i < 24; i++)
         {
             if (data[i] > 0)
