@@ -15,7 +15,7 @@ public class TierData : MonoBehaviour
 
 private int[,] data = {
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, // USED FOR BOTTOM SUCCESS TIER
-                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0}, // DEFAULT 1st Tier
+                        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0}, // DEFAULT 1st Tier @ -7.5 = "safe"
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
@@ -131,7 +131,7 @@ private int[,] data = {
                         {1,1,1,0,0,0,1,2,1,0,0,0,1,1,1,0,0,0,1,2,1,0,0,0},
                         {1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,2,1,0,0,0} };
 
-
+    // used by the LevelBuilder to get the tier data (and subsequently make the tier and populate IT's Tier Data field)
     public int[] GetTierData(int number)
     {
         int[] ret = new int[24];
@@ -142,6 +142,7 @@ private int[,] data = {
         return ret;
     }
 
+    // Used by LevelBuilder to determine the number of Tiers recorded in here (so we can sclae without breaking stuff)
     public int GetPossibleTierCount ()
     {
         return data.GetLength(0);

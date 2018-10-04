@@ -15,6 +15,7 @@ public class ColumnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Column just rotates to match the (User Controller) TowerAngle held in the Game Controller
         transform.localEulerAngles = new Vector3(0, Controller.TowerAngle,0);
 	}
 }

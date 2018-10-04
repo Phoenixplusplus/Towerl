@@ -71,18 +71,19 @@ public class MGC : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+
         if (GameRunning)
-        { 
+        {
             // CONTROLS (only need Controls is Game is Running)
-            TowerAngle -= Input.GetAxis("Horizontal") * KeyboardControlSensetivity * Time.deltaTime;
-            if (TowerAngle < 0)
+            TowerAngle -= Input.GetAxis("Horizontal") * KeyboardControlSensetivity * Time.deltaTime; // Keyboard input applied to TowerAngle
+            // Normalise Tower angle to something between 0-360
+            if (TowerAngle < 0f)
             {
-                while (TowerAngle < 0) { TowerAngle += 360; }
+                while (TowerAngle < 0f) { TowerAngle += 360f; }
             }
-            if (TowerAngle > 360)
+            if (TowerAngle > 360f)
             {
-                while (TowerAngle > 360) { TowerAngle -= 360; }
+                while (TowerAngle > 360f) { TowerAngle -= 360f; }
             }
 
 
@@ -92,38 +93,42 @@ public class MGC : MonoBehaviour {
             // At this stage we are able to detect tier transitions
             // Can compare where the Ball WAS (stored in BallHeight) against the New Height
             float NewBallHeight = Ball.transform.position.y;
-            if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight) && CurrentBallVelocity.y < 0)
+
+            if (CurrentBallVelocity.y < 0) // Only need ANY checking if ball is moving downwards
             {
-                // DO NOTHING .. Are on same Tier between frames OR Ball moving upwards
-            }
-            else // here's the Ball Mechanics, folks.  Hang onto your hats
-            {
-                if (NewBallHeight <=0) // Have Reached the bottom
+                if ((int)Mathf.Floor(NewBallHeight) == (int)Mathf.Floor(BallHeight))
                 {
-                    // Add Game Over (Win) complete code here ... or call a function ;p
-                    // but for our purposes now
-                    ResetBall();
+                    // DO NOTHING .. Are on same Tier between frames
                 }
-                else
+                else // here's the Ball Mechanics, folks.  Hang onto your hats
                 {
-                    int TierToCheck = (int)Mathf.Floor(NewBallHeight +1);
-                    int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
-                    switch (SurfaceHit)
+                    if (NewBallHeight <= 0) // Have Reached the bottom
                     {
-                        case 0: // 0 = gap -- FALL THROUGH
-                            BallFalling = true;
-                            break;
-                        case 1: // 1 = normal platform --- BOUNCE
-                            BallFalling = false;
-                            camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
-                            CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
-                            break;
-                        case 2: // 2 = Hazard ---- GAME OVER (will just reset)
-                            GameRunning = false;
-                            ResetBall();
-                            break;
-                        default:
-                            break;
+                        // Add Game Over (Win) complete code here ... or call a function ;p
+                        // but for our purposes now
+                        ResetBall();
+                    }
+                    else
+                    {
+                        int TierToCheck = (int)Mathf.Floor(NewBallHeight + 1);
+                        int SurfaceHit = GetTierSegmentType(TierToCheck, TowerAngle);
+                        switch (SurfaceHit)
+                        {
+                            case 0: // 0 = gap -- FALL THROUGH
+                                BallFalling = true;
+                                break;
+                            case 1: // 1 = normal platform --- BOUNCE
+                                BallFalling = false;
+                                camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
+                                CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                                break;
+                            case 2: // 2 = Hazard ---- GAME OVER (will just reset)
+                                GameRunning = false;
+                                ResetBall();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -140,11 +145,19 @@ public class MGC : MonoBehaviour {
     public int GetTierSegmentType(int TierToCheck, float TowerAngle)
     {
         // find the relevant Tier Object
-        Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString()+ " Ball Height: " + BallHeight.ToString());
+        Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString() + " degrees -  Ball Height: " + BallHeight.ToString());
         GameObject Tier = GameObject.FindWithTag(TierToCheck.ToString());
-        int answer = Tier.GetComponent<TierScript>().ReportType(TowerAngle);
-        Debug.Log("Returning " + answer.ToString());
-        return answer;
+        if (Tier != null)
+        { 
+            int answer = Tier.GetComponent<TierScript>().ReportType(TowerAngle);
+            Debug.Log("Returning " + answer.ToString());
+            return answer;
+        }
+        else
+        {
+            Debug.Log("Tried to find Tier " + TierToCheck.ToString() + " but fell over gracefully and returned a 'hole'");
+            return 0;
+        }
     }
 
 

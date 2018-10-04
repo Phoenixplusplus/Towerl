@@ -28,7 +28,7 @@ public class TierScript : MonoBehaviour {
 
     public int ReportType(float angle)
     {
-        float R = angle - rotation;
+        float R = angle + rotation;
         if (R < 0)
         {
             while (R < 0) { R += 360f; }
@@ -37,7 +37,10 @@ public class TierScript : MonoBehaviour {
         {
             while (R > 360) { R -= 360f; }
         }
-        return myData[(int)Mathf.Floor(R / 24)];
+        int segmentNumber = (int)Mathf.Floor(R / 15);
+        segmentNumber = 23 - segmentNumber;
+        Debug.Log("Returning data for segment " + segmentNumber.ToString()+ " Tier Angle = "+ rotation.ToString() + " Adjusted angle = " + R.ToString() );
+        return myData[segmentNumber];
     }
 
 }

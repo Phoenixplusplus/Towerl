@@ -15,17 +15,20 @@ public class CameraController2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Camera only pans with the Ball when controller flag bool "BallFalling" is true
 		if (Controller.BallFalling)
         {
             transform.position = new Vector3(transform.position.x, Controller.BallHeight + 1, transform.position.z);
         }
 	}
 
-    public void ResetCameraToTop ()
+    // Called on Start (after # Tiers in game has been declared)
+    // Subsequently available for the Game Controller (usually upon Ball Reset to top))
+    public void ResetCameraToTop () 
     {
         transform.position = new Vector3(transform.position.x, Controller.TiersPerLevel, transform.position.z);
     }
-
+    // Called by the Controller when the ball stops falling ... to lock the camera @ the correct level
     public void SetToHeight(int Height)
     {
         transform.position = new Vector3(transform.position.x, Height, transform.position.z);

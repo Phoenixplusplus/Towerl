@@ -38,6 +38,7 @@ public class LevelBuilder : MonoBehaviour {
         for (int i = TierCount - 2; i > 0  ; i--)
         {
             MakeTier(i, Random.Range(0, TD.GetPossibleTierCount() - 1), Random.Range(-180f, 180f));
+            //MakeTier(i, 1, 0); // SAfety development tier build for debugging // CAN DELETE LATER
         }
         // Bottom "Home" Tier
         MakeTier(0, 0, 0);
