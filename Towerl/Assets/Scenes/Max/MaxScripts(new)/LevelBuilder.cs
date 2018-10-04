@@ -19,9 +19,16 @@ public class LevelBuilder : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         // Get Game Controller reference
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+    }
+
+    public void BuildRandomLevel()
+    {
+        if (Controller == null) // just incase we don't have a reference fron the "Start()"
+        {
+            Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        }
         Level = Controller.CurrentLevel;
         TierCount = Controller.TiersPerLevel;
 
@@ -72,7 +79,7 @@ public class LevelBuilder : MonoBehaviour {
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
 
-        // make each 15 degree segment fanning around the 
+        // make each 15 degree segment fanning around from the "base segement .. (above)"
         for (int i = 1; i < 24; i++)
         {
             if (data[i] > 0)

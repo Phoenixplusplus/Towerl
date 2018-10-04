@@ -141,14 +141,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TiersPerLevel: 35
+  Ball: {fileID: 1678990485}
+  camera: {fileID: 1192086656}
+  levelBuilder: {fileID: 1689114760}
   SegmentScale: {x: 80, y: 10, z: 80}
   HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}
   BallScale: {x: 0.18, y: 0.18, z: 0.18}
-  Ball: {fileID: 1678990485}
-  camera: {fileID: 1192086656}
   SegmentBaseRotation: 0
-  TierHeight: 1
   BallRadius: 0.1
   BallOffset: 1
   BallStartHeightRatio: 0.75
@@ -160,9 +160,9 @@ MonoBehaviour:
   CurrentBallVelocity: {x: 0, y: 0, z: 0}
   TowerAngle: 0
   CurrentTier: 0
+  BallFalling: 0
   CurrentLevel: 0
   CurrentGameMode: 1
-  BallFalling: 0
 --- !u!4 &452659519
 Transform:
   m_ObjectHideFlags: 0
