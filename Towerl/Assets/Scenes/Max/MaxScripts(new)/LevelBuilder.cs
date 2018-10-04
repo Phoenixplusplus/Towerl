@@ -54,6 +54,36 @@ public class LevelBuilder : MonoBehaviour {
         Controller.ResetBall();
     }
 
+    public void BuildLevel(int [] tierData, float [] tierRotation)
+    {
+        if (Controller == null) // just incase we don't have a reference fron the "Start()"
+        {
+            Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        }
+        Level = Controller.CurrentLevel;
+        TierCount = Controller.TiersPerLevel;
+
+        MakeColumn();
+
+        // Get random pair of colours for Tier segments
+        baseColour = PickColour();
+        contrastColour = baseColour + 1;
+ 
+        // Make Tiers
+        // Top Tier ... Orientation -7.5 to ensure bounce on a platform
+        MakeTier(TierCount - 1, 1, -7.5f);
+        //Remaining Middle Tiers
+        for (int i = TierCount - 2; i > 0; i--)
+        {
+            MakeTier(i, tierData[i - 1], tierRotation[i - 1]);
+        }
+        // Bottom "Home" Tier
+        MakeTier(0, 0, 0);
+
+        // Get Controller to make ball
+        Controller.ResetBall();
+    }
+
     private void MakeColumn ()
     {
         // make column (and Apply Controller scale factors)

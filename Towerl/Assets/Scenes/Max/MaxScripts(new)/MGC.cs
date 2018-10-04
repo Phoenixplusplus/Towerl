@@ -71,7 +71,8 @@ public class MGC : MonoBehaviour {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
 
-        levelBuilder.BuildRandomLevel();
+        //levelBuilder.BuildRandomLevel();
+        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
     }
 
     // Update is called once per frame
