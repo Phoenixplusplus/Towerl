@@ -84,9 +84,9 @@ public class MGC : MonoBehaviour {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
 
-        //levelBuilder.BuildRandomLevel();
-        MainScreen.enabled = false;
-        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
+        levelBuilder.BuildRandomLevel();
+        MainScreen.gameObject.SetActive(false);
+        //levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
         GameRunning = true;
     }
 

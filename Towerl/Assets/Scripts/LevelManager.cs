@@ -6,7 +6,7 @@ struct LevelData
 {
     public int tiersPerLevel;
     public int[] tierData;
-    public float [] tierRotation;
+    public int [] tierRotation;
     
     
     
@@ -184,7 +184,7 @@ public class LevelManager : MonoBehaviour
     }
 
     // Return 
-    public float [] GetTiersRotation()
+    public int [] GetTiersRotation()
     {
         return m_levelData[0].tierRotation;
     }
@@ -192,8 +192,20 @@ public class LevelManager : MonoBehaviour
     private void InitializeTierData()
     {
         // Level 1
-        m_levelData[0].tiersPerLevel = 35;
-        m_levelData[0].tierData = new int[] { 82, 34, 12, 82, 24, 89, 33, 69, 42, 115, 1, 58, 95, 24, 10, 105, 78, 76, 48, 42, 111, 12, 76, 92, 101, 13, 43, 35, 91, 1, 92, 11, 81 };
-        m_levelData[0].tierRotation = new float[] { 156.1657f, 156.9886f, -59.06171f, 37.10887f, -154.7912f, -134.2751f, 118.9105f, -62.12183f, 168.1163f, 30.16866f, 97.36208f, 59.79043f, 108.4861f, -96.00956f, 177.42f, -50.37872f, -129.1293f, 71.90333f, 78.19261f, 3.095032f, 179.8276f, 133.8281f, 58.11171f, 166.3284f, 130.8206f, 82.6125f, 17.28053f, 115.2303f, 63.02122f, -2.419464f, 100.1263f, -152.4574f, 59.49766f };
+        //m_levelData[0].tiersPerLevel = 35;
+        m_levelData[0].tierData = new int[] { 82, 34, 12, 82, 24,
+            89, 33, 69, 42, 115,
+            1, 58, 95, 24, 10,
+            105, 78, 76, 48, 42,
+            111, 12, 76, 92, 101,
+            13, 43, 35, 91, 1,
+            92, 11, 81 };
+        m_levelData[0].tierRotation = new int[] { 156, 156, -59, 37, -154,
+            -134, 118, -62, 168, 30,
+            97, 59, 108, -96, 177,
+            -50, -129, 71, 78, 3,
+            179, 133, 58, 166, 130,
+            82, 17, 115, 63, -2,
+            100, -152, 59 };
     }
 }

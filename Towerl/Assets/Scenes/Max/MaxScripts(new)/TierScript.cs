@@ -9,7 +9,7 @@ public class TierScript : MonoBehaviour {
     private MGC Controller;
 
     public int[] myData = new int[32];
-    public float rotation = 0f;
+    public int rotation = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -23,12 +23,12 @@ public class TierScript : MonoBehaviour {
         {
             transform.localScale = Controller.SegmentScale;
         }
-        transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + rotation, 0);
+        transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + (float)rotation, 0);
 	}
 
     public int ReportType(float angle)
     {
-        float R = angle + rotation;
+        float R = angle + (float)rotation;
         if (R < 0)
         {
             while (R < 0) { R += 360f; }

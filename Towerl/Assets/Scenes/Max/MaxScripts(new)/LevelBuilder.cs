@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour {
 
-    public TierData TD;
+    private TierData TD = new TierData();
     private MGC Controller;
     private int Level;
     private int TierCount;
@@ -40,11 +40,11 @@ public class LevelBuilder : MonoBehaviour {
 
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
-        MakeTier(TierCount-1, 1, -7.5f);
+        MakeTier(TierCount-1, 1, -8);
         //Remaining Middle Tiers
         for (int i = TierCount - 2; i > 0  ; i--)
         {
-            MakeTier(i, Random.Range(1, TD.GetPossibleTierCount()), Random.Range(-180f, 180f));
+            MakeTier(i, Random.Range( (int)(TD.GetPossibleTierCount() * 0.75), TD.GetPossibleTierCount()), Random.Range(-180, 181));
             //MakeTier(i, 1, 0); // SAfety development tier build for debugging // CAN DELETE LATER
         }
         // Bottom "Home" Tier
@@ -54,7 +54,7 @@ public class LevelBuilder : MonoBehaviour {
         Controller.ResetBall();
     }
 
-    public void BuildLevel(int [] tierData, float [] tierRotation)
+    public void BuildLevel(int [] tierData, int [] tierRotation)
     {
         if (Controller == null) // just incase we don't have a reference fron the "Start()"
         {
@@ -68,14 +68,16 @@ public class LevelBuilder : MonoBehaviour {
         // Get random pair of colours for Tier segments
         baseColour = PickColour();
         contrastColour = baseColour + 1;
- 
+
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
-        MakeTier(TierCount - 1, 1, -7.5f);
+        TierCount = tierData.Length;
+        MakeTier(TierCount + 1, 1, -8);
         //Remaining Middle Tiers
-        for (int i = TierCount - 2; i > 0; i--)
+ 
+        for (int i = TierCount - 1; i >= 0; i--)
         {
-            MakeTier(i, tierData[i - 1], tierRotation[i - 1]);
+            MakeTier(i+1, tierData[i], tierRotation[i]);
         }
         // Bottom "Home" Tier
         MakeTier(0, 0, 0);
@@ -92,7 +94,7 @@ public class LevelBuilder : MonoBehaviour {
         clone.gameObject.tag = "Column";
     }
 
-    private void MakeTier (int Height, int TierCode, float Rotation)
+    private void MakeTier (int Height, int TierCode, int Rotation)
     {
         // go get the tier data (an int [24]) from the "Tier Data" object
         int[] data = TD.GetTierData(TierCode);
