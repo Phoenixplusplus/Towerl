@@ -87,7 +87,7 @@ public class LevelBuilder : MonoBehaviour {
     private void MakeColumn ()
     {
         // make column (and Apply Controller scale factors)
-        Transform clone = (Transform)Instantiate(Column, new Vector3(0f, (float)Controller.TiersPerLevel / 2, 0), Quaternion.identity);
+        Transform clone = (Transform)Instantiate(Column, new Vector3(0f, (float)(Controller.TiersPerLevel / 2) + ((Controller.BallScale.y) / 2), 0), Quaternion.identity);
         clone.transform.localScale = Vector3.Scale(clone.transform.localScale, Controller.ColumnScale);
         clone.gameObject.tag = "Column";
     }
@@ -99,7 +99,7 @@ public class LevelBuilder : MonoBehaviour {
 
         // instantiate primary section = this will have the Tag and control script (further segments are childed to it)
         // IMPORTANT ... Segment 0 ALWAYS should be 1 (a solid vanilla platform)
-        Transform Seg0 = (Transform)Instantiate(Seg15, new Vector3(0, Height, 0), Quaternion.Euler(0, Rotation, 0));
+        Transform Seg0 = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y)/2, 0), Quaternion.Euler(0, Rotation, 0));
         Seg0.gameObject.tag = Height.ToString(); // set tag
         Seg0.transform.localScale = Controller.SegmentScale; // set scale
         Seg0.gameObject.AddComponent<TierScript>(); // add tier control script (and configure it)
@@ -114,7 +114,7 @@ public class LevelBuilder : MonoBehaviour {
         {
             if (data[i] > 0)
             {
-            Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
+            Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y) / 2, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
             segClone.transform.localScale = Controller.SegmentScale;
             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
                 if (data[i] == 2)

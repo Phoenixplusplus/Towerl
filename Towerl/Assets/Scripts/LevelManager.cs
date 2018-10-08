@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour
     /** Store the count of levels*/
     private const int NUMBER_OF_LEVELS = 30;
 
+    public int CurrentPlayerCasualLevelReached;
+
     /** Array of level datas, store highscore, stars earned for each level */
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
 
@@ -50,6 +52,23 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void GetPlayerCasualLevel ()
+    {
+        CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
+    }
+
+
+    public int GetPlayerCasualLvl()
+    {
+        return CurrentPlayerCasualLevelReached;
+    }
+
+    public void SetPlayerCasualLevel(int value)
+    {
+        PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
+        PlayerPrefs.Save();
+    }
+
     public void LoadLevelData()
     {
         // Initialize
@@ -71,6 +90,7 @@ public class LevelManager : MonoBehaviour
         _instance = this;
         LoadLevelData();
         InitializeTierData();
+        GetPlayerCasualLevel();
     }
     
 
