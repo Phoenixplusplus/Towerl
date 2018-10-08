@@ -9,6 +9,8 @@ public class MGC : MonoBehaviour {
     public Transform Ball;
     public Camera camera;
     public LevelBuilder levelBuilder;
+    [Header("GUI Elements")]
+    public Canvas MainScreen;
 
     [Header("Object & Game Scales")]
     public Vector3 SegmentScale = new Vector3(100f, 10f, 100f);
@@ -30,12 +32,14 @@ public class MGC : MonoBehaviour {
     public float TowerAngle;
     public int CurrentTier;
     public bool BallFalling = false;
-    private bool GameRunning = true;
+    private bool GameRunning = false;
 
     [Header ("Global Game Control Flags/States")]
     public int CurrentLevel;
+    public int CurrentPlayerCasualLevelReached;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
+
 
     // --------------------//
     // establish Singelton //
@@ -66,11 +70,24 @@ public class MGC : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        CurrentTier = TiersPerLevel;
+/*
+ *         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
 
         //levelBuilder.BuildRandomLevel();
         levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
+        */
+    }
+
+    public void PlayMe()
+    {
+        CurrentTier = TiersPerLevel;
+        TowerAngle = 0f;
+
+        //levelBuilder.BuildRandomLevel();
+        MainScreen.enabled = false;
+        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
+        GameRunning = true;
     }
 
     // Update is called once per frame
@@ -115,6 +132,9 @@ public class MGC : MonoBehaviour {
                 {
                     // Add Game Over (Win) complete code here ... or call a function ;p
                     // but for our purposes now
+                    double Start = Time.realtimeSinceStartup;
+                    DestroyLevel();
+                    
                     ResetBall();
                 }
                 else
@@ -143,6 +163,20 @@ public class MGC : MonoBehaviour {
         }
         BallHeight = Ball.transform.position.y; // IMPORTANT - this gives us frame to frame comparison
         if (BallHeight < 0) { ResetBall(); }
+    }
+
+    private void DestroyLevel() // called by MGC to find and destroy all tiers and the column
+    {
+        // Find & kill the column
+        GameObject ThingIWantToKill = GameObject.FindWithTag("Column");
+        if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
+
+        // Find and kill the Tiers (Magic Number of 40 Maximum Game Tiers used)
+        for (int i = 0; i < 35; i++)
+        {
+            ThingIWantToKill = GameObject.FindWithTag(i.ToString());
+            if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
+        }
     }
 
     public int GetTierSegmentType(int TierToCheck, float TowerAngle)
