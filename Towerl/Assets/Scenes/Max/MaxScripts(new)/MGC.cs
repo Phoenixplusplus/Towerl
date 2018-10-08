@@ -115,8 +115,12 @@ public class MGC : MonoBehaviour {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
                     // Add Game Over (Win) complete code here ... or call a function ;p
-                    // but for our purposes now
+                    // but for our purposes now 
+                    double Start = Time.realtimeSinceStartup;
+                    DestroyLevel();
+                    levelBuilder.BuildRandomLevel();
                     ResetBall();
+                    Debug.Log("Destroy & Create New took: " + (Time.realtimeSinceStartup - Start).ToString());
                 }
                 else
                 {
@@ -164,6 +168,19 @@ public class MGC : MonoBehaviour {
         }
     }
 
+    private void DestroyLevel () // called by MGC to find and destroy all tiers and the column
+    {
+        // Find & kill the column
+        GameObject ThingIWantToKill = GameObject.FindWithTag("Column");
+        if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
+
+        // Find and kill the Tiers (Magic Number of 40 Maximum Game Tiers used)
+        for (int i = 0; i < 35; i++)
+        {
+            ThingIWantToKill = GameObject.FindWithTag(i.ToString());
+            if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
+        }
+    }
 
     public void ResetBall () // called by LevelBuilder AFTER it has finished making the Level
     {
