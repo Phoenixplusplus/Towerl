@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657767, g: 0.4964127, b: 0.57481843, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641216, b: 0.5748184, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -240,6 +240,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 318253927}
   m_CullTransparentMesh: 0
+--- !u!1 &348083292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 348083294}
+  - component: {fileID: 348083293}
+  m_Layer: 0
+  m_Name: LevelBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &348083293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 348083292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa6bf59f6b89d946b1bfa806e032b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Column: {fileID: 4591683186242562, guid: db9c4ecdbb3b3a94b8f9cb94617854ad, type: 2}
+  Seg15: {fileID: 400000, guid: b9fb0c9e97b65384e85589265c4f4115, type: 3}
+--- !u!4 &348083294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 348083292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &364241046
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +619,7 @@ MonoBehaviour:
   TiersPerLevel: 35
   Ball: {fileID: 1678990485}
   camera: {fileID: 1192086656}
-  levelBuilder: {fileID: 1689114760}
+  levelBuilder: {fileID: 348083293}
   MainScreen: {fileID: 962399863}
   SegmentScale: {x: 100, y: 10, z: 100}
   HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
@@ -590,7 +632,7 @@ MonoBehaviour:
   BallMaxVelocity: 2
   Gravity: -3
   KeyboardControlSensetivity: 80
-  TouchControlSensetivity: 30
+  TouchControlSensetivity: 110
   BallHeight: 0
   CurrentBallVelocity: {x: 0, y: 0, z: 0}
   TowerAngle: 0
@@ -624,6 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   touchRotation: {x: 0, y: 0}
+  screenDimensions: {x: 0, y: 0}
   touchEnabled: 0
 --- !u!1001 &567790795
 Prefab:
@@ -877,7 +920,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: 180, z: 0}
 --- !u!1 &962399860
 GameObject:
@@ -1475,45 +1518,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2,
     type: 2}
   m_PrefabInternal: {fileID: 1678990484}
---- !u!1 &1689114759
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1689114761}
-  - component: {fileID: 1689114760}
-  m_Layer: 0
-  m_Name: LevelBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1689114760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1689114759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa6bf59f6b89d946b1bfa806e032b2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Column: {fileID: 4878124938567274, guid: e197b9831c6a46f4889ee25238f028a1, type: 2}
-  Seg15: {fileID: 400000, guid: b9fb0c9e97b65384e85589265c4f4115, type: 3}
---- !u!4 &1689114761
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1689114759}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

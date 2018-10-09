@@ -7,12 +7,14 @@ public class TouchController : MonoBehaviour {
     private MGC Controller;
 
     private Touch userTouch;
-    public Vector2 touchRotation;
+    public Vector2 touchRotation, screenDimensions;
     public bool touchEnabled = false;
 
     void Start()
     {
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+
+        screenDimensions = new Vector2(Screen.width, Screen.height);
     }
 
 	// Update is called once per frame
@@ -25,8 +27,8 @@ public class TouchController : MonoBehaviour {
             userTouch = Input.GetTouch(0);
             if (userTouch.phase == TouchPhase.Moved)
             {
-                // get movement since last frame, apply to MGC
-                Controller.TowerAngle -= userTouch.deltaPosition.x / 2;
+                // get movement since last frame, normalise, multiply by sensitivity from manager
+                Controller.TowerAngle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
             }
             // do other events based on touch below
 

@@ -24,7 +24,7 @@ public class MGC : MonoBehaviour {
     public float BallMaxVelocity = 2f;
     public float Gravity = -3f;
     public float KeyboardControlSensetivity = 80f;
-    public float TouchControlSensetivity = 2f;
+    public float TouchControlSensetivity = 110f;
 
     [Header("Game In-Play Details")]
     public float BallHeight;
@@ -134,7 +134,7 @@ public class MGC : MonoBehaviour {
                     // but for our purposes now
                     double Start = Time.realtimeSinceStartup;
                     DestroyLevel();
-                    
+                    levelBuilder.BuildRandomLevel();
                     ResetBall();
                 }
                 else
