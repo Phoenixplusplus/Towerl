@@ -25,52 +25,61 @@ public class LevelBuilder : MonoBehaviour {
 
     public void BuildRandomLevel()
     {
-        if (Controller == null) // just incase we don't have a reference fron the "Start()"
+        TierCount = Controller.TiersPerLevel - 2; // -2 as Top and Bottom tiers are "standard"
+
+        // lets build a data set
+        int[] RandomLevelData = new int[TierCount * 2];
+        int MaxTiers = TD.GetPossibleTierCount(); // only need to get it once
+        for (int i = 0; i < TierCount; i++)
         {
-            Controller = GameObject.Find("MGC").GetComponent<MGC>();
+            RandomLevelData[i * 2] = Random.Range(1, TD.GetPossibleTierCount()); // N.B.  Tier 0 = Home and has no gaps ....
+            RandomLevelData[(i * 2) + 1] = Random.Range(-180, 180);
         }
-        Level = Controller.CurrentLevel;
-        TierCount = Controller.TiersPerLevel;
+        BuildLevelFromData(RandomLevelData);
+    }
 
-        MakeColumn();
+    public void BuildLevelofDifficulty (float Difficulty)
+    {
+        // sanitise input
+        if (Difficulty < 0) Difficulty = 0f;
+        if (Difficulty > 1) Difficulty = 1f;
 
-        // Get random pair of colours for Tier segments
-        baseColour = PickColour();
-        contrastColour = baseColour + 1;
+        TierCount = Controller.TiersPerLevel - 2; // -2 as Top and Bottom tiers are "standard"
+        int[] SetDifficultyLevelData = new int[TierCount * 2];
+        int MaxTiers = TD.GetPossibleTierCount(); // only need to get it once
 
-        // Make Tiers
-        // Top Tier ... Orientation -7.5 to ensure bounce on a platform
-        MakeTier(TierCount-1, 1, -7.5f);
-        //Remaining Middle Tiers
-        for (int i = TierCount - 2; i > 0  ; i--)
+        // set up the magic
+        float P = Controller.PercentOfPossibleTiersInPool; // % span of possible tiers making up the Random pool
+        float S = 1 - P;
+        int TC = TD.GetPossibleTierCount() -1; // Tiercount .. don't need bottom tier
+        int Bottom = (int)Mathf.Floor(S * Difficulty * TC) + 1; // +1 avoiding bottom tier
+        int Top = Bottom + ((int)Mathf.Floor(P * TC)); 
+
+        Debug.Log("Difficulty: " + Difficulty.ToString() + " Tier Range " + Bottom.ToString() + " - " + Top.ToString()+" (TierData Count = " + TD.GetPossibleTierCount().ToString()+")");
+        // generate and populate data
+        for (int i = 0; i < TierCount; i++)
         {
-            MakeTier(i, Random.Range( (int)(TD.GetPossibleTierCount() * 0.75), TD.GetPossibleTierCount()), Random.Range(-180, 181));
-            //MakeTier(i, 1, 0); // SAfety development tier build for debugging // CAN DELETE LATER
+            SetDifficultyLevelData[i * 2] = Random.Range(Bottom, Top);
+            SetDifficultyLevelData[(i * 2) + 1] = Random.Range(-180, 180);
         }
-        // Bottom "Home" Tier
-        MakeTier(0, 0, 0);
-
-        // Get Controller to make ball
-        Controller.ResetBall();
+        BuildLevelFromData(SetDifficultyLevelData);
     }
 
     public void BuildLevel(int LevelNumber)
     {
-
-        if (Controller == null) // just incase we don't have a reference fron the "Start()"
-        {
-            Controller = GameObject.Find("MGC").GetComponent<MGC>();
-        }
-
         int[] LD = TD.GetLevelData(LevelNumber);
+        BuildLevelFromData(LD);
+    }
 
+    private void BuildLevelFromData (int[] LevelData)
+    {
         MakeColumn();
 
         // Get random pair of colours for Tier segments
         baseColour = PickColour();
         contrastColour = baseColour + 1;
 
-        TierCount = LD.Length;
+        TierCount = LevelData.Length;
         Debug.Log("Tier Count = " + TierCount.ToString());
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
@@ -79,7 +88,7 @@ public class LevelBuilder : MonoBehaviour {
         //Remaining Middle Tiers (from LD (Level Data) array) 
         for (int i = 0; i < TierCount - 1; i= i +2)
         {
-            MakeTier((i/2)+1, LD[i], LD[i+1]);
+            MakeTier((i/2)+1, LevelData[i], LevelData[i+1]);
         }
         // Bottom "Home" Tier
         MakeTier(0, 0, 0);

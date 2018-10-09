@@ -41,6 +41,9 @@ public class MGC : MonoBehaviour {
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
 
+    [Header("Level Difficulty Calculator Variables")]
+    public int LevelSpanForZeroTo100Percent = 5; // anything over this will be 100% difficulty
+    public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
 
     // --------------------//
     // establish Singelton //
@@ -86,8 +89,9 @@ public class MGC : MonoBehaviour {
         TowerAngle = 0f;
 
         //levelBuilder.BuildRandomLevel();
+        levelBuilder.BuildLevelofDifficulty(1f);
+        //levelBuilder.BuildLevel(23);
         MainScreen.gameObject.SetActive(false);
-        levelBuilder.BuildLevel(23);
         GameRunning = true;
     }
 
