@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MGC : MonoBehaviour {
 
+    // Minor change since Jakub broke Git ....
     public int TiersPerLevel = 35;
     [Header("Necessary Scene Object/Camera References")]
     public Transform Ball;
