@@ -240,13 +240,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 318253927}
   m_CullTransparentMesh: 0
+<<<<<<< HEAD
 --- !u!1 &348083292
+=======
+--- !u!1 &364241046
+>>>>>>> parent of 8928d46... Update
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 348083294}
   - component: {fileID: 348083293}
   m_Layer: 0
@@ -289,6 +294,8 @@ GameObject:
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
+=======
+>>>>>>> parent of 8928d46... Update
   - component: {fileID: 364241048}
   - component: {fileID: 364241047}
   m_Layer: 0
@@ -324,7 +331,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 5
+=======
+  m_RootOrder: 6
+>>>>>>> parent of 8928d46... Update
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &369451984
 GameObject:
@@ -433,7 +444,7 @@ Prefab:
     - target: {fileID: 224767641659737300, guid: 8e0d432a8170ed047af27900d06899b2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 224767641659737300, guid: 8e0d432a8170ed047af27900d06899b2,
         type: 2}
@@ -533,7 +544,11 @@ Prefab:
     - target: {fileID: 224329526619704772, guid: 33cc9289c30d4274dbef92712ade4b6b,
         type: 2}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
       value: 9
+=======
+      value: 10
+>>>>>>> parent of 8928d46... Update
       objectReference: {fileID: 0}
     - target: {fileID: 224329526619704772, guid: 33cc9289c30d4274dbef92712ade4b6b,
         type: 2}
@@ -1017,7 +1032,7 @@ RectTransform:
   - {fileID: 1132962766}
   - {fileID: 1137955315}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1412,7 +1427,11 @@ Prefab:
     - target: {fileID: 224804172126129298, guid: 686f024318fac8f4f9fc55cfb11b17d9,
         type: 2}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
       value: 6
+=======
+      value: 7
+>>>>>>> parent of 8928d46... Update
       objectReference: {fileID: 0}
     - target: {fileID: 224804172126129298, guid: 686f024318fac8f4f9fc55cfb11b17d9,
         type: 2}
@@ -1504,7 +1523,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
       value: 4
+=======
+      value: 5
+>>>>>>> parent of 8928d46... Update
       objectReference: {fileID: 0}
     - target: {fileID: 1293613983596868, guid: 5f15f87e878780c40b71baab4af411e2, type: 2}
       propertyPath: m_TagString
@@ -1518,3 +1541,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4309690016477894, guid: 5f15f87e878780c40b71baab4af411e2,
     type: 2}
   m_PrefabInternal: {fileID: 1678990484}
+<<<<<<< HEAD
+=======
+--- !u!1 &1689114759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1689114761}
+  - component: {fileID: 1689114760}
+  m_Layer: 0
+  m_Name: LevelBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1689114760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1689114759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa6bf59f6b89d946b1bfa806e032b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TD: {fileID: 457281587}
+  Column: {fileID: 4878124938567274, guid: e197b9831c6a46f4889ee25238f028a1, type: 2}
+  Seg15: {fileID: 400000, guid: b9fb0c9e97b65384e85589265c4f4115, type: 3}
+--- !u!4 &1689114761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1689114759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> parent of 8928d46... Update
