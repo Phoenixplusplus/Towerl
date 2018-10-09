@@ -208,6 +208,7 @@ public class MGC : MonoBehaviour {
         Ball.transform.localScale = BallScale;
         camera.gameObject.GetComponent<CameraController2>().ResetCameraToTop();
         GameRunning = true;
+        TowerAngle = 0f;
     }
 
 }
