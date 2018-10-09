@@ -9,7 +9,7 @@ public class TierScript : MonoBehaviour {
     private MGC Controller;
 
     public int[] myData = new int[32];
-    public int rotation = 0;
+    public float rotation = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -19,16 +19,18 @@ public class TierScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // This scaling bit is purely for development experimentation
+        // can be commented out for "Live Build"
         if (transform.localScale != Controller.SegmentScale)
         {
             transform.localScale = Controller.SegmentScale;
         }
-        transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + (float)rotation, 0);
+        transform.localEulerAngles = new Vector3(0, Controller.TowerAngle + rotation, 0);
 	}
 
     public int ReportType(float angle)
     {
-        float R = angle + (float)rotation;
+        float R = angle + rotation;
         if (R < 0)
         {
             while (R < 0) { R += 360f; }
@@ -37,8 +39,7 @@ public class TierScript : MonoBehaviour {
         {
             while (R > 360) { R -= 360f; }
         }
-        int segmentNumber = (int)Mathf.Floor(R / 15);
-        segmentNumber = 23 - segmentNumber;
+        int segmentNumber = 23 - (int)Mathf.Floor(R / 15); // Don't ask .. it's a winding, windy thing ....
         Debug.Log("Returning data for segment " + segmentNumber.ToString()+ " Tier Angle = "+ rotation.ToString() + " Adjusted angle = " + R.ToString() );
         return myData[segmentNumber];
     }

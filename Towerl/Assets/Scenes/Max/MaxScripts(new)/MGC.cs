@@ -84,9 +84,9 @@ public class MGC : MonoBehaviour {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
 
-        levelBuilder.BuildRandomLevel();
+        //levelBuilder.BuildRandomLevel();
         MainScreen.gameObject.SetActive(false);
-        //levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
+        levelBuilder.BuildLevel(23);
         GameRunning = true;
     }
 
@@ -136,6 +136,7 @@ public class MGC : MonoBehaviour {
                     DestroyLevel();
                     levelBuilder.BuildRandomLevel();
                     ResetBall();
+                    Debug.Log("Time to Destroy, Rebuild and Reset = " + (Time.realtimeSinceStartup - Start).ToString());
                 }
                 else
                 {

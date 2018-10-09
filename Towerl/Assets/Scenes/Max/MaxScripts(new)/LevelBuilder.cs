@@ -40,7 +40,7 @@ public class LevelBuilder : MonoBehaviour {
 
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
-        MakeTier(TierCount-1, 1, -8);
+        MakeTier(TierCount-1, 1, -7.5f);
         //Remaining Middle Tiers
         for (int i = TierCount - 2; i > 0  ; i--)
         {
@@ -54,14 +54,15 @@ public class LevelBuilder : MonoBehaviour {
         Controller.ResetBall();
     }
 
-    public void BuildLevel(int [] tierData, int [] tierRotation)
+    public void BuildLevel(int LevelNumber)
     {
+
         if (Controller == null) // just incase we don't have a reference fron the "Start()"
         {
             Controller = GameObject.Find("MGC").GetComponent<MGC>();
         }
-        Level = Controller.CurrentLevel;
-        TierCount = Controller.TiersPerLevel;
+
+        int[] LD = TD.GetLevelData(LevelNumber);
 
         MakeColumn();
 
@@ -69,15 +70,16 @@ public class LevelBuilder : MonoBehaviour {
         baseColour = PickColour();
         contrastColour = baseColour + 1;
 
+        TierCount = LD.Length;
+        Debug.Log("Tier Count = " + TierCount.ToString());
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
-        TierCount = tierData.Length;
-        MakeTier(TierCount + 1, 1, -8);
-        //Remaining Middle Tiers
- 
-        for (int i = TierCount - 1; i >= 0; i--)
+        MakeTier((TierCount/2) + 1, 1, -7.5f);
+        
+        //Remaining Middle Tiers (from LD (Level Data) array) 
+        for (int i = 0; i < TierCount - 1; i= i +2)
         {
-            MakeTier(i+1, tierData[i], tierRotation[i]);
+            MakeTier((i/2)+1, LD[i], LD[i+1]);
         }
         // Bottom "Home" Tier
         MakeTier(0, 0, 0);
@@ -94,7 +96,7 @@ public class LevelBuilder : MonoBehaviour {
         clone.gameObject.tag = "Column";
     }
 
-    private void MakeTier (int Height, int TierCode, int Rotation)
+    private void MakeTier (int Height, int TierCode, float Rotation)
     {
         // go get the tier data (an int [24]) from the "Tier Data" object
         int[] data = TD.GetTierData(TierCode);

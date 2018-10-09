@@ -5,7 +5,7 @@ using UnityEngine;
 public class Column_Rotation : MonoBehaviour {
 
     // Game Controller for persistent data
-    MaxGameController MGC;
+    MGC Controller;
 
     [Header("Control Variables")]
     private float RotationSpeed = 25.0f;
@@ -13,7 +13,7 @@ public class Column_Rotation : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // Get Game Cpntroller reference
-        MGC = GameObject.Find("MaxGameController").GetComponent<MaxGameController>();
+        Controller = GameObject.Find("MGC").GetComponent<MGC>();
     }
 	
 	// Update is called once per frame
@@ -21,7 +21,7 @@ public class Column_Rotation : MonoBehaviour {
 
         //transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
         transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * RotationSpeed * Time.deltaTime);
-        MGC.TowerAngle = transform.eulerAngles.y;
+        Controller.TowerAngle = transform.eulerAngles.y;
 
 	}
 }
