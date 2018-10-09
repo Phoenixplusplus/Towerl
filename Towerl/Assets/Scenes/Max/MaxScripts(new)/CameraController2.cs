@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CameraController2 : MonoBehaviour {
 
     private MGC Controller;
