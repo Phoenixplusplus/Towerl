@@ -73,13 +73,6 @@ public class MGC : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-/*
- *         CurrentTier = TiersPerLevel;
-        TowerAngle = 0f;
-
-        //levelBuilder.BuildRandomLevel();
-        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
-        */
     }
 
 
@@ -93,13 +86,13 @@ public class MGC : MonoBehaviour {
 
         switch (LevelManager.Instance.gameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
+            case (int)MODE_TYPE.RANDOM_MODE:
                 //levelBuilder.BuildRandomLevel();
                 levelBuilder.BuildLevelofDifficulty(1f);
                 break;
             default:
 
-                levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
+                levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
             break;
         };
 
@@ -111,7 +104,7 @@ public class MGC : MonoBehaviour {
         DestroyLevel();
         GameRunning = false;
 
-        LevelManager.Instance.SetCurrentLevel(0);
+        LevelManager.Instance.SetSelectedLevel(0);
         LevelManager.Instance.UpdateCanvases();
     }
 

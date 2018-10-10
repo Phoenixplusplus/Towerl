@@ -2,7 +2,7 @@
 
 public enum MODE_TYPE
 {
-    RANDOM_MONE,
+    RANDOM_MODE,
     STORY_ONE,
     STORY_TWO,
     STORY_THREE
@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     /** Store the count of levels*/
     private const int NUMBER_OF_LEVELS = 30;
 
-    private int currentLevel;
+    private int m_SelectedLevel;
 
     public int CurrentPlayerCasualLevelReached;
 
@@ -74,17 +74,17 @@ public class LevelManager : MonoBehaviour
         return CurrentPlayerCasualLevelReached;
     }
 
-    public int GetCurrentLevel()
+    public int GetSelectedLevel()
     {
-        return currentLevel;
+        return m_SelectedLevel;
     }
 
     public void SetGameMode(int newGameMode)
     {
         switch (newGameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
-                gameMode = (int)MODE_TYPE.RANDOM_MONE;
+            case (int)MODE_TYPE.RANDOM_MODE:
+                gameMode = (int)MODE_TYPE.RANDOM_MODE;
                 CNVS_mainMenu.gameObject.SetActive(false);
                 CNVS_gameplay.gameObject.SetActive(true);
                 break;
@@ -111,7 +111,7 @@ public class LevelManager : MonoBehaviour
     {
         switch (gameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
+            case (int)MODE_TYPE.RANDOM_MODE:
                 CNVS_gameplay.gameObject.SetActive(false);
                 CNVS_mainMenu.gameObject.SetActive(true);
                 break;
@@ -130,9 +130,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void SetCurrentLevel(int newLevel)
+    public void SetSelectedLevel(int newLevel)
     {
-        currentLevel = newLevel;
+        m_SelectedLevel = newLevel;
     }
 
     public void SetPlayerCasualLevel(int value)

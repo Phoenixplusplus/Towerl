@@ -28,9 +28,8 @@ public class UI_Manager : MonoBehaviour
     }
 
     /** Destroy the current level and disable menu buttons */
-    public void BackToMainMenu()
+    public void CloseMenu()
     {
-        MGC.Instance.StopMe();
         BTN_Continue.gameObject.SetActive(false);
         BTN_BackToMenu.gameObject.SetActive(false);
         BTN_QuitGame.gameObject.SetActive(false);
