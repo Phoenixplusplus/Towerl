@@ -11,7 +11,6 @@ public class MGC : MonoBehaviour {
     public Camera camera;
     public LevelBuilder levelBuilder;
     [Header("GUI Elements")]
-    public Canvas MainScreen;
 
     [Header("Object & Game Scales")]
     public Vector3 SegmentScale = new Vector3(100f, 10f, 100f);
@@ -83,22 +82,42 @@ public class MGC : MonoBehaviour {
         */
     }
 
+
+
+
     public void PlayMe()
     {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
 
-        //levelBuilder.BuildRandomLevel();
-        levelBuilder.BuildLevelofDifficulty(1f);
-        //levelBuilder.BuildLevel(23);
-        MainScreen.gameObject.SetActive(false);
+
+        switch (LevelManager.Instance.gameMode)
+        {
+            case (int)MODE_TYPE.RANDOM_MONE:
+                //levelBuilder.BuildRandomLevel();
+                levelBuilder.BuildLevelofDifficulty(1f);
+                break;
+            default:
+
+                levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
+            break;
+        };
+
         GameRunning = true;
+    }
+
+    public void StopMe()
+    {
+        DestroyLevel();
+        GameRunning = false;
+
+        LevelManager.Instance.SetCurrentLevel(0);
+        LevelManager.Instance.UpdateCanvases();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (GameRunning)
         {
             // CONTROLS (only need Controls is Game is Running)
@@ -171,7 +190,7 @@ public class MGC : MonoBehaviour {
         if (BallHeight < 0) { ResetBall(); }
     }
 
-    private void DestroyLevel() // called by MGC to find and destroy all tiers and the column
+    public void DestroyLevel() // called by MGC to find and destroy all tiers and the column
     {
         // Find & kill the column
         GameObject ThingIWantToKill = GameObject.FindWithTag("Column");

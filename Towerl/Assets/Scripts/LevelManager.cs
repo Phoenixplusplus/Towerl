@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
+public enum MODE_TYPE
+{
+    RANDOM_MONE,
+    STORY_ONE,
+    STORY_TWO,
+    STORY_THREE
+}
 
 struct LevelData
-{
-    public int tiersPerLevel;
-    public int[] tierData;
-    public int [] tierRotation;
-    
-    
-    
+{  
     public string highScoreString;
     public string starsString;
     public string levelLockString;
@@ -25,7 +25,18 @@ public class LevelManager : MonoBehaviour
     /** Store the count of levels*/
     private const int NUMBER_OF_LEVELS = 30;
 
+    private int currentLevel;
+
     public int CurrentPlayerCasualLevelReached;
+
+    public Canvas CNVS_gameplay;
+    public Canvas CNVS_mainMenu;
+    public Canvas CNVS_LevelThemeChoose;
+    public Canvas CNVS_ThemeOne;
+    public Canvas CNVS_ThemeTwo;
+    public Canvas CNVS_ThemeThree;
+
+    public int gameMode;
 
     /** Array of level datas, store highscore, stars earned for each level */
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
@@ -63,6 +74,67 @@ public class LevelManager : MonoBehaviour
         return CurrentPlayerCasualLevelReached;
     }
 
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+
+    public void SetGameMode(int newGameMode)
+    {
+        switch (newGameMode)
+        {
+            case (int)MODE_TYPE.RANDOM_MONE:
+                gameMode = (int)MODE_TYPE.RANDOM_MONE;
+                CNVS_mainMenu.gameObject.SetActive(false);
+                CNVS_gameplay.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_ONE:
+                gameMode = (int)MODE_TYPE.STORY_ONE;
+                CNVS_ThemeOne.gameObject.SetActive(false);
+                CNVS_gameplay.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_TWO:
+                gameMode = (int)MODE_TYPE.STORY_TWO;
+                CNVS_ThemeTwo.gameObject.SetActive(false);
+                CNVS_gameplay.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_THREE:
+                gameMode = (int)MODE_TYPE.STORY_THREE;
+                CNVS_ThemeThree.gameObject.SetActive(false);
+                CNVS_gameplay.gameObject.SetActive(true);
+                break;
+        };
+
+    }
+
+    public void UpdateCanvases()
+    {
+        switch (gameMode)
+        {
+            case (int)MODE_TYPE.RANDOM_MONE:
+                CNVS_gameplay.gameObject.SetActive(false);
+                CNVS_mainMenu.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_ONE:
+                CNVS_gameplay.gameObject.SetActive(false);
+                CNVS_ThemeOne.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_TWO:
+                CNVS_gameplay.gameObject.SetActive(false);
+                CNVS_ThemeTwo.gameObject.SetActive(true);
+                break;
+            case (int)MODE_TYPE.STORY_THREE:
+                CNVS_gameplay.gameObject.SetActive(false);
+                CNVS_ThemeThree.gameObject.SetActive(true);
+                break;
+        }
+    }
+
+    public void SetCurrentLevel(int newLevel)
+    {
+        currentLevel = newLevel;
+    }
+
     public void SetPlayerCasualLevel(int value)
     {
         PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
@@ -89,16 +161,9 @@ public class LevelManager : MonoBehaviour
     {
         _instance = this;
         LoadLevelData();
-        InitializeTierData();
         GetPlayerCasualLevel();
     }
     
-
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("P_Scene");
-    } 
-
     // Set new level highscore
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
     {
@@ -175,37 +240,5 @@ public class LevelManager : MonoBehaviour
     public Sprite GetThreeStarsSprite()
     {
         return m_ThreeStarSprite;
-    }
-
-    // Return 
-    public int [] GetTiersData()
-    {
-        return m_levelData[0].tierData;
-    }
-
-    // Return 
-    public int [] GetTiersRotation()
-    {
-        return m_levelData[0].tierRotation;
-    }
-
-    private void InitializeTierData()
-    {
-        // Level 1
-        //m_levelData[0].tiersPerLevel = 35;
-        m_levelData[0].tierData = new int[] { 82, 34, 12, 82, 24,
-            89, 33, 69, 42, 115,
-            1, 58, 95, 24, 10,
-            105, 78, 76, 48, 42,
-            111, 12, 76, 92, 101,
-            13, 43, 35, 91, 1,
-            92, 11, 81 };
-        m_levelData[0].tierRotation = new int[] { 156, 156, -59, 37, -154,
-            -134, 118, -62, 168, 30,
-            97, 59, 108, -96, 177,
-            -50, -129, 71, 78, 3,
-            179, 133, 58, 166, 130,
-            82, 17, 115, 63, -2,
-            100, -152, 59 };
     }
 }
