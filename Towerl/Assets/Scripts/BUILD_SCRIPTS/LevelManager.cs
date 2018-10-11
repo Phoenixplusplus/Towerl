@@ -2,7 +2,7 @@
 
 public enum MODE_TYPE
 {
-    RANDOM_MONE,
+    CASUAL,
     STORY_ONE,
     STORY_TWO,
     STORY_THREE
@@ -63,16 +63,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
+    /// ////////////////////////////////
+    // GET/SET Player CASUAL Mode stats
     private void GetPlayerCasualLevel ()
     {
         CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
     }
 
-
     public int GetPlayerCasualLvl()
     {
+        GetPlayerCasualLevel();
         return CurrentPlayerCasualLevelReached;
     }
+
+    public void SetPlayerCasualLevel(int value)
+    {
+        PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
+        PlayerPrefs.Save();
+    }
+    // End of CASUAL mode get/sets
+    /// //////////////////////////
 
     public int GetCurrentLevel()
     {
@@ -83,8 +94,8 @@ public class LevelManager : MonoBehaviour
     {
         switch (newGameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
-                gameMode = (int)MODE_TYPE.RANDOM_MONE;
+            case (int)MODE_TYPE.CASUAL:
+                gameMode = (int)MODE_TYPE.CASUAL;
                 CNVS_mainMenu.gameObject.SetActive(false);
                 CNVS_gameplay.gameObject.SetActive(true);
                 break;
@@ -111,7 +122,7 @@ public class LevelManager : MonoBehaviour
     {
         switch (gameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
+            case (int)MODE_TYPE.CASUAL:
                 CNVS_gameplay.gameObject.SetActive(false);
                 CNVS_mainMenu.gameObject.SetActive(true);
                 break;
@@ -135,11 +146,7 @@ public class LevelManager : MonoBehaviour
         currentLevel = newLevel;
     }
 
-    public void SetPlayerCasualLevel(int value)
-    {
-        PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
-        PlayerPrefs.Save();
-    }
+
 
     public void LoadLevelData()
     {

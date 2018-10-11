@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4309690016477894}
   - component: {fileID: 33170582462365012}
   - component: {fileID: 23960450777990856}
-  - component: {fileID: 114664377823871216}
   m_Layer: 0
   m_Name: MaxBall
   m_TagString: Untagged
@@ -84,14 +83,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1293613983596868}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114664377823871216
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1293613983596868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb456b016adbd8e4ca59e320cec8e761, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

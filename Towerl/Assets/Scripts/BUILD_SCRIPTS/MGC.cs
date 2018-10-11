@@ -33,10 +33,15 @@ public class MGC : MonoBehaviour {
     public int CurrentTier;
     public bool BallFalling = false;
     private bool GameRunning = false;
+    private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
+    public float CurrentGameTime = 0; // Auto incremented in "Update()"
+    private float LastGameTime = 0;
+    public int CurrentGameScore = 0; // Modified in "MoveTheBall()" (called in Update() .. if required)
+    private int LastGameScore = 0;
 
     [Header ("Global Game Control Flags/States")]
     public int CurrentLevel;
-    public int CurrentPlayerCasualLevelReached;
+    public int CasualLevel = 0;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
 
@@ -70,16 +75,18 @@ public class MGC : MonoBehaviour {
     // Finished Singelton set up //
     // --------------------------//
 
+
     // Use this for initialization
     void Start()
     {
-/*
- *         CurrentTier = TiersPerLevel;
-        TowerAngle = 0f;
-
-        //levelBuilder.BuildRandomLevel();
-        levelBuilder.BuildLevel(LevelManager.Instance.GetTiersData(), LevelManager.Instance.GetTiersRotation());
-        */
+        // Populate Player's Casual Start Level
+        CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
+        // will only be 0 if unasigned therefore NEW DEVICE ... best set it to 1
+        if (CasualLevel == 0)
+        {
+            CasualLevel = 1;
+            LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
+        }
     }
 
 
@@ -89,20 +96,45 @@ public class MGC : MonoBehaviour {
     {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
+        LastGameScore = CurrentGameScore;
+        LastGameTime = CurrentGameTime;
+        CurrentGameTime = 0;
+        CurrentGameScore = 0;
+        TiersPassed = 0;
 
+
+        //Destroy any existing Towers
+        DestroyLevel();
 
         switch (LevelManager.Instance.gameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MONE:
-                //levelBuilder.BuildRandomLevel();
-                levelBuilder.BuildLevelofDifficulty(1f);
+            case (int)MODE_TYPE.CASUAL:  
+               // incase we don't have it
+               if (CasualLevel == 0)
+                    {
+                        CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
+                        if (CasualLevel == 0)
+                        {
+                            CasualLevel++;
+                            LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
+                        }
+                    }
+               // OK, 100% have the player CasualLevel status now
+                float difficulty = 1f;
+                if (CasualLevel <= LevelSpanForZeroTo100Percent)
+                {
+                    difficulty = (CasualLevel - 1) / LevelSpanForZeroTo100Percent;
+                    Debug.Log("difficulty =: " + (CasualLevel - 1).ToString() + "/" + LevelSpanForZeroTo100Percent.ToString()+ " equals "+ difficulty.ToString());
+                }
+                Debug.Log(difficulty.ToString()+ " ergo Difficulty level: " + (difficulty*100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
+                levelBuilder.BuildLevelofDifficulty(difficulty);
                 break;
             default:
-
+                // ADD FURTHER GAME MODES HERE
+                //levelBuilder.BuildRandomLevel();
                 levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
             break;
         };
-
         GameRunning = true;
     }
 
@@ -132,7 +164,15 @@ public class MGC : MonoBehaviour {
                 while (TowerAngle > 360f) { TowerAngle -= 360f; }
             }
             MoveTheBall();
+            CurrentGameTime += Time.deltaTime; // Adds the game time (GUI ... Talk to me, baby !!)
         }
+
+        // Enable Ctrl+R to "Reset Player Casual Level"
+        if ((Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl)) && Input.GetKeyDown(KeyCode.R))
+        {
+            ResetPlayerCasualLevel();
+        }
+
     }
 
     public void MoveTheBall()
@@ -154,13 +194,14 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
+                    GameOver(true);
                     // Add Game Over (Win) complete code here ... or call a function ;p
                     // but for our purposes now
-                    double Start = Time.realtimeSinceStartup;
-                    DestroyLevel();
-                    levelBuilder.BuildRandomLevel();
-                    ResetBall();
-                    Debug.Log("Time to Destroy, Rebuild and Reset = " + (Time.realtimeSinceStartup - Start).ToString());
+                    //double Start = Time.realtimeSinceStartup;
+                    //DestroyLevel();
+                    //levelBuilder.BuildRandomLevel();
+                    //ResetBall();
+                    //Debug.Log("Time to Destroy, Rebuild and Reset = " + (Time.realtimeSinceStartup - Start).ToString());
                 }
                 else
                 {
@@ -170,15 +211,20 @@ public class MGC : MonoBehaviour {
                     {
                         case 0: // 0 = gap -- FALL THROUGH
                             BallFalling = true;
+                            TiersPassed++;
                             break;
                         case 1: // 1 = normal platform --- BOUNCE
-                            BallFalling = false;
+                            BallFalling = false; // required for Camera to track ball
+                            CurrentGameScore += (TiersPassed * TiersPassed) * 10;
+                            // ADD "BREAK Tier if TiersPassed > ???" Here
+                            TiersPassed = 0;
                             camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
                             CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                             break;
                         case 2: // 2 = Hazard ---- GAME OVER (will just reset)
                             GameRunning = false;
-                            ResetBall();
+                            //ResetBall();
+                            GameOver(false);
                             break;
                         default:
                             break;
@@ -190,13 +236,40 @@ public class MGC : MonoBehaviour {
         if (BallHeight < 0) { ResetBall(); }
     }
 
+    // Game over result true = won it, result false = blew it
+    private void GameOver(bool result)
+    {
+        switch (LevelManager.Instance.gameMode)
+        {
+            case (int)MODE_TYPE.CASUAL:
+                if (result == true) // only need to change stuff if it's a win
+                {
+                    CasualLevel++;
+                    LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
+                }
+                PlayMe(); // then re-start (either same dificulty, or higher)
+                break;
+            default:
+                // ADD STORY GAME MODE BEHAVIOUR HERE
+                levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
+                break;
+        };
+    }
+
+    // called with Ctrl+R to allow testing
+    private void ResetPlayerCasualLevel()
+    {
+        CasualLevel = 0;
+        LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
+    }
+
     public void DestroyLevel() // called by MGC to find and destroy all tiers and the column
     {
         // Find & kill the column
         GameObject ThingIWantToKill = GameObject.FindWithTag("Column");
         if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
 
-        // Find and kill the Tiers (Magic Number of 40 Maximum Game Tiers used)
+        // Find and kill the Tiers (Magic Number of 35 Maximum Game Tiers used)
         for (int i = 0; i < 35; i++)
         {
             ThingIWantToKill = GameObject.FindWithTag(i.ToString());
@@ -204,6 +277,7 @@ public class MGC : MonoBehaviour {
         }
     }
 
+    // Finds and asks the relevant tier to return the segement code we are interested in
     public int GetTierSegmentType(int TierToCheck, float TowerAngle)
     {
         // find the relevant Tier Object

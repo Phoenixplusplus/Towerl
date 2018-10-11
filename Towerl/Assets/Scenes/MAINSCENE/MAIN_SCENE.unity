@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657642, g: 0.49641162, b: 0.5748184, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657767, g: 0.4964127, b: 0.57481843, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2535,8 +2535,10 @@ MonoBehaviour:
   TowerAngle: 0
   CurrentTier: 0
   BallFalling: 0
+  CurrentGameTime: 0
+  CurrentGameScore: 0
   CurrentLevel: 0
-  CurrentPlayerCasualLevelReached: 0
+  CasualLevel: 0
   CurrentGameMode: 1
   LevelSpanForZeroTo100Percent: 5
   PercentOfPossibleTiersInPool: 0.25
