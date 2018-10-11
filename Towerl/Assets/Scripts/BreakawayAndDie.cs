@@ -5,14 +5,35 @@ using UnityEngine;
 public class BreakawayAndDie : MonoBehaviour {
 
     private Vector3 initialPosition, localDeathPosition, worldDeathPosition, newRotation;
-    private float speed = 2f;
+    private float lerpSpeed = 2f;
     private float currentTime = 0f;
     private float rotationRate;
-    public bool die;
-    public float timeout;
+    private float timeout = 2f;
+    private bool die = false;
+	
+	// Update is called once per frame
+	void Update()
+    {
+        // on death
+        if (die == true)
+        {
+            // rotate in world space
+            newRotation = new Vector3(rotationRate, rotationRate, rotationRate);
+            transform.Rotate(newRotation, Space.World);
 
-    // Use this for initialization
-    void Start ()
+            // set position in world space from local death position
+            transform.position = Vector3.Lerp(transform.position, worldDeathPosition, (Time.deltaTime * lerpSpeed));
+
+            // set timer
+            currentTime += Time.deltaTime;
+        }
+
+        // on timeout
+        if (currentTime >= timeout) Destroy(gameObject);
+    }
+
+    // Function to kill segment
+    public void KillSegment(float segLerpSpeed, float segTimeout)
     {
         initialPosition = transform.position;
 
@@ -27,28 +48,8 @@ public class BreakawayAndDie : MonoBehaviour {
         // detach from parent
         transform.parent = null;
 
-        die = false;
-        timeout = 2f;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        // on death
-        if (die == true)
-        {
-            // rotate in world space
-            newRotation = new Vector3(rotationRate, rotationRate, rotationRate);
-            transform.Rotate(newRotation, Space.World);
-
-            // set position in world space from local death position
-            transform.position = Vector3.Lerp(transform.position, worldDeathPosition, (Time.deltaTime * speed));
-
-            // set timer
-            currentTime += Time.deltaTime;
-        }
-
-        // on timeout
-        if (currentTime >= timeout) Destroy(transform.parent.gameObject);
+        timeout = segTimeout;
+        lerpSpeed = segLerpSpeed;
+        die = true;
     }
 }

@@ -212,6 +212,15 @@ public class MGC : MonoBehaviour {
                         case 0: // 0 = gap -- FALL THROUGH
                             BallFalling = true;
                             TiersPassed++;
+                            // Find and run break scripts for current tier's parent segment, and its children
+                            BreakawayAndDie[] childrenSegs;
+                            GameObject parentSeg = GameObject.FindWithTag(TierToCheck.ToString());
+                            childrenSegs = parentSeg.GetComponentsInChildren<BreakawayAndDie>();
+                            parentSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
+                            foreach (BreakawayAndDie child in childrenSegs)
+                            {
+                                child.KillSegment(2f, 1f);
+                            }
                             break;
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
