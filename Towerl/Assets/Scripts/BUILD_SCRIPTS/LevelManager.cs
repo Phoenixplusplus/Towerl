@@ -9,7 +9,7 @@ public enum MODE_TYPE
 }
 
 struct LevelData
-{  
+{
     public string highScoreString;
     public string starsString;
     public string levelLockString;
@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
 
     [SerializeField]
-    private Sprite m_OneStarSprite; 
+    private Sprite m_OneStarSprite;
     [SerializeField]
     private Sprite m_TwoStarSprite;
     [SerializeField]
@@ -66,7 +66,7 @@ public class LevelManager : MonoBehaviour
 
     /// ////////////////////////////////
     // GET/SET Player CASUAL Mode stats
-    private void GetPlayerCasualLevel ()
+    private void GetPlayerCasualLevel()
     {
         CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
     }
@@ -170,7 +170,7 @@ public class LevelManager : MonoBehaviour
         LoadLevelData();
         GetPlayerCasualLevel();
     }
-    
+
     // Set new level highscore
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
     {

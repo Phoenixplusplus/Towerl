@@ -39,7 +39,7 @@ public class MGC : MonoBehaviour {
     public int CurrentGameScore = 0; // Modified in "MoveTheBall()" (called in Update() .. if required)
     private int LastGameScore = 0;
 
-    [Header ("Global Game Control Flags/States")]
+    [Header("Global Game Control Flags/States")]
     public int CurrentLevel;
     public int CasualLevel = 0;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
@@ -108,32 +108,32 @@ public class MGC : MonoBehaviour {
 
         switch (LevelManager.Instance.gameMode)
         {
-            case (int)MODE_TYPE.CASUAL:  
-               // incase we don't have it
-               if (CasualLevel == 0)
+            case (int)MODE_TYPE.CASUAL:
+                // incase we don't have it
+                if (CasualLevel == 0)
+                {
+                    CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
+                    if (CasualLevel == 0)
                     {
-                        CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
-                        if (CasualLevel == 0)
-                        {
-                            CasualLevel++;
-                            LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
-                        }
+                        CasualLevel++;
+                        LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
                     }
-               // OK, 100% have the player CasualLevel status now
+                }
+                // OK, 100% have the player CasualLevel status now
                 float difficulty = 1f;
                 if (CasualLevel <= LevelSpanForZeroTo100Percent)
                 {
                     difficulty = (CasualLevel - 1) / LevelSpanForZeroTo100Percent;
-                    Debug.Log("difficulty =: " + (CasualLevel - 1).ToString() + "/" + LevelSpanForZeroTo100Percent.ToString()+ " equals "+ difficulty.ToString());
+                    Debug.Log("difficulty =: " + (CasualLevel - 1).ToString() + "/" + LevelSpanForZeroTo100Percent.ToString() + " equals " + difficulty.ToString());
                 }
-                Debug.Log(difficulty.ToString()+ " ergo Difficulty level: " + (difficulty*100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
+                Debug.Log(difficulty.ToString() + " ergo Difficulty level: " + (difficulty * 100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
                 levelBuilder.BuildLevelofDifficulty(difficulty);
                 break;
             default:
                 // ADD FURTHER GAME MODES HERE
                 //levelBuilder.BuildRandomLevel();
                 levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
-            break;
+                break;
         };
         GameRunning = true;
     }
@@ -284,7 +284,7 @@ public class MGC : MonoBehaviour {
         Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString() + " degrees -  Ball Height: " + BallHeight.ToString());
         GameObject Tier = GameObject.FindWithTag(TierToCheck.ToString());
         if (Tier != null)
-        { 
+        {
             int answer = Tier.GetComponent<TierScript>().ReportType(TowerAngle);
             Debug.Log("Returning " + answer.ToString());
             return answer;
@@ -297,7 +297,7 @@ public class MGC : MonoBehaviour {
     }
 
 
-    public void ResetBall () // called by LevelBuilder AFTER it has finished making the Level
+    public void ResetBall() // called by LevelBuilder AFTER it has finished making the Level
     {
         BallHeight = TiersPerLevel + BallStartHeightRatio - 1;
         Ball.transform.position = new Vector3(0f, BallHeight, BallOffset);
@@ -309,3 +309,4 @@ public class MGC : MonoBehaviour {
     }
 
 }
+
