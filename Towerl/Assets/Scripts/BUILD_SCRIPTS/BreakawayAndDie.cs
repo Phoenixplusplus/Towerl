@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class BreakawayAndDie : MonoBehaviour {
 
+    private GameObject C_Controller;
+
     private Vector3 initialPosition, localDeathPosition, worldDeathPosition, newRotation;
     private float lerpSpeed = 2f;
     private float currentTime = 0f;
     private float rotationRate;
     private float timeout = 2f;
     private bool die = false;
-	
-	// Update is called once per frame
-	void Update()
+
+    // Use this for initialization
+    void Start()
+    {
+        // Get Game Controller reference
+        C_Controller = GameObject.Find("Column");
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         // on death
         if (die == true)
@@ -20,6 +29,11 @@ public class BreakawayAndDie : MonoBehaviour {
             // rotate in world space
             newRotation = new Vector3(rotationRate, rotationRate, rotationRate);
             transform.Rotate(newRotation, Space.World);
+
+
+            // rotate the world death position based on tower rotation
+            //worldDeathPosition = RotatePointAroundPivot(localDeathPosition, initialPosition, C_Controller.transform.eulerAngles);
+
 
             // set position in world space from local death position
             transform.position = Vector3.Lerp(transform.position, worldDeathPosition, (Time.deltaTime * lerpSpeed));
@@ -32,7 +46,7 @@ public class BreakawayAndDie : MonoBehaviour {
         if (currentTime >= timeout) Destroy(gameObject);
     }
 
-    // Function to kill segment
+    // to kill segment
     public void KillSegment(float segLerpSpeed, float segTimeout)
     {
         initialPosition = transform.position;
@@ -51,5 +65,11 @@ public class BreakawayAndDie : MonoBehaviour {
         timeout = segTimeout;
         lerpSpeed = segLerpSpeed;
         die = true;
+    }
+
+    // to factor in the rotation of tower rotation
+    public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
+    {
+        return Quaternion.Euler(angles) * (point - pivot) + pivot;
     }
 }
