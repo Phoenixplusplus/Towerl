@@ -2,14 +2,14 @@
 
 public enum MODE_TYPE
 {
-    RANDOM_MODE,
+    CASUAL,
     STORY_ONE,
     STORY_TWO,
     STORY_THREE
 }
 
 struct LevelData
-{  
+{
     public string highScoreString;
     public string starsString;
     public string levelLockString;
@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     /** Store the count of levels*/
     private const int NUMBER_OF_LEVELS = 30;
 
-    private int m_SelectedLevel;
+    private int currentLevel;
 
     public int CurrentPlayerCasualLevelReached;
 
@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
 
     [SerializeField]
-    private Sprite m_OneStarSprite; 
+    private Sprite m_OneStarSprite;
     [SerializeField]
     private Sprite m_TwoStarSprite;
     [SerializeField]
@@ -63,28 +63,39 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void GetPlayerCasualLevel ()
+
+    /// ////////////////////////////////
+    // GET/SET Player CASUAL Mode stats
+    private void GetPlayerCasualLevel()
     {
         CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
     }
 
-
     public int GetPlayerCasualLvl()
     {
+        GetPlayerCasualLevel();
         return CurrentPlayerCasualLevelReached;
     }
 
-    public int GetSelectedLevel()
+    public void SetPlayerCasualLevel(int value)
     {
-        return m_SelectedLevel;
+        PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
+        PlayerPrefs.Save();
+    }
+    // End of CASUAL mode get/sets
+    /// //////////////////////////
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
     }
 
     public void SetGameMode(int newGameMode)
     {
         switch (newGameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MODE:
-                gameMode = (int)MODE_TYPE.RANDOM_MODE;
+            case (int)MODE_TYPE.CASUAL:
+                gameMode = (int)MODE_TYPE.CASUAL;
                 CNVS_mainMenu.gameObject.SetActive(false);
                 CNVS_gameplay.gameObject.SetActive(true);
                 break;
@@ -111,7 +122,7 @@ public class LevelManager : MonoBehaviour
     {
         switch (gameMode)
         {
-            case (int)MODE_TYPE.RANDOM_MODE:
+            case (int)MODE_TYPE.CASUAL:
                 CNVS_gameplay.gameObject.SetActive(false);
                 CNVS_mainMenu.gameObject.SetActive(true);
                 break;
@@ -130,16 +141,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void SetSelectedLevel(int newLevel)
+    public void SetCurrentLevel(int newLevel)
     {
-        m_SelectedLevel = newLevel;
+        currentLevel = newLevel;
     }
 
-    public void SetPlayerCasualLevel(int value)
-    {
-        PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
-        PlayerPrefs.Save();
-    }
+
 
     public void LoadLevelData()
     {
@@ -163,7 +170,7 @@ public class LevelManager : MonoBehaviour
         LoadLevelData();
         GetPlayerCasualLevel();
     }
-    
+
     // Set new level highscore
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
     {
