@@ -118,6 +118,7 @@ public class LevelBuilder : MonoBehaviour {
         Seg0.gameObject.AddComponent<TierScript>(); // add tier control script (and configure it)
         Seg0.gameObject.GetComponent<TierScript>().myData = data;
         Seg0.gameObject.GetComponent<TierScript>().rotation = Rotation;
+        Seg0.gameObject.AddComponent<BreakawayAndDie>(); // add death script
         Color safeColour;
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
@@ -130,6 +131,7 @@ public class LevelBuilder : MonoBehaviour {
             Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y) / 2, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
             segClone.transform.localScale = Controller.SegmentScale;
             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+            segClone.gameObject.AddComponent<BreakawayAndDie>(); // add death script
                 if (data[i] == 2)
                 {
                     segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
