@@ -219,6 +219,7 @@ public class MGC : MonoBehaviour {
                             parentSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
                             foreach (BreakawayAndDie child in childrenSegs)
                             {
+                                child.gameObject.tag = "Fragment";
                                 child.KillSegment(2f, 1f);
                             }
                             break;
@@ -298,6 +299,14 @@ public class MGC : MonoBehaviour {
             ThingIWantToKill = GameObject.FindWithTag(i.ToString());
             if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
         }
+
+        // Find and kill any "Fragments" from exploded segements
+        GameObject[] frags = GameObject.FindGameObjectsWithTag("Fragment");
+        foreach(GameObject frag in frags)
+        {
+            Destroy(frag);
+        }
+
     }
 
     // Finds and asks the relevant tier to return the segement code we are interested in

@@ -42,6 +42,7 @@ TagManager:
   - 35
   - Column
   - Ball
+  - Fragment
   layers:
   - Default
   - TransparentFX
