@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MGC : MonoBehaviour {
 
@@ -8,7 +6,7 @@ public class MGC : MonoBehaviour {
     public int TiersPerLevel = 35;
     [Header("Necessary Scene Object/Camera References")]
     public Transform Ball;
-    public Camera camera;
+    public new Camera camera;
     public LevelBuilder levelBuilder;
     [Header("GUI Elements")]
 
@@ -80,7 +78,7 @@ public class MGC : MonoBehaviour {
     void Start()
     {
         // Populate Player's Casual Start Level
-        CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
+        CasualLevel = LevelManager.Instance.GetPlayerCasualLevel();
         // will only be 0 if unasigned therefore NEW DEVICE ... best set it to 1
         if (CasualLevel == 0)
         {
@@ -106,13 +104,13 @@ public class MGC : MonoBehaviour {
         //Destroy any existing Towers
         DestroyLevel();
 
-        switch (LevelManager.Instance.gameMode)
+        switch (LevelManager.Instance.GetGameMode())
         {
             case (int)MODE_TYPE.CASUAL:
                 // incase we don't have it
                 if (CasualLevel == 0)
                 {
-                    CasualLevel = LevelManager.Instance.GetPlayerCasualLvl();
+                    CasualLevel = LevelManager.Instance.GetPlayerCasualLevel();
                     if (CasualLevel == 0)
                     {
                         CasualLevel++;
@@ -132,7 +130,7 @@ public class MGC : MonoBehaviour {
             default:
                 // ADD FURTHER GAME MODES HERE
                 //levelBuilder.BuildRandomLevel();
-                levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
+                levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
                 break;
         };
         GameRunning = true;
@@ -143,7 +141,7 @@ public class MGC : MonoBehaviour {
         DestroyLevel();
         GameRunning = false;
 
-        LevelManager.Instance.SetCurrentLevel(0);
+        LevelManager.Instance.SetSelectedLevel(0);
         LevelManager.Instance.UpdateCanvases();
     }
 
@@ -194,7 +192,6 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
-                    GameOver(true);
                     // Add Game Over (Win) complete code here ... or call a function ;p
                     // but for our purposes now
                     //double Start = Time.realtimeSinceStartup;
@@ -202,6 +199,9 @@ public class MGC : MonoBehaviour {
                     //levelBuilder.BuildRandomLevel();
                     //ResetBall();
                     //Debug.Log("Time to Destroy, Rebuild and Reset = " + (Time.realtimeSinceStartup - Start).ToString());
+
+                    GameOver(true);
+
                 }
                 else
                 {
@@ -219,6 +219,7 @@ public class MGC : MonoBehaviour {
                             parentSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
                             foreach (BreakawayAndDie child in childrenSegs)
                             {
+                                child.gameObject.tag = "Fragment";
                                 child.KillSegment(2f, 1f);
                             }
                             break;
@@ -248,7 +249,7 @@ public class MGC : MonoBehaviour {
     // Game over result true = won it, result false = blew it
     private void GameOver(bool result)
     {
-        switch (LevelManager.Instance.gameMode)
+        switch (LevelManager.Instance.GetGameMode())
         {
             case (int)MODE_TYPE.CASUAL:
                 if (result == true) // only need to change stuff if it's a win
@@ -260,7 +261,21 @@ public class MGC : MonoBehaviour {
                 break;
             default:
                 // ADD STORY GAME MODE BEHAVIOUR HERE
-                levelBuilder.BuildLevel(LevelManager.Instance.GetCurrentLevel());
+                if (result)
+                {
+                    DestroyLevel();
+                    LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), Random.Range(1, 3));
+                    //LevelManager.Instance.SetLevelHighScore(LevelManager.Instance.GetSelectedLevel(), "Put here number"));
+                    LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                    LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                    StopMe();
+                    //levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
+                }
+                else
+                {
+                    DestroyLevel();
+                    levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
+                }
                 break;
         };
     }
@@ -284,6 +299,14 @@ public class MGC : MonoBehaviour {
             ThingIWantToKill = GameObject.FindWithTag(i.ToString());
             if (ThingIWantToKill != null) Destroy(ThingIWantToKill);
         }
+
+        // Find and kill any "Fragments" from exploded segements
+        GameObject[] frags = GameObject.FindGameObjectsWithTag("Fragment");
+        foreach(GameObject frag in frags)
+        {
+            Destroy(frag);
+        }
+
     }
 
     // Finds and asks the relevant tier to return the segement code we are interested in
@@ -316,6 +339,5 @@ public class MGC : MonoBehaviour {
         GameRunning = true;
         TowerAngle = 0f;
     }
-
 }
 
