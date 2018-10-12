@@ -3,7 +3,22 @@ guid: 7ad4c5cfa9248fc439013ca4fe4a9e04
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BTN_Continue: {instanceID: 0}
+  - BTN_BackToMenu: {instanceID: 0}
+  - BTN_QuitGame: {instanceID: 0}
+  - m_NoStarsEarnedSprite: {fileID: 21300000, guid: 9cd7897399b6834418f3ee1eda3f14f1,
+      type: 3}
+  - m_OneStarSprite: {fileID: 21300000, guid: 5f94339b9d0aa7d418b905e186187564, type: 3}
+  - m_TwoStarSprite: {fileID: 21300000, guid: 4578fd04269bc6b4bbc501a0c15b88ac, type: 3}
+  - m_ThreeStarSprite: {fileID: 21300000, guid: 50e59d246d416e442b905e0059ef2205,
+      type: 3}
+  - CNVS_gameplay: {instanceID: 0}
+  - CNVS_mainMenu: {instanceID: 0}
+  - CNVS_LevelThemeChoose: {instanceID: 0}
+  - CNVS_ThemeOne: {instanceID: 0}
+  - CNVS_ThemeTwo: {instanceID: 0}
+  - CNVS_ThemeThree: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

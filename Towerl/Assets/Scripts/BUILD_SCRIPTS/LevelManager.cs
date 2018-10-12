@@ -3,9 +3,9 @@
 public enum MODE_TYPE
 {
     CASUAL,
-    STORY_ONE,
-    STORY_TWO,
-    STORY_THREE
+    STORY_MODE_THEME_ONE,
+    STORY_MODE_THEME_TWO,
+    STORY_MODE_THEME_THREE
 }
 
 struct LevelData
@@ -20,34 +20,21 @@ struct LevelData
 
 public class LevelManager : MonoBehaviour
 {
-    private static LevelManager _instance;
-
+    /** Level manager instance */
+    private static LevelManager _instance = null;
     /** Store the count of levels*/
     private const int NUMBER_OF_LEVELS = 30;
-
-    private int currentLevel;
-
-    public int CurrentPlayerCasualLevelReached;
-
-    public Canvas CNVS_gameplay;
-    public Canvas CNVS_mainMenu;
-    public Canvas CNVS_LevelThemeChoose;
-    public Canvas CNVS_ThemeOne;
-    public Canvas CNVS_ThemeTwo;
-    public Canvas CNVS_ThemeThree;
-
-    public int gameMode;
-
+    /** Store the selected level, used for building specific level */
+    private int m_selectedLevel;
+    /** Store the causal level, used for random mode*/
+    private int CurrentPlayerCasualLevelReached;
+    /** Game mode variable, store current game mode */
+    private int m_gameMode;
     /** Array of level datas, store highscore, stars earned for each level */
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
-
-    [SerializeField]
-    private Sprite m_OneStarSprite;
-    [SerializeField]
-    private Sprite m_TwoStarSprite;
-    [SerializeField]
-    private Sprite m_ThreeStarSprite;
-
+    /** Userinterface Manager*/
+    public UI_Manager userInterface;
+    /** Create singleton */
     public static LevelManager Instance
     {
         get
@@ -55,25 +42,29 @@ public class LevelManager : MonoBehaviour
             // If we have not created one GameManager yet, create one
             if (_instance == null)
             {
-                GameObject go = new GameObject("GameManager");
-                go.AddComponent<GameManager>();
+                GameObject go = new GameObject("LevelManager");
+                go.AddComponent<LevelManager>();
             }
-
             return _instance;
         }
     }
 
+    void Awake()
+    {
+        _instance = this;
+        LoadLevelData();
+        LoadPlayerCausalLevel();
+    }
 
     /// ////////////////////////////////
     // GET/SET Player CASUAL Mode stats
-    private void GetPlayerCasualLevel()
+    private void LoadPlayerCausalLevel()
     {
         CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
     }
 
-    public int GetPlayerCasualLvl()
+    public int GetPlayerCasualLevel()
     {
-        GetPlayerCasualLevel();
         return CurrentPlayerCasualLevelReached;
     }
 
@@ -85,93 +76,95 @@ public class LevelManager : MonoBehaviour
     // End of CASUAL mode get/sets
     /// //////////////////////////
 
-    public int GetCurrentLevel()
-    {
-        return currentLevel;
-    }
-
+    /** Set the game mode, this function is always called from UI Button.Click functions, 
+     *  When player click on levels from range 1 to 30, it always assign the store */
     public void SetGameMode(int newGameMode)
     {
         switch (newGameMode)
         {
             case (int)MODE_TYPE.CASUAL:
-                gameMode = (int)MODE_TYPE.CASUAL;
-                CNVS_mainMenu.gameObject.SetActive(false);
-                CNVS_gameplay.gameObject.SetActive(true);
+                m_gameMode = (int)MODE_TYPE.CASUAL;
+                userInterface.CNVS_mainMenu.gameObject.SetActive(false);
+                userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_ONE:
-                gameMode = (int)MODE_TYPE.STORY_ONE;
-                CNVS_ThemeOne.gameObject.SetActive(false);
-                CNVS_gameplay.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
+                m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_ONE;
+                userInterface.CNVS_ThemeOne.gameObject.SetActive(false);
+                userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_TWO:
-                gameMode = (int)MODE_TYPE.STORY_TWO;
-                CNVS_ThemeTwo.gameObject.SetActive(false);
-                CNVS_gameplay.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
+                m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_TWO;
+                userInterface.CNVS_ThemeTwo.gameObject.SetActive(false);
+                userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_THREE:
-                gameMode = (int)MODE_TYPE.STORY_THREE;
-                CNVS_ThemeThree.gameObject.SetActive(false);
-                CNVS_gameplay.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_THREE:
+                m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_THREE;
+                userInterface.CNVS_ThemeThree.gameObject.SetActive(false);
+                userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 break;
         };
 
     }
 
+    /** Function is always called when player goes back from gameplay to menu 
+     *  If player played Causal Mode, it always return him into MainMenu screen
+     *  If player played Story Mode, it always return him into Story theme which he has chosen to play */
     public void UpdateCanvases()
     {
-        switch (gameMode)
+        switch (m_gameMode)
         {
             case (int)MODE_TYPE.CASUAL:
-                CNVS_gameplay.gameObject.SetActive(false);
-                CNVS_mainMenu.gameObject.SetActive(true);
+                userInterface.CNVS_gameplay.gameObject.SetActive(false);
+                userInterface.CNVS_mainMenu.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_ONE:
-                CNVS_gameplay.gameObject.SetActive(false);
-                CNVS_ThemeOne.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
+                userInterface.CNVS_gameplay.gameObject.SetActive(false);
+                userInterface.CNVS_ThemeOne.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_TWO:
-                CNVS_gameplay.gameObject.SetActive(false);
-                CNVS_ThemeTwo.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
+                userInterface.CNVS_gameplay.gameObject.SetActive(false);
+                userInterface.CNVS_ThemeTwo.gameObject.SetActive(true);
                 break;
-            case (int)MODE_TYPE.STORY_THREE:
-                CNVS_gameplay.gameObject.SetActive(false);
-                CNVS_ThemeThree.gameObject.SetActive(true);
+            case (int)MODE_TYPE.STORY_MODE_THEME_THREE:
+                userInterface.CNVS_gameplay.gameObject.SetActive(false);
+                userInterface.CNVS_ThemeThree.gameObject.SetActive(true);
                 break;
         }
     }
 
-    public void SetCurrentLevel(int newLevel)
+    /** Set the selected level to new level, called when player click on the one of the thirty levels buttons or
+     * when player click on play random level (causal mode) it is always set to 0 */
+    public void SetSelectedLevel(int newLevel)
     {
-        currentLevel = newLevel;
+        m_selectedLevel = newLevel;
     }
 
 
-
-    public void LoadLevelData()
+    /** Load level data from memory and initialize it to data array's variables 
+     * Load data for 30 level as are:
+     * 1. Highscores 
+     * 2. How many stars earned for level
+     * 3. If the level is unlocked or not, if player never played the level before, the following level is always locked.
+     *    player always have to finish the first level to unlock the second one */
+    private void LoadLevelData()
     {
-        // Initialize
+        /** Loop them number of level times, and fill up strings with names
+         * subsequently load data from Android/IOS device's memory */
         for (int i = 0; i < NUMBER_OF_LEVELS; i++)
         {
             m_levelData[i].highScoreString = "HIGH_SCORE_LEVEL_" + i;
             m_levelData[i].starsString = "STARS_LEVEL_" + i;
             m_levelData[i].levelLockString = "IS_LEVEL_LOCK_" + i;
 
-            m_levelData[i].stars = Random.Range(1, 4);
-            //m_levelData[i].stars = PlayerPrefs.GetInt(m_levelData[i].starsString);
+            //SetLevelStars(i, 0);
+           // LockLevel(i);
+            m_levelData[i].stars = PlayerPrefs.GetInt(m_levelData[i].starsString);
             m_levelData[i].highScore = PlayerPrefs.GetInt(m_levelData[i].highScoreString);
             m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
         }
     }
 
-    void Awake()
-    {
-        _instance = this;
-        LoadLevelData();
-        GetPlayerCasualLevel();
-    }
-
-    // Set new level highscore
+    /** Set new level highscore */
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
     {
         PlayerPrefs.SetInt(m_levelData[requestedLevel].highScoreString, newHighScore);
@@ -179,7 +172,7 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Set the how many stars has been achieved in the level
+    /** Set the how many stars has been achieved in the level */
     public void SetLevelStars(int requestedLevel, int starsEearned)
     {
         PlayerPrefs.SetInt(m_levelData[requestedLevel].starsString, starsEearned);
@@ -187,65 +180,42 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Set the requested level status, whenever is locked or unlocked
-    public void SetLevelLockStatus(int requestedLevel, int _IsLocked)
+    /** Unlock the requested level status */
+    public void UnlockLevel(int requestedLevel)
     {
-        PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, _IsLocked);
-        m_levelData[requestedLevel].IsUnlocked = _IsLocked;
+        PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 1);
+        m_levelData[requestedLevel].IsUnlocked = 1;
         PlayerPrefs.Save();
     }
 
-    // Set the requested level status, whenever is locked or unlocked
-    public void SetLevelLockStatus(int requestedLevel, bool _IsLocked)
+    /** Lock the requested level status */
+    private void LockLevel(int requestedLevel)
     {
-        switch (_IsLocked)
+        if (requestedLevel == 0)
         {
-            case false:
-                PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 0);
-                m_levelData[requestedLevel].IsUnlocked = 0;
-                PlayerPrefs.Save();
-                break;
-            case true:
-                PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 1);
-                m_levelData[requestedLevel].IsUnlocked = 1;
-                PlayerPrefs.Save();
-                break;
+            PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 1);
+            m_levelData[requestedLevel].IsUnlocked = 1;
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 0);
+            m_levelData[requestedLevel].IsUnlocked = 0;
+            PlayerPrefs.Save();
         }
     }
 
-    // Return the highscore of requested level
-    public int GetLevelHighScore(int requestedLevel)
-    {
-        return m_levelData[requestedLevel].highScore;
-    }
 
-    // Return the how many stars has been achieved in the level
-    public int GetLevelStars(int requestedLevel)
-    {
-        return m_levelData[requestedLevel].stars;
-    }
-
-    // Return the requested level status, whenever is locked or unlocked
-    public int GetLevelLockStatus(int requestedLevel)
-    {
-        return m_levelData[requestedLevel].IsUnlocked;
-    }
-
-    // Return image with one star
-    public Sprite GetOneStarSprite()
-    {
-        return m_OneStarSprite;
-    }
-
-    // Return image with two stars
-    public Sprite GetTwoStarsSprite()
-    {
-        return m_TwoStarSprite;
-    }
-
-    // Return image with three stars
-    public Sprite GetThreeStarsSprite()
-    {
-        return m_ThreeStarSprite;
-    }
+    /** Return the levels count */
+    public int GetLevelsCount()                                 { return NUMBER_OF_LEVELS; }
+    /** Return the selectedLevel variable */
+    public int GetSelectedLevel()                               { return m_selectedLevel; }
+    /** Return selected game mode */
+    public int GetGameMode()                                    { return m_gameMode; }
+    /** Return the highscore of requested level */
+    public int GetLevelHighScore(int requestedLevel)            { return m_levelData[requestedLevel].highScore; }
+    /** Return the how many stars has been achieved in the level */
+    public int GetLevelStars(int requestedLevel)                { return m_levelData[requestedLevel].stars; }
+    /** Return the requested level status, whenever is locked or unlocked */
+    public int GetLevelLockStatus(int requestedLevel)           { return m_levelData[requestedLevel].IsUnlocked; }
 }
