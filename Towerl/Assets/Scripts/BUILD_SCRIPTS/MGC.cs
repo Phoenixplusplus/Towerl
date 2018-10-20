@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MGC : MonoBehaviour {
 
@@ -228,6 +230,8 @@ public class MGC : MonoBehaviour {
                             }
                             // Set progress bar amount
                             levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
+                            // Set powerball aplha/colour coroutine
+                            StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
                             break;
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
@@ -236,6 +240,7 @@ public class MGC : MonoBehaviour {
                             TiersPassed = 0;
                             camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
                             CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                            // Reset powerball colour
                             break;
                         case 2: // 2 = Hazard ---- GAME OVER (will just reset)
                             GameRunning = false;
@@ -344,6 +349,36 @@ public class MGC : MonoBehaviour {
         camera.gameObject.GetComponent<CameraController2>().ResetCameraToTop();
         GameRunning = true;
         TowerAngle = 0f;
+    }
+
+    IEnumerator PowerballStatus(GameObject Powerball)
+    {
+        //GameObject Powerball;
+        if (Powerball.activeInHierarchy == false) Powerball.SetActive(true);
+
+        Color powerballColour;
+        // set alpha to 0 first, for some reason in editor it is 0, but when activate it starts at 1
+        powerballColour = Powerball.GetComponent<MeshRenderer>().material.color;
+        powerballColour.a = 0f;
+        Powerball.GetComponent<MeshRenderer>().material.color = powerballColour;
+
+        while (Powerball.activeInHierarchy == true)
+        {
+            float powerballAlpha = powerballColour.a;
+
+            powerballAlpha = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 2)) / 10f;
+
+            powerballColour.a = powerballAlpha;
+            Powerball.GetComponent<MeshRenderer>().material.color = powerballColour;
+
+            if (CurrentBallVelocity.y > 0f)
+            {
+                Powerball.GetComponent<MeshRenderer>().material.color = new Color(powerballColour.r, powerballColour.g, powerballColour.b, 0f);
+                Powerball.SetActive(false);
+                yield break;
+            }
+            yield return null;
+        }
     }
 }
 
