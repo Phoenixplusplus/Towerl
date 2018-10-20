@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public enum MODE_TYPE
 {
@@ -129,6 +130,46 @@ public class LevelManager : MonoBehaviour
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
                 userInterface.CNVS_ThemeThree.gameObject.SetActive(true);
                 break;
+        }
+    }
+
+    // Grab variables needed for updating ingame UI below
+    public void ChangeProgressBar(float amount, int currentLevel, bool isInit)
+    {
+        Image progressBar;
+        Text thisLevelText;
+        Text nextLevelText;
+        Image thisLevelImage;
+        Image nextLevelImage;
+
+        progressBar = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar").GetComponent<Image>();
+        progressBar.fillAmount = amount;
+
+        thisLevelText = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/ThisLevel/Text").GetComponent<Text>();
+        thisLevelText.text = currentLevel.ToString();
+
+        nextLevelText = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/NextLevel/Text").GetComponent<Text>();
+        nextLevelText.text = (currentLevel + 1).ToString();
+
+        // don't change colour of background on leve linitialise, but change thereafter (ie, when player gets through a tier)
+        if (!isInit)
+        {
+            thisLevelImage = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/ThisLevel").GetComponent<Image>();
+            thisLevelImage.color = progressBar.color;
+        }
+        else
+        {
+            thisLevelImage = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/ThisLevel").GetComponent<Image>();
+            thisLevelImage.color = Color.white;
+
+            nextLevelImage = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/NextLevel").GetComponent<Image>();
+            nextLevelImage.color = Color.white;
+        }
+
+        if (amount > 0.95f)
+        {
+            nextLevelImage = userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground/IMG_ProgressBar/NextLevel").GetComponent<Image>();
+            nextLevelImage.color = progressBar.color;
         }
     }
 

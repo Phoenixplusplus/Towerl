@@ -8,6 +8,7 @@ public class MGC : MonoBehaviour {
     public Transform Ball;
     public new Camera camera;
     public LevelBuilder levelBuilder;
+    public LevelManager levelManager; // for ingame UI
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
@@ -77,6 +78,8 @@ public class MGC : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        // Grab level manager for UI changes
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         // Populate Player's Casual Start Level
         CasualLevel = LevelManager.Instance.GetPlayerCasualLevel();
         // will only be 0 if unasigned therefore NEW DEVICE ... best set it to 1
@@ -99,6 +102,7 @@ public class MGC : MonoBehaviour {
         CurrentGameTime = 0;
         CurrentGameScore = 0;
         TiersPassed = 0;
+        levelManager.ChangeProgressBar(0f, CasualLevel, true);
 
 
         //Destroy any existing Towers
@@ -222,6 +226,8 @@ public class MGC : MonoBehaviour {
                                 child.gameObject.tag = "Fragment";
                                 child.KillSegment(2f, 1f);
                             }
+                            // Set progress bar amount
+                            levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
                             break;
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
