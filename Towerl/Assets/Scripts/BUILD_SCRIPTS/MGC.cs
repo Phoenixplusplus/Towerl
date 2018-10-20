@@ -366,12 +366,12 @@ public class MGC : MonoBehaviour {
         {
             float powerballAlpha = powerballColour.a;
 
-            powerballAlpha = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 2)) / 10f;
+            powerballAlpha = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 6)) / 40f; // default = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 2)) / 10f
 
             powerballColour.a = powerballAlpha;
             Powerball.GetComponent<MeshRenderer>().material.color = powerballColour;
 
-            if (CurrentBallVelocity.y > 0f)
+            if (CurrentBallVelocity.y > 0f || Ball.transform.position.y > 34.0f)
             {
                 Powerball.GetComponent<MeshRenderer>().material.color = new Color(powerballColour.r, powerballColour.g, powerballColour.b, 0f);
                 Powerball.SetActive(false);
