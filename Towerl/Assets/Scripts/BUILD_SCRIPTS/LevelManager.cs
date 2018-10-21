@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
 
     /// ////////////////////////////////
     // GET/SET Player CASUAL Mode stats
-    private void LoadPlayerCausalLevel()
+    public void LoadPlayerCausalLevel()
     {
         CurrentPlayerCasualLevelReached = PlayerPrefs.GetInt("CurrentPlayerCasualLevelReached");
     }
