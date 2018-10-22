@@ -4,10 +4,14 @@ using UnityEngine.UI;
 public class UI_Manager : MonoBehaviour
 {
     private bool m_IsMenuOpened = false;
+    private bool m_IsDevOpened = false;
 
     public Button BTN_Continue;
     public Button BTN_BackToMenu;
     public Button BTN_QuitGame;
+    public Button BTN_ResetCasualLevelData;
+    public Button BTN_ShuffleLevel;
+    public Text TXT_DevData;
 
 
     public int starsEarnedTotal;
@@ -34,12 +38,20 @@ public class UI_Manager : MonoBehaviour
     public Canvas CNVS_ThemeTwo;
     public Canvas CNVS_ThemeThree;
 
+    //DEV
+    MGC mgc;
+    LevelManager lvlmgr;
+
     void Awake()
     {
         starsEarnedTotal = 0;
         starsEarnedThemeOne = 0;
         starsEarnedThemeTwo = 0;
         starsEarnedThemeThree = 0;
+
+        //DEV
+        mgc = GameObject.Find("MGC").GetComponent<MGC>();
+        lvlmgr = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     void Start()
@@ -69,6 +81,8 @@ public class UI_Manager : MonoBehaviour
         /** If menu is not opened, open it */
         if (!m_IsMenuOpened)
         {
+            if (BTN_ResetCasualLevelData.isActiveAndEnabled == true) OpenOrCloseDevMenu();
+
             BTN_Continue.gameObject.SetActive(true);
             BTN_BackToMenu.gameObject.SetActive(true);
             BTN_QuitGame.gameObject.SetActive(true);
@@ -83,6 +97,26 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void OpenOrCloseDevMenu()
+    {
+        if (BTN_Continue.isActiveAndEnabled == true) OpenOrCloseMenu();
+
+        if (BTN_ResetCasualLevelData.isActiveAndEnabled == true)
+        {
+            BTN_ResetCasualLevelData.gameObject.SetActive(false);
+            BTN_ShuffleLevel.gameObject.SetActive(false);
+            TXT_DevData.gameObject.SetActive(false);
+            m_IsDevOpened = false;
+        }
+        else
+        {
+            BTN_ResetCasualLevelData.gameObject.SetActive(true);
+            BTN_ShuffleLevel.gameObject.SetActive(true);
+            TXT_DevData.gameObject.SetActive(true);
+            m_IsDevOpened = true;
+        }
+    }
+
     /** Destroy the current level and disable menu buttons */
     public void CloseMenu()
     {
@@ -90,6 +124,8 @@ public class UI_Manager : MonoBehaviour
         BTN_BackToMenu.gameObject.SetActive(false);
         BTN_QuitGame.gameObject.SetActive(false);
         m_IsMenuOpened = false;
+        BTN_ResetCasualLevelData.gameObject.SetActive(false);
+        m_IsDevOpened = false;
     }
 
     public void QuitGame()
@@ -109,4 +145,34 @@ public class UI_Manager : MonoBehaviour
     public Sprite GetLevelIsLockSprite() { return m_LevelIsLocked; }
     /** Return image "level is unlock" */
     public Sprite GetLevelIsUnlockedSprite() { return m_LevelIsUnlocked; }
+
+
+
+
+    // DEV MENU STUFF
+    
+    public void DEVResetCasualLevelData()
+    {
+        // ie. also resets difficulty
+        mgc.CasualLevel = 0;
+        mgc.StopMe();
+        lvlmgr.SetPlayerCasualLevel(0);
+        lvlmgr.LoadPlayerCausalLevel();
+    }
+
+    public void DEVShuffleLevel()
+    {
+        mgc.GameOver(false);
+    }
+
+    void Update()
+    {
+        // just debug stuff we can see onscreen
+        if (m_IsDevOpened)
+        {
+            TXT_DevData.text = "Ball\nHeight: " + mgc.BallHeight + "\nYVelocity: " + mgc.CurrentBallVelocity.y + "\nMaxYVelocty: " + mgc.BallMaxVelocity + "\nGravity: " + mgc.Gravity + "\nBallFalling: " + mgc.BallFalling + "\n" + "\nTower\nAngle: " + mgc.TowerAngle + "\nTotalTiers: " + mgc.TiersPerLevel +
+                "\nCurrentTier: " + mgc.CurrentTier + "\n" + "\nGame\nisRunning: " + mgc.GameRunning + "\nTime: " + mgc.CurrentGameTime + "\nGameMode: " + mgc.CurrentGameMode + "\nMaxDiffLvl+: " + mgc.LevelSpanForZeroTo100Percent + "\nTierPool: " + mgc.PercentOfPossibleTiersInPool + "\n" + "\n" + "\nChambawamba\nApproved";
+        }
+    }
+
 }

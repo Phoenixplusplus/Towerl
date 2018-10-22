@@ -33,7 +33,7 @@ public class MGC : MonoBehaviour {
     public float TowerAngle;
     public int CurrentTier;
     public bool BallFalling = false;
-    private bool GameRunning = false;
+    public bool GameRunning = false;
     private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
     public float CurrentGameTime = 0; // Auto incremented in "Update()"
     private float LastGameTime = 0;
@@ -258,7 +258,7 @@ public class MGC : MonoBehaviour {
     }
 
     // Game over result true = won it, result false = blew it
-    private void GameOver(bool result)
+    public void GameOver(bool result)
     {
         switch (LevelManager.Instance.GetGameMode())
         {
