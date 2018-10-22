@@ -95,21 +95,25 @@ public class LevelManager : MonoBehaviour
                 m_gameMode = (int)MODE_TYPE.CASUAL;
                 userInterface.CNVS_mainMenu.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(true);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_ONE;
                 userInterface.CNVS_ThemeOne.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_TWO;
                 userInterface.CNVS_ThemeTwo.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_THREE:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_THREE;
                 userInterface.CNVS_ThemeThree.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 break;
         };
 
@@ -128,7 +132,7 @@ public class LevelManager : MonoBehaviour
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
-                userInterface.CNVS_ThemeOne.gameObject.SetActive(true);
+                userInterface.CNVS_ThemeOne.gameObject.SetActive(true);       
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);

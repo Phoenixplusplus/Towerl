@@ -100,12 +100,12 @@ public class MGC : MonoBehaviour {
     {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
-        LastGameScore = levelManager.LoadPlayerCasualScore();
+        LastGameScore = CurrentGameScore;
         LastGameTime = CurrentGameTime;
         CurrentGameTime = 0;
-        CurrentGameScore = LastGameScore;
+        CurrentGameScore = 0;
         TiersPassed = 0;
-        levelManager.ChangeProgressBar(0f, CasualLevel, true);
+        //levelManager.ChangeProgressBar(0f, CasualLevel, true);
         Ball.GetComponent<TrailRenderer>().enabled = false;
         StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
         levelManager.ChangeScore(CurrentGameScore);
@@ -136,6 +136,12 @@ public class MGC : MonoBehaviour {
                 }
                 Debug.Log(difficulty.ToString() + " ergo Difficulty level: " + (difficulty * 100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
                 levelBuilder.BuildLevelofDifficulty(difficulty);
+                // if casual mode, grab saved score
+                LastGameScore = levelManager.LoadPlayerCasualScore();
+                CurrentGameScore = LastGameScore;
+                levelManager.ChangeScore(CurrentGameScore);
+                // change the progress bar too
+                levelManager.ChangeProgressBar(0f, CasualLevel, true);
                 break;
             default:
                 // ADD FURTHER GAME MODES HERE
@@ -233,8 +239,8 @@ public class MGC : MonoBehaviour {
                                 child.gameObject.tag = "Fragment";
                                 child.KillSegment(2f, 1f);
                             }
-                            // Set progress bar amount
-                            levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
+                            // Set progress bar amount, if casual mode
+                            if (LevelManager.Instance.GetGameMode() == 0) levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
                             // Set powerball aplha/colour coroutine
                             StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
                             // Set score
