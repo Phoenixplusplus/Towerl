@@ -154,6 +154,7 @@ public class MGC : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(CurrentGameScore);
         if (GameRunning)
         {
             // CONTROLS (only need Controls is Game is Running)
@@ -232,10 +233,11 @@ public class MGC : MonoBehaviour {
                             levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
                             // Set powerball aplha/colour coroutine
                             StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
+                            // Set score
+                            CurrentGameScore += (TiersPassed * TiersPassed) * 10;
                             break;
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
-                            CurrentGameScore += (TiersPassed * TiersPassed) * 10;
                             // ADD "BREAK Tier if TiersPassed > ???" Here
                             TiersPassed = 0;
                             camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
@@ -254,7 +256,6 @@ public class MGC : MonoBehaviour {
             }
         }
         BallHeight = Ball.transform.position.y; // IMPORTANT - this gives us frame to frame comparison
-        if (BallHeight < 0) { ResetBall(); }
     }
 
     // Game over result true = won it, result false = blew it
@@ -364,6 +365,9 @@ public class MGC : MonoBehaviour {
 
         while (Powerball.activeInHierarchy == true)
         {
+            // enable trail whenever powerball is active
+            //Ball.GetComponent<TrailRenderer>().enabled = true;
+
             float powerballAlpha = powerballColour.a;
 
             powerballAlpha = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 6)) / 40f; // default = (CurrentBallVelocity.y - (CurrentBallVelocity.y * 2)) / 10f
@@ -373,6 +377,8 @@ public class MGC : MonoBehaviour {
 
             if (CurrentBallVelocity.y > 0f || Ball.transform.position.y > 34.0f)
             {
+                //Ball.GetComponent<TrailRenderer>().enabled = false;
+                Ball.GetComponent<TrailRenderer>().material.color = new Color(0,0,0.5f,1);
                 Powerball.GetComponent<MeshRenderer>().material.color = new Color(powerballColour.r, powerballColour.g, powerballColour.b, 0f);
                 Powerball.SetActive(false);
                 yield break;
