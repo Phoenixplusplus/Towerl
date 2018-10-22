@@ -239,12 +239,20 @@ public class MGC : MonoBehaviour {
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
                             // ADD "BREAK Tier if TiersPassed > ???" Here
+                            if (TiersPassed >= 3) BreakthroughTier(TierToCheck);
                             TiersPassed = 0;
                             camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
                             CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                             // Reset powerball colour
                             break;
                         case 2: // 2 = Hazard ---- GAME OVER (will just reset)
+                            if (TiersPassed >= 3)
+                            {
+                                BreakthroughTier(TierToCheck);
+                                camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
+                                CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                                break;
+                            }
                             GameRunning = false;
                             //ResetBall();
                             GameOver(false);
@@ -256,6 +264,11 @@ public class MGC : MonoBehaviour {
             }
         }
         BallHeight = Ball.transform.position.y; // IMPORTANT - this gives us frame to frame comparison
+    }
+
+    public void BreakthroughTier (int ToDie)
+    {
+        // Hi Phoenix .... do the honour's please
     }
 
     // Game over result true = won it, result false = blew it
