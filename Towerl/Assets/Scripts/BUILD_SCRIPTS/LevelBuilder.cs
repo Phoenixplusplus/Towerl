@@ -9,6 +9,8 @@ public class LevelBuilder : MonoBehaviour {
 
     public Transform Column;
     public Transform Seg15;
+    public Material safeTransparentMaterial;
+    public Material hazardTransparentMaterial;
 
     // 268 colours, 134 combinations
     // even number is safe colour, odd number is hazard colour
@@ -116,6 +118,7 @@ public class LevelBuilder : MonoBehaviour {
         Seg0.gameObject.GetComponent<TierScript>().myData = data;
         Seg0.gameObject.GetComponent<TierScript>().rotation = Rotation;
         Seg0.gameObject.AddComponent<BreakawayAndDie>(); // add death script
+        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
         Color safeColour;
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
@@ -129,12 +132,14 @@ public class LevelBuilder : MonoBehaviour {
             segClone.transform.localScale = Controller.SegmentScale;
             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
             segClone.gameObject.AddComponent<BreakawayAndDie>(); // add death script
+            segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
                 if (data[i] == 2)
                 {
                     segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
                     Color hazardColour;
                     ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
                     segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
+                    segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = hazardTransparentMaterial; // give segment a transparent death material
                 }
             segClone.transform.parent = Seg0.transform;
             }

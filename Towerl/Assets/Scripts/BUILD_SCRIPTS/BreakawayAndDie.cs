@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
+using UnityEditor;
 
 public class BreakawayAndDie : MonoBehaviour {
 
     private GameObject C_Controller;
+    public Material safeTransparentMaterial;
+    public Material hazardTransparentMaterial;
+    private Material childMaterial;
 
     private Vector3 initialPosition, localDeathPosition, worldDeathPosition, newRotation;
     private float lerpSpeed = 2f;
@@ -28,16 +32,16 @@ public class BreakawayAndDie : MonoBehaviour {
             newRotation = new Vector3(rotationRate, rotationRate, rotationRate);
             transform.Rotate(newRotation, Space.World);
 
-
-            // rotate the world death position based on tower rotation
-            //worldDeathPosition = RotatePointAroundPivot(localDeathPosition, initialPosition, C_Controller.transform.eulerAngles);
-
-
             // set position in world space from local death position
             transform.position = Vector3.Lerp(transform.position, worldDeathPosition, (Time.deltaTime * lerpSpeed));
 
             // set timer
             currentTime += Time.deltaTime;
+
+            // change alpha of 'child material' ie. the segment material
+            Color finalColour = childMaterial.color;
+            finalColour.a = timeout - currentTime;
+            childMaterial.color = finalColour;
         }
 
         // on timeout
@@ -60,14 +64,25 @@ public class BreakawayAndDie : MonoBehaviour {
         // detach from parent
         transform.parent = null;
 
+        // set transparent material
+        if (safeTransparentMaterial != null)
+        {
+            safeTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material = safeTransparentMaterial;
+        }
+        if (hazardTransparentMaterial != null)
+        {
+            hazardTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
+        }
+        // grab this so that we can tint alpha over time after this function is called ~(saves us finding components per update)
+        childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+
         timeout = segTimeout;
         lerpSpeed = segLerpSpeed;
         die = true;
     }
 
     // to factor in the rotation of tower rotation
-    public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
-    {
-        return Quaternion.Euler(angles) * (point - pivot) + pivot;
-    }
+    public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) { return Quaternion.Euler(angles) * (point - pivot) + pivot; }
 }

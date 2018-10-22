@@ -244,6 +244,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Column: {fileID: 4591683186242562, guid: db9c4ecdbb3b3a94b8f9cb94617854ad, type: 2}
   Seg15: {fileID: 400000, guid: b9fb0c9e97b65384e85589265c4f4115, type: 3}
+  safeTransparentMaterial: {fileID: 2100000, guid: ecae2893fdc257446b6464e5eca73f54,
+    type: 2}
+  hazardTransparentMaterial: {fileID: 2100000, guid: c7ed59576c0c7fa449f1a9da6949f436,
+    type: 2}
 --- !u!4 &348083294
 Transform:
   m_ObjectHideFlags: 0
