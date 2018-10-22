@@ -154,7 +154,7 @@ public class MGC : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(CurrentGameScore);
+        // Debug.Log(CurrentGameScore); // might need it again one day
         if (GameRunning)
         {
             // CONTROLS (only need Controls is Game is Running)
@@ -236,6 +236,7 @@ public class MGC : MonoBehaviour {
                             // Set score
                             CurrentGameScore += (TiersPassed * TiersPassed) * 10;
                             break;
+
                         case 1: // 1 = normal platform --- BOUNCE
                             BallFalling = false; // required for Camera to track ball
                             // ADD "BREAK Tier if TiersPassed > ???" Here
@@ -245,18 +246,22 @@ public class MGC : MonoBehaviour {
                             CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                             // Reset powerball colour
                             break;
+
                         case 2: // 2 = Hazard ---- GAME OVER (will just reset)
+                            // Tier Breakaway Code // does not kill game
                             if (TiersPassed >= 3)
                             {
                                 BreakthroughTier(TierToCheck);
+                                BallFalling = false;
+                                TiersPassed = 0;
                                 camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
                                 CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                                 break;
                             }
                             GameRunning = false;
-                            //ResetBall();
                             GameOver(false);
                             break;
+
                         default:
                             break;
                     }
@@ -266,9 +271,9 @@ public class MGC : MonoBehaviour {
         BallHeight = Ball.transform.position.y; // IMPORTANT - this gives us frame to frame comparison
     }
 
-    public void BreakthroughTier (int ToDie)
+    public void BreakthroughTier (int TierToDie)
     {
-        // Hi Phoenix .... do the honour's please
+        // Hi Phoenix ... you asked for it.... do the honour's please ;p 
     }
 
     // Game over result true = won it, result false = blew it
@@ -338,12 +343,13 @@ public class MGC : MonoBehaviour {
     public int GetTierSegmentType(int TierToCheck, float TowerAngle)
     {
         // find the relevant Tier Object
-        Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString() + " degrees -  Ball Height: " + BallHeight.ToString());
+        // Debug log saved for possible future use
+        // Debug.Log("Trying to find " + TierToCheck.ToString() + " @ " + TowerAngle.ToString() + " degrees -  Ball Height: " + BallHeight.ToString());
         GameObject Tier = GameObject.FindWithTag(TierToCheck.ToString());
         if (Tier != null)
         {
             int answer = Tier.GetComponent<TierScript>().ReportType(TowerAngle);
-            Debug.Log("Returning " + answer.ToString());
+            // Debug.Log("Returning " + answer.ToString());
             return answer;
         }
         else

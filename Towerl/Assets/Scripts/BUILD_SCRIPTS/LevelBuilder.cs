@@ -78,7 +78,6 @@ public class LevelBuilder : MonoBehaviour {
         contrastColour = baseColour + 1;
 
         TierCount = LevelData.Length;
-        Debug.Log("Tier Count = " + TierCount.ToString());
         // Make Tiers
         // Top Tier ... Orientation -7.5 to ensure bounce on a platform
         MakeTier((TierCount/2) + 1, 1, -7.5f);

@@ -40,7 +40,9 @@ public class TierScript : MonoBehaviour {
             while (R > 360) { R -= 360f; }
         }
         int segmentNumber = 23 - (int)Mathf.Floor(R / 15); // Don't ask .. it's a winding, windy thing ....
-        Debug.Log("Returning data for segment " + segmentNumber.ToString()+ " Tier Angle = "+ rotation.ToString() + " Adjusted angle = " + R.ToString() );
+        // SAVED FOR FUTURE DEV WORK ...logs Tier, segment, angle and what is returned
+        // Debug.Log("Returning data for segment " + segmentNumber.ToString()+ " Tier Angle = "+ rotation.ToString() + " Adjusted angle = " + R.ToString() );
+
         return myData[segmentNumber];
     }
 
