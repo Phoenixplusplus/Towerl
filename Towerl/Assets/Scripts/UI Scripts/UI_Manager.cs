@@ -58,6 +58,10 @@ public class UI_Manager : MonoBehaviour
     {
         m_buttonLevelArray = FindObjectsOfType(typeof(SM_ButtonLevel)) as SM_ButtonLevel[];
 
+        CNVS_LevelThemeChoose.gameObject.SetActive(false);
+        CNVS_ThemeOne.gameObject.SetActive(false);
+        CNVS_ThemeTwo.gameObject.SetActive(false);
+        CNVS_ThemeThree.gameObject.SetActive(false);
         CNVS_ThemeOne.gameObject.SetActive(false);
         CNVS_ThemeTwo.gameObject.SetActive(false);
         CNVS_ThemeThree.gameObject.SetActive(false);

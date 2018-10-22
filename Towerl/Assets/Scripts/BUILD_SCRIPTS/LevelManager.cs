@@ -203,6 +203,7 @@ public class LevelManager : MonoBehaviour
             m_levelData[i].highScore = PlayerPrefs.GetInt(m_levelData[i].highScoreString);
             m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
         }
+        m_levelData[0].IsUnlocked = 1;
     }
 
     /** Set new level highscore */
