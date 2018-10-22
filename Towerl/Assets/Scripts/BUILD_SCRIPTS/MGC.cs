@@ -11,6 +11,7 @@ public class MGC : MonoBehaviour {
     public new Camera camera;
     public LevelBuilder levelBuilder;
     public LevelManager levelManager; // for ingame UI
+    public GameObject scoreSprite;
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
@@ -105,6 +106,9 @@ public class MGC : MonoBehaviour {
         CurrentGameScore = 0;
         TiersPassed = 0;
         levelManager.ChangeProgressBar(0f, CasualLevel, true);
+        Ball.GetComponent<TrailRenderer>().enabled = false;
+        StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
+        levelManager.ChangeScore(CurrentGameScore);
 
 
         //Destroy any existing Towers
@@ -235,6 +239,11 @@ public class MGC : MonoBehaviour {
                             StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
                             // Set score
                             CurrentGameScore += (TiersPassed * TiersPassed) * 10;
+                            // Spawn score sprite
+                            GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.3f, 0), new Quaternion(0, 180, 0, 1));
+                            sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * 10).ToString();
+                            // Change score on UI
+                            levelManager.ChangeScore(CurrentGameScore);
                             break;
 
                         case 1: // 1 = normal platform --- BOUNCE
@@ -403,6 +412,17 @@ public class MGC : MonoBehaviour {
                 yield break;
             }
             yield return null;
+        }
+    }
+
+    IEnumerator ActivateTrail(TrailRenderer Trail)
+    {
+        float time = 0f;
+        while (Trail.enabled == false)
+        {
+            time += Time.deltaTime;
+            yield return null;
+            if (time > 0.3f) Trail.enabled = true; 
         }
     }
 }
