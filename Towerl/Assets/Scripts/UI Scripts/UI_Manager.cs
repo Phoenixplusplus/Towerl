@@ -62,9 +62,6 @@ public class UI_Manager : MonoBehaviour
         CNVS_ThemeOne.gameObject.SetActive(false);
         CNVS_ThemeTwo.gameObject.SetActive(false);
         CNVS_ThemeThree.gameObject.SetActive(false);
-        CNVS_ThemeOne.gameObject.SetActive(false);
-        CNVS_ThemeTwo.gameObject.SetActive(false);
-        CNVS_ThemeThree.gameObject.SetActive(false);
     }
 
     public void GetStarsButtons(int value)
