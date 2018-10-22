@@ -173,6 +173,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void ChangeScore(int score)
+    {
+        userInterface.CNVS_gameplay.gameObject.transform.Find("Score").GetComponent<Text>().text = score.ToString();
+    }
+
     /** Set the selected level to new level, called when player click on the one of the thirty levels buttons or
      * when player click on play random level (causal mode) it is always set to 0 */
     public void SetSelectedLevel(int newLevel)
