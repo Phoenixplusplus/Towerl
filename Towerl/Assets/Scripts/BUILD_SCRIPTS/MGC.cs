@@ -100,10 +100,10 @@ public class MGC : MonoBehaviour {
     {
         CurrentTier = TiersPerLevel;
         TowerAngle = 0f;
-        LastGameScore = CurrentGameScore;
+        LastGameScore = levelManager.LoadPlayerCasualScore();
         LastGameTime = CurrentGameTime;
         CurrentGameTime = 0;
-        CurrentGameScore = 0;
+        CurrentGameScore = LastGameScore;
         TiersPassed = 0;
         levelManager.ChangeProgressBar(0f, CasualLevel, true);
         Ball.GetComponent<TrailRenderer>().enabled = false;
@@ -295,6 +295,7 @@ public class MGC : MonoBehaviour {
                 {
                     CasualLevel++;
                     LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
+                    LevelManager.Instance.SetPlayerCasualScore(CurrentGameScore);
                 }
                 PlayMe(); // then re-start (either same dificulty, or higher)
                 break;

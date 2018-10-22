@@ -159,6 +159,8 @@ public class UI_Manager : MonoBehaviour
         mgc.StopMe();
         lvlmgr.SetPlayerCasualLevel(0);
         lvlmgr.LoadPlayerCausalLevel();
+        lvlmgr.SetPlayerCasualScore(0);
+        lvlmgr.LoadPlayerCasualScore();
     }
 
     public void DEVShuffleLevel()

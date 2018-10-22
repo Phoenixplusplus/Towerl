@@ -74,6 +74,14 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentPlayerCasualLevelReached", value);
         PlayerPrefs.Save();
     }
+
+    public int LoadPlayerCasualScore() { return PlayerPrefs.GetInt("PlayerCasualScore"); }
+
+    public void SetPlayerCasualScore(int score)
+    {
+        PlayerPrefs.SetInt("PlayerCasualScore", score);
+        PlayerPrefs.Save();
+    }
     // End of CASUAL mode get/sets
     /// //////////////////////////
 
