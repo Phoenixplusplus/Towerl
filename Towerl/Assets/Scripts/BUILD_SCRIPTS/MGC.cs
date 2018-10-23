@@ -108,7 +108,7 @@ public class MGC : MonoBehaviour {
         //levelManager.ChangeProgressBar(0f, CasualLevel, true);
         Ball.GetComponent<TrailRenderer>().enabled = false;
         StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
-        levelManager.ChangeScore(CurrentGameScore);
+        levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
 
 
         //Destroy any existing Towers
@@ -139,7 +139,7 @@ public class MGC : MonoBehaviour {
                 // if casual mode, grab saved score
                 LastGameScore = levelManager.LoadPlayerCasualScore();
                 CurrentGameScore = LastGameScore;
-                levelManager.ChangeScore(CurrentGameScore);
+                levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
                 // change the progress bar too
                 levelManager.ChangeProgressBar(0f, CasualLevel, true);
                 break;
@@ -249,7 +249,8 @@ public class MGC : MonoBehaviour {
                             GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.3f, 0), new Quaternion(0, 180, 0, 1));
                             sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * 10).ToString();
                             // Change score on UI
-                            levelManager.ChangeScore(CurrentGameScore);
+                            int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * 10;
+                            levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
                             break;
 
                         case 1: // 1 = normal platform --- BOUNCE

@@ -49,12 +49,17 @@ public class LevelManager : MonoBehaviour
             return _instance;
         }
     }
+    /** For Score Text animation **/
+    public Transform scoreText;
+    private ScoreAnimation scoreAnimation;
 
     void Awake()
     {
         _instance = this;
+        scoreText = userInterface.CNVS_gameplay.gameObject.transform.Find("Score");
+        scoreAnimation = userInterface.CNVS_gameplay.gameObject.transform.Find("Score").GetComponent<ScoreAnimation>();
         LoadLevelData();
-        LoadPlayerCausalLevel();
+        LoadPlayerCausalLevel(); 
     }
 
     /// ////////////////////////////////
@@ -185,10 +190,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void ChangeScore(int score)
+    public void ChangeScore(int previousScore, int currentScore, bool isInit)
     {
-        userInterface.CNVS_gameplay.gameObject.transform.Find("Score").GetComponent<Text>().text = score.ToString();
+        scoreAnimation.SetNumber(previousScore, currentScore, isInit);
     }
+
 
     /** Set the selected level to new level, called when player click on the one of the thirty levels buttons or
      * when player click on play random level (causal mode) it is always set to 0 */
