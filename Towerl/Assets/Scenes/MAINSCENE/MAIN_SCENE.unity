@@ -3120,6 +3120,8 @@ MonoBehaviour:
   levelManager: {fileID: 0}
   scoreSprite: {fileID: 1590684685727948, guid: 7b222252499dc86448e5564f79878b5b,
     type: 2}
+  bonusSprite: {fileID: 1906108448813772, guid: 615b11006e6e2844cb478e3d0e83b57a,
+    type: 2}
   SegmentScale: {x: 100, y: 10, z: 100}
   HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}

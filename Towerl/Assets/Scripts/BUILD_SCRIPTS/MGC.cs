@@ -12,6 +12,7 @@ public class MGC : MonoBehaviour {
     public LevelBuilder levelBuilder;
     public LevelManager levelManager; // for ingame UI
     public GameObject scoreSprite;
+    public GameObject bonusSprite;
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
@@ -105,7 +106,6 @@ public class MGC : MonoBehaviour {
         CurrentGameTime = 0;
         CurrentGameScore = 0;
         TiersPassed = 0;
-        //levelManager.ChangeProgressBar(0f, CasualLevel, true);
         Ball.GetComponent<TrailRenderer>().enabled = false;
         StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
         levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
@@ -228,29 +228,33 @@ public class MGC : MonoBehaviour {
                     {
                         case 0: // 0 = gap -- FALL THROUGH
                             BallFalling = true;
-                            TiersPassed++;
+                            
                             // Find and run break scripts for current tier's parent segment, and its children
                             BreakawayAndDie[] childrenSegs;
                             GameObject parentSeg = GameObject.FindWithTag(TierToCheck.ToString());
-                            childrenSegs = parentSeg.GetComponentsInChildren<BreakawayAndDie>();
-                            parentSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
-                            foreach (BreakawayAndDie child in childrenSegs)
+                            if (parentSeg != null)
                             {
-                                child.gameObject.tag = "Fragment";
-                                child.KillSegment(2f, 1f);
+                                childrenSegs = parentSeg.GetComponentsInChildren<BreakawayAndDie>();
+                                parentSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
+                                foreach (BreakawayAndDie child in childrenSegs)
+                                {
+                                    child.gameObject.tag = "Fragment";
+                                    child.KillSegment(2f, 1f);
+                                }
+                                TiersPassed++;
+                                // Set progress bar amount, if casual mode
+                                if (LevelManager.Instance.GetGameMode() == 0) levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
+                                // Set powerball aplha/colour coroutine
+                                StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
+                                // Set score
+                                CurrentGameScore += (TiersPassed * TiersPassed) * 10;
+                                // Spawn score sprite
+                                GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.4f, 0), new Quaternion(0, 180, 0, 1));
+                                sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * 10).ToString();
+                                // Change score on UI
+                                int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * 10;
+                                levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
                             }
-                            // Set progress bar amount, if casual mode
-                            if (LevelManager.Instance.GetGameMode() == 0) levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
-                            // Set powerball aplha/colour coroutine
-                            StartCoroutine(PowerballStatus(Ball.GetChild(0).gameObject));
-                            // Set score
-                            CurrentGameScore += (TiersPassed * TiersPassed) * 10;
-                            // Spawn score sprite
-                            GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.4f, 0), new Quaternion(0, 180, 0, 1));
-                            sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * 10).ToString();
-                            // Change score on UI
-                            int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * 10;
-                            levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
                             break;
 
                         case 1: // 1 = normal platform --- BOUNCE
@@ -289,7 +293,29 @@ public class MGC : MonoBehaviour {
 
     public void BreakthroughTier (int TierToDie)
     {
-        // Hi Phoenix ... you asked for it.... do the honour's please ;p 
+        // Find and run break scripts for current tier's parent segment, and its children
+        BreakawayAndDie[] childrenBreakSegs;
+        GameObject parentBreakSeg = GameObject.FindWithTag(TierToDie.ToString());
+        childrenBreakSegs = parentBreakSeg.GetComponentsInChildren<BreakawayAndDie>();
+        parentBreakSeg.GetComponent<BreakawayAndDie>().KillSegment(2f, 1f);
+        foreach (BreakawayAndDie child in childrenBreakSegs)
+        {
+            child.gameObject.tag = "Fragment";
+            child.BreakthroughSegment(2f, 1f);
+        }
+        // also increment the score/BONUS score here, as it's only typically done when a segment is 0, but we should add a 'multiplier' score for successful breakthrough
+        CurrentGameScore += (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
+        // Spawn score sprite
+        GameObject sprite = Instantiate(scoreSprite, Ball.transform.position + new Vector3(0, 0.4f, 0), new Quaternion(0, 180, 0, 1));
+        sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel))).ToString();
+        sprite.GetComponent<TextMesh>().color = new Color(0.7176471f, 0.09803922f, 0.145098f, 1);
+        // Spawn bonus sprite
+        GameObject bonussprite = Instantiate(bonusSprite, Ball.transform.position + new Vector3(0, 0.2f, 0), new Quaternion(0, 180, 0, 1));
+        // Change BONUS score on UI
+        int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
+        levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
+        // enable camera shake (strength based on tiers passed)
+        camera.GetComponent<CameraController2>().EnableCameraShake(0.005f * TiersPassed, 1.0f, 1.0f);
     }
 
     // Game over result true = won it, result false = blew it

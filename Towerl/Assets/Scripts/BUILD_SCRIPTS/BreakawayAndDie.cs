@@ -83,6 +83,51 @@ public class BreakawayAndDie : MonoBehaviour {
         die = true;
     }
 
+    // to breakthrough segment
+    public void BreakthroughSegment(float segLerpSpeed, float segTimeout)
+    {
+
+
+        // find the ball and get it's velocity, so we can shoot segments off according to this value, bit more reaslistic
+        // also find the colour of the Powerball at the moment, to put its colour onto the segments
+        float BallVeloc = GameObject.Find("MGC").GetComponent<MGC>().CurrentBallVelocity.y;
+        Color BallColour = GameObject.Find("MGC").GetComponent<MGC>().Ball.transform.GetChild(0).GetComponent<Renderer>().material.color;
+
+        initialPosition = transform.position;
+
+        // set death position for each segment locally
+
+        localDeathPosition = new Vector3(initialPosition.x, initialPosition.y + (BallVeloc * 0.5f), initialPosition.z + Random.Range(0.7f, 1.0f));
+
+        // translate it to world transform
+        worldDeathPosition = transform.TransformDirection(localDeathPosition);
+
+        rotationRate = Random.Range(-5.0f, 5.0f) * 0.1f;
+
+        // detach from parent
+        transform.parent = null;
+
+        // set transparent material
+        if (safeTransparentMaterial != null)
+        {
+            //safeTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material = safeTransparentMaterial;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color = BallColour;
+        }
+        if (hazardTransparentMaterial != null)
+        {
+            //hazardTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
+            gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color = BallColour;
+        }
+        // grab this so that we can tint alpha over time after this function is called ~(saves us finding components per update)
+        childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+
+        timeout = segTimeout;
+        lerpSpeed = segLerpSpeed;
+        die = true;
+    }
+
     // to factor in the rotation of tower rotation
     public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) { return Quaternion.Euler(angles) * (point - pivot) + pivot; }
 }
