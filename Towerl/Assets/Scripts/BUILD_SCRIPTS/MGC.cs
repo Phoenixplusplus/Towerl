@@ -246,7 +246,7 @@ public class MGC : MonoBehaviour {
                             // Set score
                             CurrentGameScore += (TiersPassed * TiersPassed) * 10;
                             // Spawn score sprite
-                            GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.3f, 0), new Quaternion(0, 180, 0, 1));
+                            GameObject sprite = Instantiate(scoreSprite, Ball.transform.position - new Vector3(0, 0.4f, 0), new Quaternion(0, 180, 0, 1));
                             sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * 10).ToString();
                             // Change score on UI
                             int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * 10;
