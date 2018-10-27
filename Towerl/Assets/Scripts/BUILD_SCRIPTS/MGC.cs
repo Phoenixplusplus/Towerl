@@ -11,6 +11,7 @@ public class MGC : MonoBehaviour {
     public new Camera camera;
     public LevelBuilder levelBuilder;
     public LevelManager levelManager; // for ingame UI
+    public SoundManager SM;
     public GameObject scoreSprite;
     public GameObject bonusSprite;
     [Header("GUI Elements")]
@@ -49,7 +50,7 @@ public class MGC : MonoBehaviour {
     private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
 
     [Header("Level Difficulty Calculator Variables")]
-    public int LevelSpanForZeroTo100Percent = 5; // anything over this will be 100% difficulty
+    public int LevelSpanForZeroTo100Percent = 20; // anything over this will be 100% difficulty
     public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
 
     // --------------------//
@@ -131,7 +132,7 @@ public class MGC : MonoBehaviour {
                 float difficulty = 1f;
                 if (CasualLevel <= LevelSpanForZeroTo100Percent)
                 {
-                    difficulty = (CasualLevel - 1) / LevelSpanForZeroTo100Percent;
+                    difficulty = (float)(CasualLevel - 1) / LevelSpanForZeroTo100Percent;
                     Debug.Log("difficulty =: " + (CasualLevel - 1).ToString() + "/" + LevelSpanForZeroTo100Percent.ToString() + " equals " + difficulty.ToString());
                 }
                 Debug.Log(difficulty.ToString() + " ergo Difficulty level: " + (difficulty * 100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
