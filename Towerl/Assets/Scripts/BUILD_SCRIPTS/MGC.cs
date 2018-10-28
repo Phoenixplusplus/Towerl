@@ -53,11 +53,15 @@ public class MGC : MonoBehaviour {
     public int LevelSpanForZeroTo100Percent = 20; // anything over this will be 100% difficulty
     public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
 
-    [Header("Music/SFX on bools & Music Selection")]
+    [Header("Music/SFX bools & Music Selection")]
     // N.B. Sound Manager looks for changes in these and behaves accordingly (or it will eventually)
     public bool Music_ON = true;
+    [Range(0,1)]
+    public float Music_Vol = 1f;
     public bool SFX_ON = true;
-    public string MusicChoice = "Punk"; // ... placeholder for later.
+    [Range(0, 1)]
+    public float SFX_Vol = 1f;
+    public Music MusicChoice; // ... placeholder for later ... see Start()
 
     // --------------------//
     // establish Singelton //
@@ -99,6 +103,7 @@ public class MGC : MonoBehaviour {
             CasualLevel = 1;
             LevelManager.Instance.SetPlayerCasualLevel(CasualLevel);
         }
+
     }
 
 
@@ -216,6 +221,7 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
+                    SM.PlaySFX(SFX.Boom);
                     GameOver(true);
                 }
                 else
@@ -240,6 +246,7 @@ public class MGC : MonoBehaviour {
                                     child.KillSegment(2f, 1f);
                                 }
                                 TiersPassed++;
+                                SM.PlaySFX(SFX.Whoosh);
                                 // Set progress bar amount, if casual mode
                                 if (LevelManager.Instance.GetGameMode() == 0) levelManager.ChangeProgressBar(1.0f - (BallHeight / TiersPerLevel), CasualLevel, false);
                                 // Set powerball aplha/colour coroutine
@@ -262,6 +269,7 @@ public class MGC : MonoBehaviour {
                             TiersPassed = 0;
                             camera.GetComponent<CameraController2>().SetToHeight(TierToCheck + 1);
                             CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
+                            SM.PlaySFX(SFX.Laser);
                             // Reset powerball colour
                             break;
 
@@ -276,6 +284,7 @@ public class MGC : MonoBehaviour {
                                 CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                                 break;
                             }
+                            SM.PlaySFX(SFX.Titter);
                             GameRunning = false;
                             GameOver(false);
                             break;
@@ -291,6 +300,8 @@ public class MGC : MonoBehaviour {
 
     public void BreakthroughTier (int TierToDie)
     {
+        // Let's make some noise about it ...
+        SM.PlaySFX(SFX.Boom);
         // Find and run break scripts for current tier's parent segment, and its children
         BreakawayAndDie[] childrenBreakSegs;
         GameObject parentBreakSeg = GameObject.FindWithTag(TierToDie.ToString());

@@ -3149,7 +3149,10 @@ MonoBehaviour:
   LevelSpanForZeroTo100Percent: 20
   PercentOfPossibleTiersInPool: 0.25
   Music_ON: 1
+  Music_Vol: 1
   SFX_ON: 1
+  SFX_Vol: 1
+  MusicChoice: 6
 --- !u!4 &452659519
 Transform:
   m_ObjectHideFlags: 0
