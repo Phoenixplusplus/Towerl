@@ -53,6 +53,12 @@ public class MGC : MonoBehaviour {
     public int LevelSpanForZeroTo100Percent = 20; // anything over this will be 100% difficulty
     public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
 
+    [Header("Music/SFX on bools & Music Selection")]
+    // N.B. Sound Manager looks for changes in these and behaves accordingly (or it will eventually)
+    public bool Music_ON = true;
+    public bool SFX_ON = true;
+    public string MusicChoice = "Punk"; // ... placeholder for later.
+
     // --------------------//
     // establish Singelton //
     // ------------------- //
@@ -210,16 +216,7 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
-                    // Add Game Over (Win) complete code here ... or call a function ;p
-                    // but for our purposes now
-                    //double Start = Time.realtimeSinceStartup;
-                    //DestroyLevel();
-                    //levelBuilder.BuildRandomLevel();
-                    //ResetBall();
-                    //Debug.Log("Time to Destroy, Rebuild and Reset = " + (Time.realtimeSinceStartup - Start).ToString());
-
                     GameOver(true);
-
                 }
                 else
                 {
