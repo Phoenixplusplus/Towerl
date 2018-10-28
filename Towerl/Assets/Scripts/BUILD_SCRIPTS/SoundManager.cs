@@ -224,7 +224,7 @@ public class SoundManager : MonoBehaviour
     // IMPORTANT ... Currently not implemeted in the GUI.  Needs to be called when e.g. any "Sounds options select" window is CLOSED
     // it "is" called when someone updates "Music Choice" in teh Inspector ... because it would be annoying oherwise ;p
     // but clearly Users won't have that luxury
-    void SetPlayerSoundPref ()
+    public void SetPlayerSoundPref ()
     {
         PlayerPrefs.SetInt("MusicChoice", (int)Controller.MusicChoice);
         PlayerPrefs.SetFloat("MusicVol", Controller.Music_Vol);
