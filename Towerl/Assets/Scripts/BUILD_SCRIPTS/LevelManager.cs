@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
         scoreText = userInterface.CNVS_gameplay.gameObject.transform.Find("Score");
         scoreAnimation = userInterface.CNVS_gameplay.gameObject.transform.Find("Score").GetComponent<ScoreAnimation>();
         LoadLevelData();
-        LoadPlayerCausalLevel(); 
+        LoadPlayerCausalLevel();
     }
 
     /// ////////////////////////////////
@@ -132,18 +132,22 @@ public class LevelManager : MonoBehaviour
         switch (m_gameMode)
         {
             case (int)MODE_TYPE.CASUAL:
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_MenuBackground").GetComponent<RectTransform>().anchoredPosition = new Vector2(844.47f, 0.46021f); // needs to be reset before setting active to false
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
                 userInterface.CNVS_mainMenu.gameObject.SetActive(true);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_MenuBackground").GetComponent<RectTransform>().anchoredPosition = new Vector2(844.47f, 0.46021f);
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
                 userInterface.CNVS_ThemeOne.gameObject.SetActive(true);       
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_MenuBackground").GetComponent<RectTransform>().anchoredPosition = new Vector2(844.47f, 0.46021f);
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
                 userInterface.CNVS_ThemeTwo.gameObject.SetActive(true);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_THREE:
+                userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_MenuBackground").GetComponent<RectTransform>().anchoredPosition = new Vector2(844.47f, 0.46021f);
                 userInterface.CNVS_gameplay.gameObject.SetActive(false);
                 userInterface.CNVS_ThemeThree.gameObject.SetActive(true);
                 break;

@@ -79,23 +79,23 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenOrCloseMenu()
     {
-        /** If menu is not opened, open it */
-        if (!m_IsMenuOpened)
-        {
-            if (BTN_ResetCasualLevelData.isActiveAndEnabled == true) OpenOrCloseDevMenu();
+        ///** If menu is not opened, open it */
+        //if (!m_IsMenuOpened)
+        //{
+        //    if (BTN_ResetCasualLevelData.isActiveAndEnabled == true) OpenOrCloseDevMenu();
 
-            BTN_Continue.gameObject.SetActive(true);
-            BTN_BackToMenu.gameObject.SetActive(true);
-            BTN_QuitGame.gameObject.SetActive(true);
-            m_IsMenuOpened = true;
-        }
-        else /** If menu is opened, close it */
-        {
-            BTN_Continue.gameObject.SetActive(false);
-            BTN_BackToMenu.gameObject.SetActive(false);
-            BTN_QuitGame.gameObject.SetActive(false);
-            m_IsMenuOpened = false;
-        }
+        //    BTN_Continue.gameObject.SetActive(true);
+        //    BTN_BackToMenu.gameObject.SetActive(true);
+        //    BTN_QuitGame.gameObject.SetActive(true);
+        //    m_IsMenuOpened = true;
+        //}
+        //else /** If menu is opened, close it */
+        //{
+        //    BTN_Continue.gameObject.SetActive(false);
+        //    BTN_BackToMenu.gameObject.SetActive(false);
+        //    BTN_QuitGame.gameObject.SetActive(false);
+        //    m_IsMenuOpened = false;
+        //}
     }
 
     public void OpenOrCloseDevMenu()

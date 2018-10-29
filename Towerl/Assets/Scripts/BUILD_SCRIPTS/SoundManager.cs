@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviour
     private bool SFXON;
     private float SFXVol;
     private Music PlayerPref;
+    private Music CurrentTrack;
 
     /// <summary>
     /// DEVELOPER NOTE
@@ -49,6 +50,17 @@ public class SoundManager : MonoBehaviour
     public void PlayMusic(Music choice)
     {
         sources[0].clip = MusicFiles[(int)choice];
+        sources[0].loop = true;
+        sources[0].Play(0);
+        if (!MusicOn) PauseMusic();
+        CurrentTrack = choice;
+    }
+
+    public void PlayNextTrack()
+    {
+        if (CurrentTrack >= (Music)9) CurrentTrack = 0;
+        CurrentTrack++;
+        sources[0].clip = MusicFiles[(int)CurrentTrack];
         sources[0].loop = true;
         sources[0].Play(0);
         if (!MusicOn) PauseMusic();
