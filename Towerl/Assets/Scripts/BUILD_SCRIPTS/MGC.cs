@@ -200,6 +200,8 @@ public class MGC : MonoBehaviour {
             ResetPlayerCasualLevel();
         }
 
+        // adroid back button ^_^
+        if (Input.GetKeyDown(KeyCode.Escape)) StopMe();
     }
 
     public void MoveTheBall()
@@ -302,6 +304,8 @@ public class MGC : MonoBehaviour {
     {
         // Let's make some noise about it ...
         SM.PlaySFX(SFX.Boom);
+        // and give it some vibration
+        StartCoroutine(ActivateVibration(0.2f, true));
         // Find and run break scripts for current tier's parent segment, and its children
         BreakawayAndDie[] childrenBreakSegs;
         GameObject parentBreakSeg = GameObject.FindWithTag(TierToDie.ToString());
@@ -466,6 +470,23 @@ public class MGC : MonoBehaviour {
             time += Time.deltaTime;
             yield return null;
             if (time > 0.3f) Trail.enabled = true; 
+        }
+    }
+
+    IEnumerator ActivateVibration(float delay, bool enabled)
+    {
+        float time = 0;
+        while (enabled == true)
+        {
+            time += Time.deltaTime;
+            yield return null;
+            if (time > delay)
+            {
+                Handheld.Vibrate();
+                time = 0;
+                enabled = false;
+                yield break;
+            }
         }
     }
 }

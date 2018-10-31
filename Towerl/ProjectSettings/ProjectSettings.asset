@@ -150,7 +150,7 @@ PlayerSettings:
   targetPixelDensity: 30
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
-  androidMaxAspectRatio: 2.1
+  androidMaxAspectRatio: 37.18
   applicationIdentifier:
     Android: uk.co.kingston.ci6510.Towerl
   buildNumber: {}
