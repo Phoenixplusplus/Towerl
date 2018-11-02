@@ -35,7 +35,7 @@ public class MGC : MonoBehaviour {
     public Vector3 CurrentBallVelocity;
     public float TowerAngle;
     public int CurrentTier;
-    public bool BallFalling = false;
+    public bool BallFalling = false; // used by camera to establish if if needs to track down
     public bool GameRunning = false;
     private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
     public float CurrentGameTime = 0; // Auto incremented in "Update()"
@@ -46,22 +46,23 @@ public class MGC : MonoBehaviour {
     [Header("Global Game Control Flags/States")]
     public int CurrentLevel;
     public int CasualLevel = 0;
-    public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase
-    private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc)
+    public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase // QUESTION - ARE WE USING THIS ANYWHERE ?
+    private int CurrentScreen = 1; // use 1 for "Playing Game" ... others TBA (menu, splash, help etc) // QUESTION - ARE WE USING THIS ANYWHERE ?
 
     [Header("Level Difficulty Calculator Variables")]
     public int LevelSpanForZeroTo100Percent = 20; // anything over this will be 100% difficulty
     public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
 
     [Header("Music/SFX bools & Music Selection")]
-    // N.B. Sound Manager looks for changes in these and behaves accordingly (or it will eventually)
-    public bool Music_ON = true;
+    // N.B. Sound Manager looks for changes in these and behaves accordingly
+    // GUI can access to update in various functions below
+    public bool Music_ON = true;    // change with ToggleMusic()
     [Range(0,1)]
-    public float Music_Vol = 1f;
-    public bool SFX_ON = true;
+    public float Music_Vol = 1f;    // change with ChangeMusicVolume(float)
+    public bool SFX_ON = true;      // change with ToggleSFX()
     [Range(0, 1)]
-    public float SFX_Vol = 1f;
-    public Music MusicChoice; // ... placeholder for later ... see Start()
+    public float SFX_Vol = 1f;      // change with ChangeMusicVolume(float)
+    public Music MusicChoice;       // Current Music Choice // cycle with ChangeMusicTrack() // WARNING ?? Revisit if number of BG tracks changes from 10
 
     // --------------------//
     // establish Singelton //
@@ -490,6 +491,7 @@ public class MGC : MonoBehaviour {
         }
     }
 
+    /////////////////
     // SOUND Changers
     public void ToggleMusic()
     {
@@ -513,7 +515,8 @@ public class MGC : MonoBehaviour {
         SFX_Vol = volume;
     }
 
-    public void ChangeMusicTrack()
+    // DANGER ... MAGIC NUMBER ALERT .. FIXED INTO 10 Background Music Tracks
+    public void ChangeMusicTrack() 
     {
         if (MusicChoice >= (Music)9)
             { MusicChoice = 0; }
@@ -522,6 +525,9 @@ public class MGC : MonoBehaviour {
             MusicChoice++;
         }
     }
+    // END OF SOUND Changers
+    ////////////////////////
+
 
 
 }
