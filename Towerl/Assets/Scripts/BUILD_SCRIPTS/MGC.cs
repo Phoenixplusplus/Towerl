@@ -489,5 +489,40 @@ public class MGC : MonoBehaviour {
             }
         }
     }
+
+    // SOUND Changers
+    public void ToggleMusic()
+    {
+        Music_ON = !Music_ON;
+    }
+
+    public void ToggleSFX()
+    {
+        SFX_ON = !SFX_ON;
+    }
+
+    public void ChangeMusicVolume (float volume)
+    {
+        volume = Mathf.Clamp(volume, 0f, 1f);
+        Music_Vol = volume;
+    }
+
+    public void ChangeSFXVolume(float volume)
+    {
+        volume = Mathf.Clamp(volume, 0f, 1f);
+        SFX_Vol = volume;
+    }
+
+    public void ChangeMusicTrack()
+    {
+        if (MusicChoice >= (Music)9)
+            { MusicChoice = 0; }
+        else
+        {
+            MusicChoice++;
+        }
+    }
+
+
 }
 
