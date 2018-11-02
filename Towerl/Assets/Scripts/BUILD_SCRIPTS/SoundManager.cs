@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
     private float SFXVol;
     private Music PlayerPref;
     private Music CurrentTrack;
+    private float SaveTimer = 0;
 
     /// <summary>
     /// DEVELOPER NOTE
@@ -160,9 +161,22 @@ public class SoundManager : MonoBehaviour
 
     void Update ()
     {
-        // probably better to have this as a struct one day
+        // Save Preferences if incremented Save Timer less than 1
+        if (SaveTimer > 0)
+        {
+            SaveTimer -= Time.deltaTime;
+            if (SaveTimer <= 0)
+            {
+                SetPlayerSoundPref();
+                Debug.Log("Player Sound Preferences Updated by Sound Manager");
+                SaveTimer = 0;
+            }
+        }
+
+        // Music on/off toggled
         if (Controller.Music_ON != MusicOn)
         {
+            SaveTimer = 3f;
             MusicOn = Controller.Music_ON;
             if (Controller.Music_ON) // music switched ON
             {
@@ -177,8 +191,10 @@ public class SoundManager : MonoBehaviour
             }
         }
 
+        // SFX on/off toggled
         if (Controller.SFX_ON != SFXON)
         {
+            SaveTimer = 3f;
             SFXON = Controller.SFX_ON;
             if (Controller.SFX_ON) // SFX switched ON
                 {
@@ -188,25 +204,31 @@ public class SoundManager : MonoBehaviour
                 { KillSFX(); }
         }
 
+        // Change in desired Music volume
         if (Controller.Music_Vol != MusicVol)
         {
+            SaveTimer = 3f;
             MusicVol = Controller.Music_Vol;
             SetMusicVolume(Controller.Music_Vol);
         }
 
+        // Change in desired SFX volume
         if (Controller.SFX_Vol != SFXVol)
         {
+            SaveTimer = 3f;
             SFXVol = Controller.SFX_Vol;
             SetSFXVolume(Controller.SFX_Vol);
         }
 
+        // Change in desired Background Music // N.B. 
+        // IMPORTANT // MGC has a hard wired 10 selection of Background Music Choices in ChangeMusicTrack()
         if (Controller.MusicChoice != PlayerPref)
         {
+            SaveTimer = 3f;
             PlayerPref = Controller.MusicChoice;
             PlayMusic(PlayerPref);
             SetPlayerSoundPref();
         }
-
     }
     ////////////////////////////////////
     // PLAYER MUSIC PREFERENCE Get/Sets
@@ -233,9 +255,8 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    // IMPORTANT ... Currently not implemeted in the GUI.  Needs to be called when e.g. any "Sounds options select" window is CLOSED
-    // it "is" called when someone updates "Music Choice" in teh Inspector ... because it would be annoying oherwise ;p
-    // but clearly Users won't have that luxury
+    // IMPORTANT ... SetPlayerSoundPref handled within sound Manager
+    // and change to sound preferences creates a 3 second count down.  If no further change for 3 seconds, it saves.
     public void SetPlayerSoundPref ()
     {
         PlayerPrefs.SetInt("MusicChoice", (int)Controller.MusicChoice);
