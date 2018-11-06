@@ -29,6 +29,7 @@ public class MGC : MonoBehaviour {
     public float Gravity = -3f;
     public float KeyboardControlSensetivity = 80f;
     public float TouchControlSensetivity = 110f;
+    public int SkinType;
 
     [Header("Game In-Play Details")]
     public float BallHeight;

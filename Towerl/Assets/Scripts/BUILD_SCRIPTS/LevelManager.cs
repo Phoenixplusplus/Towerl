@@ -9,6 +9,14 @@ public enum MODE_TYPE
     STORY_MODE_THEME_THREE
 }
 
+public enum SKIN_TYPE
+{
+    CASUAL,
+    TREE,
+    ROCK,
+    NEON
+}
+
 struct LevelData
 {
     public string highScoreString;
@@ -31,6 +39,8 @@ public class LevelManager : MonoBehaviour
     private int CurrentPlayerCasualLevelReached;
     /** Game mode variable, store current game mode */
     private int m_gameMode;
+    /** Skin mode variable, store current skin mode */
+    private int m_skinType;
     /** Array of level datas, store highscore, stars earned for each level */
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
     /** Userinterface Manager*/
@@ -98,24 +108,32 @@ public class LevelManager : MonoBehaviour
         {
             case (int)MODE_TYPE.CASUAL:
                 m_gameMode = (int)MODE_TYPE.CASUAL;
+                m_skinType = (int)SKIN_TYPE.CASUAL;
+                GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
                 userInterface.CNVS_mainMenu.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(true);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_ONE:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_ONE;
+                m_skinType = (int)SKIN_TYPE.TREE;
+                GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
                 userInterface.CNVS_ThemeOne.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_TWO:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_TWO;
+                m_skinType = (int)SKIN_TYPE.ROCK;
+                GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
                 userInterface.CNVS_ThemeTwo.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 break;
             case (int)MODE_TYPE.STORY_MODE_THEME_THREE:
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_THREE;
+                m_skinType = (int)SKIN_TYPE.NEON;
+                GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
                 userInterface.CNVS_ThemeThree.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);

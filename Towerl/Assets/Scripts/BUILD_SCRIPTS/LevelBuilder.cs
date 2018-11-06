@@ -7,10 +7,19 @@ public class LevelBuilder : MonoBehaviour {
     private int Level;
     private int TierCount;
 
+    [Header("Meshes")]
     public Transform Column;
     public Transform Seg15;
+    public Transform TreeHazardMesh;
+
+    [Header("Slice Materials")]
     public Material safeTransparentMaterial;
     public Material hazardTransparentMaterial;
+    public Material invisibleMaterial;
+    public Material treeSafeMaterial;
+    public Material treeHazardMaterial;
+    public Material treeSafeTransparentMaterial;
+    public Material treeHazardTransparentMaterial;
 
     // 268 colours, 134 combinations
     // even number is safe colour, odd number is hazard colour
@@ -123,23 +132,98 @@ public class LevelBuilder : MonoBehaviour {
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
 
+        // set skin for MASTER slice
+        switch (Controller.SkinType)
+        {
+            // casual
+            case 0:
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                break;
+            // tree
+            case 1:
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = treeSafeMaterial;
+                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = treeSafeTransparentMaterial;
+                break;
+            // rock
+            case 2:
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                break;
+            // neon
+            case 3:
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                break;
+        }
+
         // make each 15 degree segment fanning around from the "base segement .. (above)"
         for (int i = 1; i < 24; i++)
         {
             if (data[i] > 0)
             {
-            Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y) / 2, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
-            segClone.transform.localScale = Controller.SegmentScale;
-            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
-            segClone.gameObject.AddComponent<BreakawayAndDie>(); // add death script
-            segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
+                Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y) / 2, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
+                segClone.transform.localScale = Controller.SegmentScale;
+                segClone.gameObject.AddComponent<BreakawayAndDie>(); // add death script
+                segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
+                // now set the skin for every other safe slice
+                switch (Controller.SkinType)
+                {
+                    // casual
+                    case 0:
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        break;
+                    // tree
+                    case 1:
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = treeSafeMaterial;
+                        segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = treeSafeTransparentMaterial;
+                        break;
+                    // rock
+                    case 2:
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        break;
+                    // neon
+                    case 3:
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        break;
+                }
+
                 if (data[i] == 2)
                 {
-                    segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
-                    Color hazardColour;
-                    ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
-                    segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
-                    segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = hazardTransparentMaterial; // give segment a transparent death material
+                    // different method.. some hazard slices have custom meshes to factor in
+                    switch (Controller.SkinType)
+                    {
+                        // casual
+                        case 0:
+                            segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            Color hazardColour;
+                            ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = hazardTransparentMaterial; // give segment a transparent death material
+                            break;
+                        // tree
+                        case 1:
+                            // tree hazard has a different mesh, pop the invisible material on the original hazard slice
+                            // we will use it as a base for the new mesh's transform
+                            segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = invisibleMaterial;
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().isInvisible = true; // THIS IS IMPORTANT
+                            Transform treeHazard = (Transform)Instantiate(TreeHazardMesh, segClone.transform.position, segClone.transform.rotation);
+                            // hard coding this in for the moment, change later
+                            treeHazard.transform.localScale = new Vector3(30f, 30f, 30f);
+                            treeHazard.transform.Rotate(Vector3.up, 7.5f);
+                            //
+                            treeHazard.gameObject.AddComponent<BreakawayAndDie>(); // add death script
+                            treeHazard.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = treeHazardTransparentMaterial; // give segment a transparent death material
+                            // don't forget to parent the new mesh
+                            treeHazard.transform.parent = Seg0.transform;
+                            break;
+                        // rock
+                        case 2:
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            break;
+                        // neon
+                        case 3:
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            break;
+                    }
                 }
             segClone.transform.parent = Seg0.transform;
             }
