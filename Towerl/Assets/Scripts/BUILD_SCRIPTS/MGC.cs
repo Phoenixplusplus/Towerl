@@ -122,6 +122,7 @@ public class MGC : MonoBehaviour {
         Ball.GetComponent<TrailRenderer>().enabled = false;
         StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
         levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
+        camera.GetComponent<CameraController2>().EnableAdventureMap(false);
 
 
         //Destroy any existing Towers
