@@ -38,6 +38,10 @@ public class MGC : MonoBehaviour {
     public int CurrentTier;
     public bool BallFalling = false; // used by camera to establish if if needs to track down
     public bool GameRunning = false;
+    public bool isAnimating = false;
+    public bool resultGameOver = false;
+    private float animationTimer = 0f;
+    private float maxAnimationTime = .5f;
     private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
     public float CurrentGameTime = 0; // Auto incremented in "Update()"
     private float LastGameTime = 0;
@@ -182,19 +186,25 @@ public class MGC : MonoBehaviour {
         // Debug.Log(CurrentGameScore); // might need it again one day
         if (GameRunning)
         {
-            // CONTROLS (only need Controls is Game is Running)
-            TowerAngle -= Input.GetAxis("Horizontal") * KeyboardControlSensetivity * Time.deltaTime; // Keyboard input applied to TowerAngle
-            // Normalise Tower angle to something between 0-360
-            if (TowerAngle < 0f)
-            {
-                while (TowerAngle < 0f) { TowerAngle += 360f; }
-            }
-            if (TowerAngle > 360f)
-            {
-                while (TowerAngle > 360f) { TowerAngle -= 360f; }
-            }
-            MoveTheBall();
             CurrentGameTime += Time.deltaTime; // Adds the game time (GUI ... Talk to me, baby !!)
+            
+            // do start animation stuff here..
+
+            if (CurrentGameTime > maxAnimationTime)
+            {
+                // CONTROLS (only need Controls is Game is Running)
+                TowerAngle -= Input.GetAxis("Horizontal") * KeyboardControlSensetivity * Time.deltaTime; // Keyboard input applied to TowerAngle
+                                                                                                         // Normalise Tower angle to something between 0-360
+                if (TowerAngle < 0f)
+                {
+                    while (TowerAngle < 0f) { TowerAngle += 360f; }
+                }
+                if (TowerAngle > 360f)
+                {
+                    while (TowerAngle > 360f) { TowerAngle -= 360f; }
+                }
+                MoveTheBall();
+            }
         }
 
         // Enable Ctrl+R to "Reset Player Casual Level"
@@ -205,6 +215,9 @@ public class MGC : MonoBehaviour {
 
         // adroid back button ^_^
         if (Input.GetKeyDown(KeyCode.Escape)) StopMe();
+
+        // animation and gameover
+        if (isAnimating == true) UpdateAnimation(maxAnimationTime, resultGameOver);
     }
 
     public void MoveTheBall()
@@ -227,7 +240,9 @@ public class MGC : MonoBehaviour {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
                     SM.PlaySFX(SFX.Boom);
-                    GameOver(true);
+                    resultGameOver = true;
+                    isAnimating = true; // trigger the function at the end of Update()
+                    //GameOver(resultGameOver);
                 }
                 else
                 {
@@ -290,8 +305,9 @@ public class MGC : MonoBehaviour {
                                 break;
                             }
                             SM.PlaySFX(SFX.Titter);
-                            GameRunning = false;
-                            GameOver(false);
+                            resultGameOver = false;
+                            isAnimating = true; // trigger the function at the end of Update()
+                            //GameOver(resultGameOver);
                             break;
 
                         default:
@@ -395,7 +411,6 @@ public class MGC : MonoBehaviour {
         {
             Destroy(frag);
         }
-
     }
 
     // Finds and asks the relevant tier to return the segement code we are interested in
@@ -428,6 +443,30 @@ public class MGC : MonoBehaviour {
         camera.gameObject.GetComponent<CameraController2>().ResetCameraToTop();
         GameRunning = true;
         TowerAngle = 0f;
+    }
+
+    public void UpdateAnimation(float maxAnimationTime, bool result)
+    {
+        GameRunning = false;
+        if (animationTimer < maxAnimationTime)
+        {
+            animationTimer += Time.deltaTime;
+            // do animation stuff
+            if (result == true)
+            {
+                // hurray you won
+            }
+            else
+            {
+                // boo you lost
+            }
+        }
+        else
+        {
+            animationTimer = 0;
+            isAnimating = false;
+            GameOver(result); // this ultimately sets gameRunning to true again
+        }
     }
 
     IEnumerator PowerballStatus(GameObject Powerball)
