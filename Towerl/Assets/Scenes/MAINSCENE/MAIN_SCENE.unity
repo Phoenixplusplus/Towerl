@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &30352273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -350,6 +350,10 @@ Prefab:
     - target: {fileID: 1356957567019978, guid: 5d7332acc78ff414d941c9ff8b5c8c70, type: 2}
       propertyPath: m_Name
       value: AdventureBackdrop
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986877920449844, guid: 5d7332acc78ff414d941c9ff8b5c8c70, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.84990656
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d7332acc78ff414d941c9ff8b5c8c70, type: 2}
@@ -6447,6 +6451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939a8dde1404a1944af44e48c5a3f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Camera: {fileID: 1192086656}
   touchRotation: {x: 0, y: 0}
   screenDimensions: {x: 0, y: 0}
   touchEnabled: 0
@@ -12028,6 +12033,8 @@ MonoBehaviour:
   Duration: 1
   enableShake: 0
   enableCameraPan: 0
+  cameraMaxHeight: 67
+  cameraMinHeight: 35
 --- !u!1 &1212762520
 GameObject:
   m_ObjectHideFlags: 0
@@ -17981,16 +17988,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MusicFiles:
-  - {fileID: 8300000, guid: c7865cfefb0afb44e8584a91a0ea09f0, type: 3}
-  - {fileID: 8300000, guid: 36e5d73d6edb1fb45885f8764904a8e5, type: 3}
-  - {fileID: 8300000, guid: aabbfb6109832da47ac65955d16367c5, type: 3}
-  - {fileID: 8300000, guid: 36b01d8b91918944fbea60d6a7cb2be0, type: 3}
-  - {fileID: 8300000, guid: e36e7cdfbcdf3404791b6e6e0df13551, type: 3}
-  - {fileID: 8300000, guid: 6b3548e07046ba9499f3751a9f417b0a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 8300000, guid: efb0832c829910649a9a84c68acbdbd5, type: 3}
-  - {fileID: 8300000, guid: 32659fef29f5b494dadcfb9340a5e529, type: 3}
-  - {fileID: 8300000, guid: 63339ee9f44f430488f22214b399423f, type: 3}
-  - {fileID: 8300000, guid: 6b0684bf5c67bda4cbd1b312107e72e2, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   SFXFiles:
   - {fileID: 8300000, guid: 8391030f86673df458185b6bc85ec0b7, type: 3}
   - {fileID: 8300000, guid: ce69424c8fa52684282d52e92d0cf66c, type: 3}

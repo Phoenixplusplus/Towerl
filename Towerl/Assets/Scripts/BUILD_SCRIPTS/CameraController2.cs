@@ -19,8 +19,11 @@ public class CameraController2 : MonoBehaviour {
     public float Duration = 1f;
     public bool enableShake = false;
     public bool enableCameraPan = false;
+
     Vector3 startPosition;
     Vector3 initialPosition;
+    public float cameraMaxHeight = 67.0f;
+    public float cameraMinHeight = 35.0f;
 
 
     // Use this for initialization
@@ -56,7 +59,7 @@ public class CameraController2 : MonoBehaviour {
         }
 
         // for adventure menu mode
-        if (enableCameraPan)
+        if (enableCameraPan && transform.position.y < cameraMaxHeight && transform.position.y >= cameraMinHeight)
         {
             if (Input.GetKey("up"))
             {
@@ -68,6 +71,9 @@ public class CameraController2 : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * 5f, transform.position.z);
             }
         }
+        // resrict
+        if (enableCameraPan && transform.position.y > cameraMaxHeight) transform.position = new Vector3(transform.position.x, cameraMaxHeight, transform.position.z);
+        if (enableCameraPan && transform.position.y < cameraMinHeight) transform.position = new Vector3(transform.position.x, cameraMinHeight, transform.position.z);
     }
 
     // Called on Start (after # Tiers in game has been declared)

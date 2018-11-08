@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TouchController : MonoBehaviour {
 
+    public Camera Camera;
     private MGC Controller;
+    private CameraController2 c_Camera;
 
     private Touch userTouch;
     public Vector2 touchRotation, screenDimensions;
@@ -13,6 +15,7 @@ public class TouchController : MonoBehaviour {
     void Start()
     {
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        c_Camera = Camera.GetComponent<CameraController2>();
 
         screenDimensions = new Vector2(Screen.width, Screen.height);
     }
@@ -29,6 +32,11 @@ public class TouchController : MonoBehaviour {
             {
                 // get movement since last frame, normalise, multiply by sensitivity from manager
                 Controller.TowerAngle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
+
+                if (c_Camera.enableCameraPan)
+                {
+                    Camera.transform.position = new Vector3(Camera.transform.position.x, Camera.transform.position.y - ((userTouch.deltaPosition.y / screenDimensions.y) * (Controller.TouchControlSensetivity / 4)), Camera.transform.position.z);
+                }
             }
             // do other events based on touch below
 

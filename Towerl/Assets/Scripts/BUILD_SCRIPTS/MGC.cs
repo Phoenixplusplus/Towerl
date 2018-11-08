@@ -331,9 +331,18 @@ public class MGC : MonoBehaviour {
                             resultGameOver = false;
                             isAnimating = true; // trigger the function at the end of Update()
                             // try again sprite
-                            GameObject s_tryAgainSprite = Instantiate(tryAgainSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
-                            s_tryAgainSprite.transform.localScale = new Vector3(1.0f, 0.25f, 0.5f);
-                            s_tryAgainSprite.GetComponent<EarnedSprite>().time = 0.3f;
+                            if (LevelManager.Instance.GetGameMode() == 0)
+                            {
+                                GameObject s_tryAgainSprite = Instantiate(tryAgainSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                                s_tryAgainSprite.transform.localScale = new Vector3(1.0f, 0.25f, 0.5f);
+                                s_tryAgainSprite.GetComponent<EarnedSprite>().time = 0.3f;
+                            }
+                            else
+                            {
+                                GameObject s_tryAgainSprite = Instantiate(tryAgainSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                                s_tryAgainSprite.transform.localScale = new Vector3(1.0f, 0.25f, 0.5f);
+
+                            }
                             //GameOver(resultGameOver);
                             break;
 
