@@ -22,6 +22,7 @@ public class MGC : MonoBehaviour {
     public GameObject twoStarsEarnedSprite;
     public GameObject threeStarsEarnedSprite;
     public GameObject tryAgainSprite;
+    public GameObject levelUpSprite;
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
@@ -405,17 +406,14 @@ public class MGC : MonoBehaviour {
                 if (result) // win
                 {
                     DestroyLevel();
-                    // set starts on score
+                    // set stars on score
                     if (CurrentGameScore < 7500) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
                     else if (CurrentGameScore > 7500 && CurrentGameScore < 15000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
                     else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
-                    //LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), Random.Range(1, 3));
-                    //LevelManager.Instance.SetLevelHighScore(LevelManager.Instance.GetSelectedLevel(), "Put here number"));
                     LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
                     LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
                     StopMe();
                     camera.GetComponent<CameraController2>().EnableAdventureMap(true);
-                    //levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
                 }
                 else
                 {
@@ -496,15 +494,6 @@ public class MGC : MonoBehaviour {
             if (animationTimer < maxAnimationTime)
             {
                 animationTimer += Time.deltaTime;
-
-                if (result == true)
-                {
-                    // hurray you won
-                }
-                else
-                {
-                    // boo you lost
-                }
             }
             else
             {
@@ -518,15 +507,6 @@ public class MGC : MonoBehaviour {
             if (animationTimer < maxAnimationTime * 2)
             {
                 animationTimer += Time.deltaTime;
-
-                if (result == true)
-                {
-                    // hurray you won
-                }
-                else
-                {
-                    // boo you lost
-                }
             }
             else
             {
@@ -542,8 +522,8 @@ public class MGC : MonoBehaviour {
     {
         if (LevelManager.Instance.GetGameMode() == 0)
         {
-            GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
-            s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+            GameObject s_levelSprite = Instantiate(levelUpSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+            s_levelSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
         }
         if (LevelManager.Instance.GetGameMode() != 0)
         {
@@ -552,21 +532,21 @@ public class MGC : MonoBehaviour {
                 GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
                 s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
                 GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_oneSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+                s_oneSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
             }
             else if (CurrentGameScore > 7500 && CurrentGameScore < 15000)
             {
                 GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
                 s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
                 GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_twoSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+                s_twoSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
             }
             else
             {
                 GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
                 s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
                 GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_threeSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+                s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
             }
         }
     }

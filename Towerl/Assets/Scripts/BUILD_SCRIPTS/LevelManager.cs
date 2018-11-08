@@ -231,10 +231,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void ChangeScore(int previousScore, int currentScore, bool isInit)
-    {
-        scoreAnimation.SetNumber(previousScore, currentScore, isInit);
-    }
+    public void ChangeScore(int previousScore, int currentScore, bool isInit) { scoreAnimation.SetNumber(previousScore, currentScore, isInit); }
 
 
     /** Set the selected level to new level, called when player click on the one of the thirty levels buttons or
