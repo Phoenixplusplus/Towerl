@@ -7,6 +7,12 @@ public class CameraController2 : MonoBehaviour {
     private MGC Controller;
     public GameObject adventureBackdrop;
 
+    [Header("Backdrop Textures")]
+    public Material casualBackdrop;
+    public Material treeBackdrop;
+    public Material rockBackdrop;
+    public Material neonbackdrop;
+
     [Header("CameraShake")]
     public float shakePower = 0.2f;
     public float shakeAbsorb = 1f;
@@ -62,7 +68,7 @@ public class CameraController2 : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * 5f, transform.position.z);
             }
         }
-	}
+    }
 
     // Called on Start (after # Tiers in game has been declared)
     // Subsequently available for the Game Controller (usually upon Ball Reset to top))
@@ -107,6 +113,18 @@ public class CameraController2 : MonoBehaviour {
             transform.GetChild(0).gameObject.SetActive(true);
             adventureBackdrop.SetActive(false);
             enableCameraPan = false;
+        }
+    }
+
+    // change backdrop
+    public void ChangeBackdropMaterial(int gamemode)
+    {
+        switch (gamemode)
+        {
+            case 0: transform.GetChild(0).GetComponent<Renderer>().material = casualBackdrop; break;
+            case 1: transform.GetChild(0).GetComponent<Renderer>().material = treeBackdrop; break;
+            case 2: transform.GetChild(0).GetComponent<Renderer>().material = rockBackdrop; break;
+            case 3: transform.GetChild(0).GetComponent<Renderer>().material = neonbackdrop; break;
         }
     }
 }

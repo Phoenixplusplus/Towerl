@@ -14,6 +14,14 @@ public class MGC : MonoBehaviour {
     public SoundManager SM;
     public GameObject scoreSprite;
     public GameObject bonusSprite;
+    public GameObject startSprite;
+    public GameObject notbadSprite;
+    public GameObject niceSprite;
+    public GameObject amazingSprite;
+    public GameObject oneStarEarnedSprite;
+    public GameObject twoStarsEarnedSprite;
+    public GameObject threeStarsEarnedSprite;
+    public GameObject tryAgainSprite;
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
@@ -42,11 +50,13 @@ public class MGC : MonoBehaviour {
     public bool resultGameOver = false;
     private float animationTimer = 0f;
     private float maxAnimationTime = .5f;
+    private bool startAnimation = false;
     private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
     public float CurrentGameTime = 0; // Auto incremented in "Update()"
     private float LastGameTime = 0;
     public int CurrentGameScore = 0; // Modified in "MoveTheBall()" (called in Update() .. if required)
     private int LastGameScore = 0;
+    private int storyBonusMultiplier = 3;
 
     [Header("Global Game Control Flags/States")]
     public int CurrentLevel;
@@ -129,7 +139,6 @@ public class MGC : MonoBehaviour {
         levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
         camera.GetComponent<CameraController2>().EnableAdventureMap(false);
 
-
         //Destroy any existing Towers
         DestroyLevel();
 
@@ -161,24 +170,33 @@ public class MGC : MonoBehaviour {
                 levelManager.ChangeScore(LastGameScore, CurrentGameScore, true);
                 // change the progress bar too
                 levelManager.ChangeProgressBar(0f, CasualLevel, true);
+                // change backdrop
+                camera.GetComponent<CameraController2>().ChangeBackdropMaterial(LevelManager.Instance.GetGameMode());
                 break;
             default:
                 // ADD FURTHER GAME MODES HERE
                 //levelBuilder.BuildRandomLevel();
                 levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
+                levelManager.ChangeScore(0, 0, true);
+                // change backdrop
+                camera.GetComponent<CameraController2>().ChangeBackdropMaterial(LevelManager.Instance.GetGameMode());
                 break;
         };
         GameRunning = true;
+
+        // start sprite
+        GameObject s_startSprite = Instantiate(startSprite, Ball.transform.position - new Vector3(0, 1.0f, -1), new Quaternion(0, 180, -60, 1));
+        s_startSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
     }
 
     public void StopMe()
     {
         DestroyLevel();
         GameRunning = false;
+        isAnimating = false;
 
         LevelManager.Instance.SetSelectedLevel(0);
         LevelManager.Instance.UpdateCanvases();
-        camera.transform.position = new Vector3(0, 34, 0);
     }
 
     // Update is called once per frame
@@ -187,9 +205,10 @@ public class MGC : MonoBehaviour {
         // Debug.Log(CurrentGameScore); // might need it again one day
         if (GameRunning)
         {
+            //if (startAnimation == false)
+            //startAnimation = true;
+
             CurrentGameTime += Time.deltaTime; // Adds the game time (GUI ... Talk to me, baby !!)
-            
-            // do start animation stuff here..
 
             if (CurrentGameTime > maxAnimationTime)
             {
@@ -240,9 +259,11 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
-                    SM.PlaySFX(SFX.Boom);
+                    SM.PlaySFX(SFX.Woohoo);
                     resultGameOver = true;
                     isAnimating = true; // trigger the function at the end of Update()
+                    // end game sprite
+                    SpawnWinGameSprite();
                     //GameOver(resultGameOver);
                 }
                 else
@@ -308,6 +329,10 @@ public class MGC : MonoBehaviour {
                             SM.PlaySFX(SFX.Titter);
                             resultGameOver = false;
                             isAnimating = true; // trigger the function at the end of Update()
+                            // try again sprite
+                            GameObject s_tryAgainSprite = Instantiate(tryAgainSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                            s_tryAgainSprite.transform.localScale = new Vector3(1.0f, 0.25f, 0.5f);
+                            s_tryAgainSprite.GetComponent<EarnedSprite>().time = 0.3f;
                             //GameOver(resultGameOver);
                             break;
 
@@ -337,16 +362,26 @@ public class MGC : MonoBehaviour {
             child.BreakthroughSegment(2f, 1f);
         }
         // also increment the score/BONUS score here, as it's only typically done when a segment is 0, but we should add a 'multiplier' score for successful breakthrough
-        CurrentGameScore += (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
+        if (LevelManager.Instance.GetGameMode() == 0) CurrentGameScore += (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
+        else CurrentGameScore += (TiersPassed * TiersPassed) * (10 * (TiersPassed + storyBonusMultiplier));
         // Spawn score sprite
         GameObject sprite = Instantiate(scoreSprite, Ball.transform.position + new Vector3(0, 0.4f, 0), new Quaternion(0, 180, 0, 1));
-        sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel))).ToString();
+        if (LevelManager.Instance.GetGameMode() == 0) sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel))).ToString();
+        else sprite.GetComponent<TextMesh>().text = "+" + ((TiersPassed * TiersPassed) * (10 * (TiersPassed + storyBonusMultiplier))).ToString();
         sprite.GetComponent<TextMesh>().color = new Color(0.7176471f, 0.09803922f, 0.145098f, 1);
         // Spawn bonus sprite
         GameObject bonussprite = Instantiate(bonusSprite, Ball.transform.position + new Vector3(0, 0.2f, 0), new Quaternion(0, 180, 0, 1));
         // Change BONUS score on UI
-        int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
-        levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
+        if (LevelManager.Instance.GetGameMode() == 0)
+        {
+            int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * (10 * (TiersPassed + CasualLevel));
+            levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
+        }
+        else
+        {
+            int PreviousGameScore = CurrentGameScore - (TiersPassed * TiersPassed) * (10 * (TiersPassed + storyBonusMultiplier));
+            levelManager.ChangeScore(PreviousGameScore, CurrentGameScore, false);
+        }
         // enable camera shake (strength based on tiers passed)
         camera.GetComponent<CameraController2>().EnableCameraShake(0.005f * TiersPassed, 1.0f, 1.0f);
     }
@@ -370,7 +405,11 @@ public class MGC : MonoBehaviour {
                 if (result) // win
                 {
                     DestroyLevel();
-                    LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), Random.Range(1, 3));
+                    // set starts on score
+                    if (CurrentGameScore < 7500) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                    else if (CurrentGameScore > 7500 && CurrentGameScore < 15000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                    else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                    //LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), Random.Range(1, 3));
                     //LevelManager.Instance.SetLevelHighScore(LevelManager.Instance.GetSelectedLevel(), "Put here number"));
                     LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
                     LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
@@ -381,7 +420,7 @@ public class MGC : MonoBehaviour {
                 else
                 {
                     DestroyLevel();
-                    levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
+                    PlayMe();
                 }
                 break;
         };
@@ -451,24 +490,84 @@ public class MGC : MonoBehaviour {
     {
         GameRunning = false;
         BallFalling = false;
-        if (animationTimer < maxAnimationTime)
+
+        if (LevelManager.Instance.GetGameMode() == 0) // casual mode
         {
-            animationTimer += Time.deltaTime;
-            // do animation stuff
-            if (result == true)
+            if (animationTimer < maxAnimationTime)
             {
-                // hurray you won
+                animationTimer += Time.deltaTime;
+
+                if (result == true)
+                {
+                    // hurray you won
+                }
+                else
+                {
+                    // boo you lost
+                }
             }
             else
             {
-                // boo you lost
+                isAnimating = false;
+                animationTimer = 0;
+                GameOver(result); // this ultimately sets gameRunning to true again
             }
         }
-        else
+        else // story mode, give a bit more time for transition to read displayed score
         {
-            isAnimating = false;
-            animationTimer = 0;
-            GameOver(result); // this ultimately sets gameRunning to true again
+            if (animationTimer < maxAnimationTime * 2)
+            {
+                animationTimer += Time.deltaTime;
+
+                if (result == true)
+                {
+                    // hurray you won
+                }
+                else
+                {
+                    // boo you lost
+                }
+            }
+            else
+            {
+                isAnimating = false;
+                animationTimer = 0;
+                GameOver(result); // this ultimately sets gameRunning to true again
+            }
+        }
+    }
+
+    // used to spawn sprites to screen once game is won
+    public void SpawnWinGameSprite()
+    {
+        if (LevelManager.Instance.GetGameMode() == 0)
+        {
+            GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+            s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+        }
+        if (LevelManager.Instance.GetGameMode() != 0)
+        {
+            if (CurrentGameScore < 7500)
+            {
+                GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                s_oneSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+            }
+            else if (CurrentGameScore > 7500 && CurrentGameScore < 15000)
+            {
+                GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                s_twoSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+            }
+            else
+            {
+                GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                s_threeSprite.transform.localScale = new Vector3(1.3f, 0.25f, 0.5f);
+            }
         }
     }
 

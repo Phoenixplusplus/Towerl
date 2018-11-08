@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public enum Music { Techno, Rock, Smooth, Groove, Indian, Noble, Prestige, Arcade, Punk, Spiritual }
-public enum SFX { Bang, Spring, Boom, Laser, Clang, Titter, Smack, Whip1, Whip2, Whoosh }
+public enum SFX { Bang, Spring, Boom, Laser, Clang, Titter, Woohoo, Whip1, Whip2, Whoosh }
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour

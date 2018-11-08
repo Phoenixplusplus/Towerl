@@ -12,6 +12,12 @@ public class LevelBuilder : MonoBehaviour {
     public Transform Seg15;
     public Transform TreeHazardMesh;
 
+    [Header("Column Materials")]
+    public Material casualColumnMaterial;
+    public Material treeColumnMaterial;
+    public Material rockColumnMaterial;
+    public Material neonColumnMaterial;
+
     [Header("Slice Materials")]
     public Material safeTransparentMaterial;
     public Material hazardTransparentMaterial;
@@ -20,6 +26,14 @@ public class LevelBuilder : MonoBehaviour {
     public Material treeHazardMaterial;
     public Material treeSafeTransparentMaterial;
     public Material treeHazardTransparentMaterial;
+    public Material rockSafeMaterial;
+    public Material rockHazardMaterial;
+    public Material rockSafeTransparentMaterial;
+    public Material rockHazardTransparentMaterial;
+    public Material neonSafeMaterial;
+    public Material neonHazardMaterial;
+    public Material neonSafeTransparentMaterial;
+    public Material nronHazardTransparentMaterial;
 
     // 268 colours, 134 combinations
     // even number is safe colour, odd number is hazard colour
@@ -111,6 +125,15 @@ public class LevelBuilder : MonoBehaviour {
         Transform clone = (Transform)Instantiate(Column, new Vector3(0f, (float)(Controller.TiersPerLevel / 2) + ((Controller.BallScale.y) / 2), 0), Quaternion.identity);
         clone.transform.localScale = Vector3.Scale(clone.transform.localScale, Controller.ColumnScale);
         clone.gameObject.tag = "Column";
+
+        // also put a material on the column
+        switch (Controller.SkinType)
+        {
+            case 0: clone.GetComponent<Renderer>().material = casualColumnMaterial; break;
+            case 1: clone.GetComponent<Renderer>().material = treeColumnMaterial; break;
+            case 2: clone.GetComponent<Renderer>().material = rockColumnMaterial; break;
+            case 3: clone.GetComponent<Renderer>().material = neonColumnMaterial; break;
+        }
     }
 
     private void MakeTier (int Height, int TierCode, float Rotation)
