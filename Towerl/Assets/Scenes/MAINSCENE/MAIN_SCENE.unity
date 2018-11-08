@@ -6374,6 +6374,8 @@ MonoBehaviour:
   CurrentTier: 0
   BallFalling: 0
   GameRunning: 0
+  isAnimating: 0
+  resultGameOver: 0
   CurrentGameTime: 0
   CurrentGameScore: 0
   CurrentLevel: 0
@@ -18822,7 +18824,7 @@ Prefab:
     - target: {fileID: 114966724420626574, guid: 923f66f46eddeb5448cde39b503b715f,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114844575822579772, guid: 923f66f46eddeb5448cde39b503b715f,
         type: 2}

@@ -178,6 +178,7 @@ public class MGC : MonoBehaviour {
 
         LevelManager.Instance.SetSelectedLevel(0);
         LevelManager.Instance.UpdateCanvases();
+        camera.transform.position = new Vector3(0, 34, 0);
     }
 
     // Update is called once per frame
@@ -366,7 +367,7 @@ public class MGC : MonoBehaviour {
                 break;
             default:
                 // ADD STORY GAME MODE BEHAVIOUR HERE
-                if (result)
+                if (result) // win
                 {
                     DestroyLevel();
                     LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), Random.Range(1, 3));
@@ -374,6 +375,7 @@ public class MGC : MonoBehaviour {
                     LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
                     LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
                     StopMe();
+                    camera.GetComponent<CameraController2>().EnableAdventureMap(true);
                     //levelBuilder.BuildLevel(LevelManager.Instance.GetSelectedLevel());
                 }
                 else
@@ -448,6 +450,7 @@ public class MGC : MonoBehaviour {
     public void UpdateAnimation(float maxAnimationTime, bool result)
     {
         GameRunning = false;
+        BallFalling = false;
         if (animationTimer < maxAnimationTime)
         {
             animationTimer += Time.deltaTime;
@@ -463,8 +466,8 @@ public class MGC : MonoBehaviour {
         }
         else
         {
-            animationTimer = 0;
             isAnimating = false;
+            animationTimer = 0;
             GameOver(result); // this ultimately sets gameRunning to true again
         }
     }
