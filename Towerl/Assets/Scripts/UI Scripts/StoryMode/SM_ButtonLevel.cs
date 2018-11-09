@@ -67,5 +67,9 @@ public class SM_ButtonLevel : MonoBehaviour {
             case 3: /** Set the buttons positions which are between buttons, these buttons are not position on the top or bottom */
                 m_StarsImage.sprite = LevelManager.Instance.userInterface.GetThreeStarsSprite(); break;
         }
+
+        /** Activate button and load image "level is unlocked" */
+        m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsUnlockedSprite();
+        GetComponent<Button>().enabled = true;
     }
 }

@@ -43,9 +43,12 @@ public class LevelManager : MonoBehaviour
     private int m_skinType;
     /** Array of level datas, store highscore, stars earned for each level */
     private LevelData[] m_levelData = new LevelData[NUMBER_OF_LEVELS];
+    /** Array of adventure buttons */
+    private SM_ButtonLevel[] m_levelButtonsArray;
     /** Userinterface Manager*/
     public UI_Manager userInterface;
     /** Create singleton */
+
     public static LevelManager Instance
     {
         get
@@ -70,9 +73,13 @@ public class LevelManager : MonoBehaviour
         scoreAnimation = userInterface.CNVS_gameplay.gameObject.transform.Find("Score").GetComponent<ScoreAnimation>();
         LoadLevelData();
         LoadPlayerCausalLevel();
-        //
         userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
         userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(false);
+    }
+
+    void Start()
+    {
+        InitializeLevelButtons();
     }
 
     /// ////////////////////////////////
@@ -267,6 +274,29 @@ public class LevelManager : MonoBehaviour
         m_levelData[0].IsUnlocked = 1;
     }
 
+    /** Initialize all room buttons */
+    private void InitializeLevelButtons()
+    {
+        /** Get all button which contain SM_ButtonLevel script and put them into array */
+        m_levelButtonsArray = FindObjectsOfType(typeof(SM_ButtonLevel)) as SM_ButtonLevel[];
+
+        // Swap the buttons positions in array
+        // Create temporary UI_RoomButton object
+        SM_ButtonLevel a;
+        for (int i = 0; i < m_levelButtonsArray.Length; i++)
+        {
+            for (int k = 0; k < m_levelButtonsArray.Length - 1; k++)
+            {
+                if (m_levelButtonsArray[k].level > m_levelButtonsArray[k + 1].level)
+                {
+                    a = m_levelButtonsArray[k];
+                    m_levelButtonsArray[k] = m_levelButtonsArray[k + 1];
+                    m_levelButtonsArray[k + 1] = a;
+                }
+            }
+        }
+    }
+
     /** Set new level highscore */
     public void SetLevelHighScore(int requestedLevel, int newHighScore)
     {
@@ -286,9 +316,13 @@ public class LevelManager : MonoBehaviour
     /** Unlock the requested level status */
     public void UnlockLevel(int requestedLevel)
     {
+        /** If it is final level, dont unlock anything */
+        if (requestedLevel == m_levelButtonsArray.Length) return;
+       
         PlayerPrefs.SetInt(m_levelData[requestedLevel].levelLockString, 1);
         m_levelData[requestedLevel].IsUnlocked = 1;
-        PlayerPrefs.Save();
+        m_levelButtonsArray[requestedLevel].UpdateStars();
+        PlayerPrefs.Save();      
     }
 
     /** Lock the requested level status */
