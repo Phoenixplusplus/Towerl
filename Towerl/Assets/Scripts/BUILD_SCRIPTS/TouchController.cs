@@ -30,8 +30,11 @@ public class TouchController : MonoBehaviour {
             userTouch = Input.GetTouch(0);
             if (userTouch.phase == TouchPhase.Moved)
             {
-                // get movement since last frame, normalise, multiply by sensitivity from manager
-                Controller.TowerAngle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
+                if (!Controller.isAnimating)
+                {
+                    // get movement since last frame, normalise, multiply by sensitivity from manager
+                    Controller.TowerAngle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
+                }
 
                 if (c_Camera.enableCameraPan)
                 {

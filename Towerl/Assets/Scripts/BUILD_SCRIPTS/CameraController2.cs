@@ -20,8 +20,8 @@ public class CameraController2 : MonoBehaviour {
     public bool enableShake = false;
     public bool enableCameraPan = false;
 
-    Vector3 startPosition;
-    Vector3 initialPosition;
+    Vector3 startPosition, defaultPosition;
+    public Vector3 initialPosition;
     public float cameraMaxHeight = 67.0f;
     public float cameraMinHeight = 35.0f;
 
@@ -32,6 +32,7 @@ public class CameraController2 : MonoBehaviour {
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
         ResetCameraToTop();
         initialPosition = transform.position;
+        defaultPosition = initialPosition;
     }
 	
 	// Update is called once per frame
@@ -112,10 +113,21 @@ public class CameraController2 : MonoBehaviour {
             transform.GetChild(0).gameObject.SetActive(false);
             adventureBackdrop.SetActive(true);
             enableCameraPan = true;
+            for (int i = 0; i < 30; i++)
+            {
+                if (LevelManager.Instance.GetLevelStars(i) == 0 && i != 0)
+                {
+                    float buttonYPos = GameObject.Find("BTN_Level_" + i).transform.position.y;
+                    Vector3 tempPos;
+                    tempPos = new Vector3(transform.position.x, buttonYPos - 1f, transform.position.z);
+                    transform.position = tempPos;
+                    break;
+                }
+            }
         }
         else
         {
-            transform.position = initialPosition;
+            transform.position = defaultPosition;
             transform.GetChild(0).gameObject.SetActive(true);
             adventureBackdrop.SetActive(false);
             enableCameraPan = false;
