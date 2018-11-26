@@ -169,7 +169,8 @@ public class LevelBuilder : MonoBehaviour {
                 break;
             // rock
             case 2:
-                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockSafeMaterial;
+                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = rockSafeTransparentMaterial;
                 break;
             // neon
             case 3:
@@ -200,7 +201,8 @@ public class LevelBuilder : MonoBehaviour {
                         break;
                     // rock
                     case 2:
-                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockSafeMaterial;
+                        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = rockSafeTransparentMaterial;
                         break;
                     // neon
                     case 3:
@@ -240,7 +242,9 @@ public class LevelBuilder : MonoBehaviour {
                             break;
                         // rock
                         case 2:
-                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockHazardMaterial;
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = rockHazardTransparentMaterial;
                             break;
                         // neon
                         case 3:
