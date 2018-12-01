@@ -8,15 +8,33 @@ public class TierScript : MonoBehaviour {
 
     public int[] myData = new int[32];
     public float rotation = 0;
+    [SerializeField]
+    private float DeltaRot = 0f;
+    private bool Populated = false;
+    [SerializeField]
+    private float[] RotOdds = { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, -1f, 1f };
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         // Get Game Controller reference
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        if(Controller.CurrentDifficulty != 0 && tag !="0" && tag != "34")
+        {
+            float mod = Mathf.Clamp((float) Controller.CasualLevel / (float) Controller.LevelSpanForZeroTo100Percent,0f,2.5f);
+            // Debug.Log("Tier " + tag + " mod = " + mod.ToString());
+            int Magic = Random.Range(0, 10);
+            DeltaRot = 10f * RotOdds[Magic] * mod;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(DeltaRot != 0 && Controller.GameRunning)
+        {
+            rotation += DeltaRot * Time.deltaTime;
+        }
+
         // This scaling bit is purely for development experimentation
         // can be commented out for "Live Build"
         if (transform.localScale != Controller.SegmentScale)

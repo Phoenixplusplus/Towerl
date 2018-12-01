@@ -68,6 +68,7 @@ public class MGC : MonoBehaviour {
     [Header("Level Difficulty Calculator Variables")]
     public int LevelSpanForZeroTo100Percent = 20; // anything over this will be 100% difficulty
     public float PercentOfPossibleTiersInPool = 0.25f; // i.e. .25 means level 0 = first 25% of tiers, 1.0 = last 25%
+    public float CurrentDifficulty = 0f; // Used by Tiers to establish whether they need to have a rotate chance .. set to 0 on "PlayMe()" ... only given a value 0-1 when difficulty used.
 
     [Header("Music/SFX bools & Music Selection")]
     // N.B. Sound Manager looks for changes in these and behaves accordingly
@@ -134,6 +135,7 @@ public class MGC : MonoBehaviour {
         LastGameTime = CurrentGameTime;
         CurrentGameTime = 0;
         CurrentGameScore = 0;
+        CurrentDifficulty = 0; // used to establish if Tiers need to rotate ...
         TiersPassed = 0;
         Ball.GetComponent<TrailRenderer>().enabled = false;
         StartCoroutine(ActivateTrail(Ball.GetComponent<TrailRenderer>()));
@@ -163,6 +165,7 @@ public class MGC : MonoBehaviour {
                     difficulty = (float)(CasualLevel - 1) / LevelSpanForZeroTo100Percent;
                     Debug.Log("difficulty =: " + (CasualLevel - 1).ToString() + "/" + LevelSpanForZeroTo100Percent.ToString() + " equals " + difficulty.ToString());
                 }
+                CurrentDifficulty = difficulty;
                 Debug.Log(difficulty.ToString() + " ergo Difficulty level: " + (difficulty * 100).ToString() + "% for CasualLevel: " + CasualLevel.ToString());
                 levelBuilder.BuildLevelofDifficulty(difficulty);
                 // if casual mode, grab saved score
