@@ -426,11 +426,31 @@ public class MGC : MonoBehaviour {
                 {
                     DestroyLevel();
                     // set stars on score
-                    if (CurrentGameScore < 7500) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
-                    else if (CurrentGameScore > 7500 && CurrentGameScore < 15000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
-                    else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
-                    LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
-                    LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                    switch (SkinType)
+                    {
+                        case 1:
+                            if (CurrentGameScore < 7500 ) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                            else if (CurrentGameScore > 7500 && CurrentGameScore < 15000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                            else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                            LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                            LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                            break;
+                        case 2:
+                            if (CurrentGameScore < 3000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                            else if (CurrentGameScore < 8000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                            else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                            LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                            LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                            break;
+                        case 3:
+                            if (CurrentGameScore < 2000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                            else if (CurrentGameScore < 7000) LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                            else LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                            LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                            LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                            break;
+                    }
+
                     StopMe();
                     camera.GetComponent<CameraController2>().EnableAdventureMap(true);
                 }
@@ -548,26 +568,92 @@ public class MGC : MonoBehaviour {
         }
         if (LevelManager.Instance.GetGameMode() != 0)
         {
-            if (CurrentGameScore < 7500)
+            switch (SkinType)
             {
-                GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
-                s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
-                GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_oneSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
-            }
-            else if (CurrentGameScore > 7500 && CurrentGameScore < 15000)
-            {
-                GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
-                s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
-                GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_twoSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
-            }
-            else
-            {
-                GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
-                s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
-                GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
-                s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                case 1:
+                    if (CurrentGameScore < 7500)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                        GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_oneSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else if (CurrentGameScore < 15000)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                        GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_twoSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                        GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                        LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                        LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                    }
+                    break;
+                case 2:
+                    if (CurrentGameScore < 3000)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                        GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_oneSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else if (CurrentGameScore < 8000)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                        GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_twoSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                        GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                        LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                        LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                    }
+                    break;
+                case 3:
+                    if (CurrentGameScore < 2000)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 1);
+                        GameObject s_notbadSprite = Instantiate(notbadSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_notbadSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_oneSprite = Instantiate(oneStarEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_oneSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else if (CurrentGameScore < 7000)
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 2);
+                        GameObject s_niceSprite = Instantiate(niceSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_niceSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_twoSprite = Instantiate(twoStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_twoSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                    }
+                    else
+                    {
+                        LevelManager.Instance.SetLevelStars(LevelManager.Instance.GetSelectedLevel(), 3);
+                        GameObject s_amazingSprite = Instantiate(amazingSprite, Ball.transform.position - new Vector3(0, 0, -1), new Quaternion(0, 180, -60, 1));
+                        s_amazingSprite.transform.localScale = new Vector3(1, 0.3f, 0.5f);
+                        GameObject s_threeSprite = Instantiate(threeStarsEarnedSprite, Ball.transform.position - new Vector3(0, 0.5f, -1), new Quaternion(0, 180, -60, 1));
+                        s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
+                        LevelManager.Instance.UnlockLevel(LevelManager.Instance.GetSelectedLevel() + 1);
+                        LevelManager.Instance.userInterface.GetStarsButtons(LevelManager.Instance.GetSelectedLevel());
+                    }
+                    break;
             }
         }
     }
