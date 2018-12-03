@@ -174,7 +174,8 @@ public class LevelBuilder : MonoBehaviour {
                 break;
             // neon
             case 3:
-                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                //Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonSafeMaterial);
                 break;
         }
 
@@ -206,7 +207,8 @@ public class LevelBuilder : MonoBehaviour {
                         break;
                     // neon
                     case 3:
-                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        //segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonSafeMaterial);
                         break;
                 }
 
@@ -248,7 +250,8 @@ public class LevelBuilder : MonoBehaviour {
                             break;
                         // neon
                         case 3:
-                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            //segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonHazardMaterial);
                             break;
                     }
                 }

@@ -272,6 +272,8 @@ public class LevelManager : MonoBehaviour
             m_levelData[i].IsUnlocked = PlayerPrefs.GetInt(m_levelData[i].levelLockString);
         }
         m_levelData[0].IsUnlocked = 1;
+        m_levelData[10].IsUnlocked = 1;
+        m_levelData[20].IsUnlocked = 1;
     }
 
     /** Initialize all room buttons */

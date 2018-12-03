@@ -3456,8 +3456,8 @@ MonoBehaviour:
   casualColumnMaterial: {fileID: 2100000, guid: d99535c69dbf1d94eaa2a5469b3e54ec,
     type: 2}
   treeColumnMaterial: {fileID: 2100000, guid: 49178276f40f91d46a72e0e51204c785, type: 2}
-  rockColumnMaterial: {fileID: 2100000, guid: 310de065e448efc4c9e34023a6298330, type: 2}
-  neonColumnMaterial: {fileID: 2100000, guid: 372604850e4103a4c9a02f7ebe031bee, type: 2}
+  rockColumnMaterial: {fileID: 2100000, guid: bdb864269610c364dbce6f875e3793fc, type: 2}
+  neonColumnMaterial: {fileID: 2100000, guid: 54a28b22ec0a1314bb06fe5bdba8bd49, type: 2}
   safeTransparentMaterial: {fileID: 2100000, guid: ecae2893fdc257446b6464e5eca73f54,
     type: 2}
   hazardTransparentMaterial: {fileID: 2100000, guid: c7ed59576c0c7fa449f1a9da6949f436,
@@ -3475,8 +3475,8 @@ MonoBehaviour:
     type: 2}
   rockHazardTransparentMaterial: {fileID: 2100000, guid: 9db280e3733675640b1b374c08305bd2,
     type: 2}
-  neonSafeMaterial: {fileID: 0}
-  neonHazardMaterial: {fileID: 0}
+  neonSafeMaterial: {fileID: 2100000, guid: 54a28b22ec0a1314bb06fe5bdba8bd49, type: 2}
+  neonHazardMaterial: {fileID: 2100000, guid: 52c18604374bad44f9ca984b60469915, type: 2}
   neonSafeTransparentMaterial: {fileID: 0}
   nronHazardTransparentMaterial: {fileID: 0}
 --- !u!4 &348083294
@@ -14057,6 +14057,7 @@ GameObject:
   - component: {fileID: 1192086656}
   - component: {fileID: 1192086655}
   - component: {fileID: 1192086658}
+  - component: {fileID: 1192086659}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14140,7 +14141,7 @@ MonoBehaviour:
   casualBackdrop: {fileID: 2100000, guid: 19faf579e87e27c48b7b23a2e922d4e0, type: 2}
   treeBackdrop: {fileID: 2100000, guid: 08088f88e7ff495468d9d4e8b06e0400, type: 2}
   rockBackdrop: {fileID: 2100000, guid: 5cbdb8a4718a02d4eb85e53338f0aeb9, type: 2}
-  neonbackdrop: {fileID: 0}
+  neonbackdrop: {fileID: 2100000, guid: 19faf579e87e27c48b7b23a2e922d4e0, type: 2}
   shakePower: 0.2
   shakeAbsorb: 1
   Duration: 1
@@ -14149,6 +14150,18 @@ MonoBehaviour:
   initialPosition: {x: 0, y: 0, z: 0}
   cameraMaxHeight: 67
   cameraMinHeight: 35
+--- !u!114 &1192086659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1192086654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 9a951eed11220f1488aecdd1dbf65932, type: 2}
 --- !u!1001 &1209200988
 Prefab:
   m_ObjectHideFlags: 0
@@ -15553,7 +15566,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16408,7 +16421,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -21887,7 +21900,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22666,7 +22679,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
