@@ -52,6 +52,10 @@ public class MGC : MonoBehaviour {
     private float animationTimer = 0f;
     private float maxAnimationTime = .5f;
     private bool startAnimation = false;
+    [SerializeField]
+    private float SquishTimer = 0f;
+    [SerializeField]
+    private float SquishDuration = 0.5f;
     private int TiersPassed = 0; // n.b. as in "Tiers passed in a row and whether we need "POWER BALL" .. also use for score calculation
     public float CurrentGameTime = 0; // Auto incremented in "Update()"
     private float LastGameTime = 0;
@@ -60,6 +64,7 @@ public class MGC : MonoBehaviour {
     private int storyBonusMultiplier = 3;
 
     [Header("Global Game Control Flags/States")]
+    [SerializeField] bool DEVELOPMENTBUILD = true;
     public int CurrentLevel;
     public int CasualLevel = 0;
     public int CurrentGameMode = 1; // 1 = Classic, 2 = Timed/Story, 3 = Chase // QUESTION - ARE WE USING THIS ANYWHERE ?
@@ -330,6 +335,8 @@ public class MGC : MonoBehaviour {
                                 CurrentBallVelocity = new Vector3(0, BallMaxVelocity, 0);
                                 break;
                             }
+                            SquishTimer = SquishDuration;
+                            StartCoroutine(Squish());
                             SM.PlaySFX(SFX.Titter);
                             resultGameOver = false;
                             isAnimating = true; // trigger the function at the end of Update()
@@ -490,7 +497,9 @@ public class MGC : MonoBehaviour {
         BallHeight = TiersPerLevel + BallStartHeightRatio - 1;
         Ball.transform.position = new Vector3(0f, BallHeight, BallOffset);
         CurrentBallVelocity = new Vector3(0, 0, 0);
-        Ball.transform.localScale = BallScale;
+        StopCoroutine(Squish());
+        SquishTimer = 0f;
+        Ball.transform.localScale = BallScale; // useful since we may have scaled the ball upon death
         camera.gameObject.GetComponent<CameraController2>().ResetCameraToTop();
         GameRunning = true;
         TowerAngle = 0f;
@@ -561,6 +570,23 @@ public class MGC : MonoBehaviour {
                 s_threeSprite.transform.localScale = new Vector3(1.3f, 0.65f, 0.5f);
             }
         }
+    }
+
+    IEnumerator Squish()
+    {
+
+        while (SquishDuration > 0)
+        { 
+            SquishTimer -= Time.deltaTime;
+            if (SquishTimer <= 0) break;
+            float lerp = (SquishDuration - SquishTimer) / SquishDuration;
+            Debug.Log("Squish Lerp: " + lerp.ToString());
+            Ball.localScale = Vector3.Lerp(BallScale, new Vector3(BallScale.x * 3.5f, BallScale.y * 0.05f, BallScale.z * 3.5f), lerp);
+            Ball.position = Vector3.Lerp(Ball.position, new Vector3(Ball.position.x, Mathf.FloorToInt(Ball.position.y) + 1.01f - (BallScale.y / 2), Ball.position.z), lerp);
+            yield return null;
+        }
+        SquishTimer = 0f;
+        yield break;
     }
 
     IEnumerator PowerballStatus(GameObject Powerball)
