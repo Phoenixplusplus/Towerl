@@ -174,7 +174,7 @@ public class LevelBuilder : MonoBehaviour {
                 break;
             // neon
             case 3:
-                //Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
                 Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonSafeMaterial);
                 break;
         }
@@ -207,7 +207,7 @@ public class LevelBuilder : MonoBehaviour {
                         break;
                     // neon
                     case 3:
-                        //segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
                         segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonSafeMaterial);
                         break;
                 }
@@ -219,7 +219,7 @@ public class LevelBuilder : MonoBehaviour {
                     {
                         // casual
                         case 0:
-                            segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            //segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
                             Color hazardColour;
                             ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
                             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
@@ -250,7 +250,7 @@ public class LevelBuilder : MonoBehaviour {
                             break;
                         // neon
                         case 3:
-                            //segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
                             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(neonHazardMaterial);
                             break;
                     }

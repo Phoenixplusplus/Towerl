@@ -7230,8 +7230,11 @@ MonoBehaviour:
   GameRunning: 0
   isAnimating: 0
   resultGameOver: 0
+  SquishTimer: 0
+  SquishDuration: 0.5
   CurrentGameTime: 0
   CurrentGameScore: 0
+  DEVELOPMENTBUILD: 1
   CurrentLevel: 0
   CasualLevel: 0
   CurrentGameMode: 1
