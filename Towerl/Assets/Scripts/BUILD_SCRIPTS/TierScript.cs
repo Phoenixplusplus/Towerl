@@ -18,6 +18,7 @@ public class TierScript : MonoBehaviour {
 	void Awake () {
         // Get Game Controller reference
         Controller = GameObject.Find("MGC").GetComponent<MGC>();
+        // Casual mode
         if(Controller.CurrentDifficulty != 0 && tag !="0" && tag != "34")
         {
             float mod = Mathf.Clamp((float) Controller.CasualLevel / (float) Controller.LevelSpanForZeroTo100Percent,0f,2.5f);
@@ -25,6 +26,19 @@ public class TierScript : MonoBehaviour {
             int Magic = Random.Range(0, 10);
             DeltaRot = 10f * RotOdds[Magic] * mod;
         }
+        // story mode
+        else if (tag =="33" || tag == "28" || tag == "23" || tag == "18" || tag == "13" || tag =="8" || tag == "3")
+        {
+            float mod = Mathf.FloorToInt(Controller.CurrentLevel / 10) + 1;
+            DeltaRot = 10f * mod;
+        }
+        else if (tag == "31" || tag == "27" || tag == "26" || tag == "17" || tag == "9" || tag == "4" || tag == "2")
+        {
+            float mod = Mathf.FloorToInt(Controller.CurrentLevel / 10) + 1;
+            DeltaRot = -10f * mod;
+        }
+
+
     }
 	
 	// Update is called once per frame
