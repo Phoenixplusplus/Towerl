@@ -581,7 +581,7 @@ public class MGC : MonoBehaviour {
             if (SquishTimer <= 0) break;
             float lerp = (SquishDuration - SquishTimer) / SquishDuration;
             Debug.Log("Squish Lerp: " + lerp.ToString());
-            Ball.localScale = Vector3.Lerp(BallScale, new Vector3(BallScale.x * 3.5f, BallScale.y * 0.05f, BallScale.z * 3.5f), lerp);
+            Ball.localScale = Vector3.Lerp(BallScale, new Vector3(BallScale.x * 3f, BallScale.y * 0.05f, BallScale.z * 3f), lerp);
             Ball.position = Vector3.Lerp(Ball.position, new Vector3(Ball.position.x, Mathf.FloorToInt(Ball.position.y) + 1.01f - (BallScale.y / 2), Ball.position.z), lerp);
             yield return null;
         }
