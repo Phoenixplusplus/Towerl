@@ -219,7 +219,7 @@ public class LevelBuilder : MonoBehaviour {
                     {
                         // casual
                         case 0:
-                            //segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
                             Color hazardColour;
                             ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
                             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
