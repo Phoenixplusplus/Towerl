@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 
 public class CameraController2 : MonoBehaviour {
 
     private MGC Controller;
     public GameObject adventureBackdrop;
+    private PostProcessingBehaviour PPB;
 
     [Header("Backdrop Textures")]
     public Material casualBackdrop;
@@ -33,6 +35,7 @@ public class CameraController2 : MonoBehaviour {
         ResetCameraToTop();
         initialPosition = transform.position;
         defaultPosition = initialPosition;
+        PPB = this.GetComponent<PostProcessingBehaviour>();
     }
 	
 	// Update is called once per frame
@@ -75,6 +78,9 @@ public class CameraController2 : MonoBehaviour {
         // resrict
         if (enableCameraPan && transform.position.y > cameraMaxHeight) transform.position = new Vector3(transform.position.x, cameraMaxHeight, transform.position.z);
         if (enableCameraPan && transform.position.y < cameraMinHeight) transform.position = new Vector3(transform.position.x, cameraMinHeight, transform.position.z);
+
+        if (Controller.SkinType == 3 && !PPB.isActiveAndEnabled) PPB.enabled = true;
+        if (Controller.SkinType != 3 && PPB.isActiveAndEnabled) PPB.enabled = false;
     }
 
     // Called on Start (after # Tiers in game has been declared)
