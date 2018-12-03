@@ -150,7 +150,7 @@ public class LevelBuilder : MonoBehaviour {
         Seg0.gameObject.GetComponent<TierScript>().myData = data;
         Seg0.gameObject.GetComponent<TierScript>().rotation = Rotation;
         Seg0.gameObject.AddComponent<BreakawayAndDie>(); // add death script
-        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
+        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(safeTransparentMaterial); // give segment a transparent death material
         Color safeColour;
         ColorUtility.TryParseHtmlString(hexColours[baseColour], out safeColour);
         Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
@@ -164,13 +164,13 @@ public class LevelBuilder : MonoBehaviour {
                 break;
             // tree
             case 1:
-                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = treeSafeMaterial;
-                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = treeSafeTransparentMaterial;
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(treeSafeMaterial);
+                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(treeSafeTransparentMaterial);
                 break;
             // rock
             case 2:
-                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockSafeMaterial;
-                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = rockSafeTransparentMaterial;
+                Seg0.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(rockSafeMaterial);
+                Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(rockSafeTransparentMaterial);
                 break;
             // neon
             case 3:
@@ -187,7 +187,7 @@ public class LevelBuilder : MonoBehaviour {
                 Transform segClone = (Transform)Instantiate(Seg15, new Vector3(0, Height - (Controller.BallScale.y) / 2, 0), Quaternion.Euler(0, (i * 15) + Rotation, 0));
                 segClone.transform.localScale = Controller.SegmentScale;
                 segClone.gameObject.AddComponent<BreakawayAndDie>(); // add death script
-                segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = safeTransparentMaterial; // give segment a transparent death material
+                segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(safeTransparentMaterial); // give segment a transparent death material
                 // now set the skin for every other safe slice
                 switch (Controller.SkinType)
                 {
@@ -197,13 +197,13 @@ public class LevelBuilder : MonoBehaviour {
                         break;
                     // tree
                     case 1:
-                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = treeSafeMaterial;
-                        segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = treeSafeTransparentMaterial;
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(treeSafeMaterial);
+                        segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(treeSafeTransparentMaterial);
                         break;
                     // rock
                     case 2:
-                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockSafeMaterial;
-                        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = rockSafeTransparentMaterial;
+                        segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(rockSafeMaterial);
+                        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(rockSafeTransparentMaterial);
                         break;
                     // neon
                     case 3:
@@ -223,14 +223,14 @@ public class LevelBuilder : MonoBehaviour {
                             Color hazardColour;
                             ColorUtility.TryParseHtmlString(hexColours[contrastColour], out hazardColour);
                             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = hazardColour;
-                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = hazardTransparentMaterial; // give segment a transparent death material
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = new Material(hazardTransparentMaterial); // give segment a transparent death material
                             break;
                         // tree
                         case 1:
                             // tree hazard has a different mesh, pop the invisible material on the original hazard slice
                             // we will use it as a base for the new mesh's transform
                             segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
-                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = invisibleMaterial;
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(invisibleMaterial);
                             segClone.gameObject.GetComponent<BreakawayAndDie>().isInvisible = true; // THIS IS IMPORTANT
                             Transform treeHazard = (Transform)Instantiate(TreeHazardMesh, segClone.transform.position, segClone.transform.rotation);
                             // hard coding this in for the moment, change later
@@ -238,15 +238,15 @@ public class LevelBuilder : MonoBehaviour {
                             treeHazard.transform.Rotate(Vector3.up, 7.5f);
                             //
                             treeHazard.gameObject.AddComponent<BreakawayAndDie>(); // add death script
-                            treeHazard.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = treeHazardTransparentMaterial; // give segment a transparent death material
+                            treeHazard.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = new Material(treeHazardTransparentMaterial); // give segment a transparent death material
                             // don't forget to parent the new mesh
                             treeHazard.transform.parent = Seg0.transform;
                             break;
                         // rock
                         case 2:
                             segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
-                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = rockHazardMaterial;
-                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = rockHazardTransparentMaterial;
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(rockHazardMaterial);
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = new Material(rockHazardTransparentMaterial);
                             break;
                         // neon
                         case 3:
