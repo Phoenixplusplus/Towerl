@@ -3451,7 +3451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Column: {fileID: 4591683186242562, guid: db9c4ecdbb3b3a94b8f9cb94617854ad, type: 2}
-  Seg15: {fileID: 400000, guid: 2463bdbb6f9f6854ebe726bfa13d427a, type: 3}
+  Seg15: {fileID: 400000, guid: 23e5f56fef79dbe4dbf464fdbc30b10e, type: 3}
   TreeHazardMesh: {fileID: 400000, guid: 79099bcf65ef0f44493840684ea99bc8, type: 3}
   casualColumnMaterial: {fileID: 2100000, guid: d99535c69dbf1d94eaa2a5469b3e54ec,
     type: 2}
@@ -3469,9 +3469,9 @@ MonoBehaviour:
     type: 2}
   treeHazardTransparentMaterial: {fileID: 2100000, guid: 7854fa52397bae24da74c093ac25d806,
     type: 2}
-  rockSafeMaterial: {fileID: 2100000, guid: 98306a781d5ff3d4ca0d4be77c745b45, type: 2}
+  rockSafeMaterial: {fileID: 2100000, guid: 4d49110a9b8ebfa4398eccec462b61b9, type: 2}
   rockHazardMaterial: {fileID: 2100000, guid: 6c5e93146e402d14492ed96539d01a61, type: 2}
-  rockSafeTransparentMaterial: {fileID: 2100000, guid: b0d161fc9ab4acc4bb7da23763b89c33,
+  rockSafeTransparentMaterial: {fileID: 2100000, guid: ef088db0e412ca742ab34ad110a413e1,
     type: 2}
   rockHazardTransparentMaterial: {fileID: 2100000, guid: 9db280e3733675640b1b374c08305bd2,
     type: 2}
@@ -7209,7 +7209,7 @@ MonoBehaviour:
     type: 2}
   levelUpSprite: {fileID: 1358037878211534, guid: 1f325f5ebe3cb3841a253343b05fe529,
     type: 2}
-  SegmentScale: {x: 100, y: 10, z: 100}
+  SegmentScale: {x: 100, y: 15, z: 100}
   HazardScaleModifier: {x: 1.1, y: 1.1, z: 1.1}
   ColumnScale: {x: 0.8, y: 17.5, z: 0.8}
   BallScale: {x: 0.18, y: 0.18, z: 0.18}
