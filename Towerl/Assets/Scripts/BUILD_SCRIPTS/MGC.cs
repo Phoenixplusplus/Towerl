@@ -26,7 +26,7 @@ public class MGC : MonoBehaviour {
     [Header("GUI Elements")]
 
     [Header("Object & Game Scales")]
-    public Vector3 SegmentScale = new Vector3(100f, 10f, 100f);
+    public Vector3 SegmentScale = new Vector3(100f, 15f, 100f);
     public Vector3 HazardScaleModifier = new Vector3(1.1f, 1.1f, 1.1f);
     public Vector3 ColumnScale = new Vector3(0.8f, 17.5f, 0.8f);
     public Vector3 BallScale = new Vector3(0.18f, 0.18f, 0.18f);
