@@ -231,6 +231,7 @@ public class LevelBuilder : MonoBehaviour {
                             // we will use it as a base for the new mesh's transform
                             segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
                             segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(invisibleMaterial);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                             segClone.gameObject.GetComponent<BreakawayAndDie>().isInvisible = true; // THIS IS IMPORTANT
                             Transform treeHazard = (Transform)Instantiate(TreeHazardMesh, segClone.transform.position, segClone.transform.rotation);
                             // hard coding this in for the moment, change later
