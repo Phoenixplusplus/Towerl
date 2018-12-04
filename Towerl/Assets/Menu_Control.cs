@@ -38,8 +38,8 @@ public class Menu_Control : MonoBehaviour {
         while (StartTime < PhaseInTime)
         {
             StartTime += Time.deltaTime;
-            //float lerp = EaseLibSharp.EaseLibSharp.Bounce(StartTime / PhaseInTime);
-            //Title.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, lerp);
+            float lerp = EaseLibSharp.EaseLibSharp.Bounce(StartTime / PhaseInTime);
+            Title.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, lerp);
             yield return null;
         }
         yield break;
