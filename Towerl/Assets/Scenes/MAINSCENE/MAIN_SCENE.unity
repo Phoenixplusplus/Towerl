@@ -379,6 +379,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 4.8966994
       objectReference: {fileID: 0}
+    - target: {fileID: 1356957567019978, guid: 5d7332acc78ff414d941c9ff8b5c8c70, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d7332acc78ff414d941c9ff8b5c8c70, type: 2}
   m_IsPrefabAsset: 0
@@ -17746,6 +17750,11 @@ Prefab:
         type: 2}
       propertyPath: m_Shadows.m_Strength
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114439752286424006, guid: 4e09747a48fb6034e991d78f2f6be33b,
+        type: 2}
+      propertyPath: Confetti
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e09747a48fb6034e991d78f2f6be33b, type: 2}
