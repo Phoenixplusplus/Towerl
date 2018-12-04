@@ -5,6 +5,7 @@ using UnityEngine;
 public class TouchController : MonoBehaviour {
 
     public Camera Camera;
+    public Menu_Control menuTower;
     private MGC Controller;
     private CameraController2 c_Camera;
 
@@ -34,6 +35,7 @@ public class TouchController : MonoBehaviour {
                 {
                     // get movement since last frame, normalise, multiply by sensitivity from manager
                     Controller.TowerAngle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
+                    menuTower.Angle -= (userTouch.deltaPosition.x / screenDimensions.x) * Controller.TouchControlSensetivity;
                 }
 
                 if (c_Camera.enableCameraPan)

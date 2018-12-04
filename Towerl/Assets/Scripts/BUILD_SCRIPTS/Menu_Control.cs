@@ -21,7 +21,7 @@ public class Menu_Control : MonoBehaviour {
     public Canvas Level_Choose;
     public float PhaseInTime = 2f;
     public float StartTime = 0f;
-    private float Angle = 0;
+    public float Angle = 0;
 
 
 	// Use this for initialization
