@@ -38,6 +38,9 @@ public class UI_Manager : MonoBehaviour
     public Canvas CNVS_ThemeTwo;
     public Canvas CNVS_ThemeThree;
 
+    // And the NEW MENU
+    public Menu_Control Select_Menu;
+
     //DEV
     MGC mgc;
     LevelManager lvlmgr;
