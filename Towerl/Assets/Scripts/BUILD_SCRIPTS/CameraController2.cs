@@ -8,6 +8,7 @@ public class CameraController2 : MonoBehaviour {
     private MGC Controller;
     public GameObject adventureBackdrop;
     private PostProcessingBehaviour PPB;
+    public GameObject Confetti;
 
     [Header("Backdrop Textures")]
     public Material casualBackdrop;
@@ -24,6 +25,7 @@ public class CameraController2 : MonoBehaviour {
 
     Vector3 startPosition, defaultPosition;
     public Vector3 initialPosition;
+    Quaternion initialRotation;
     public float cameraMaxHeight = 67.0f;
     public float cameraMinHeight = 35.0f;
 
@@ -35,7 +37,9 @@ public class CameraController2 : MonoBehaviour {
         ResetCameraToTop();
         initialPosition = transform.position;
         defaultPosition = initialPosition;
+        initialRotation = transform.rotation;
         PPB = this.GetComponent<PostProcessingBehaviour>();
+        Confetti.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -134,6 +138,7 @@ public class CameraController2 : MonoBehaviour {
         else
         {
             transform.position = defaultPosition;
+            transform.rotation = initialRotation;
             transform.GetChild(0).gameObject.SetActive(true);
             adventureBackdrop.SetActive(false);
             enableCameraPan = false;

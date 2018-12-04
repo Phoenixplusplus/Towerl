@@ -268,6 +268,7 @@ public class MGC : MonoBehaviour {
             {
                 if (NewBallHeight <= 0) // Have Reached the bottom
                 {
+                    camera.GetComponent<CameraController2>().Confetti.SetActive(true);
                     SM.PlaySFX(SFX.Woohoo);
                     resultGameOver = true;
                     isAnimating = true; // trigger the function at the end of Update()
@@ -532,12 +533,13 @@ public class MGC : MonoBehaviour {
 
         if (LevelManager.Instance.GetGameMode() == 0) // casual mode
         {
-            if (animationTimer < maxAnimationTime)
+            if (animationTimer < maxAnimationTime * 2)
             {
                 animationTimer += Time.deltaTime;
             }
             else
             {
+                camera.GetComponent<CameraController2>().Confetti.SetActive(false);
                 isAnimating = false;
                 animationTimer = 0;
                 GameOver(result); // this ultimately sets gameRunning to true again
@@ -545,12 +547,13 @@ public class MGC : MonoBehaviour {
         }
         else // story mode, give a bit more time for transition to read displayed score
         {
-            if (animationTimer < maxAnimationTime * 2)
+            if (animationTimer < maxAnimationTime * 3)
             {
                 animationTimer += Time.deltaTime;
             }
             else
             {
+                camera.GetComponent<CameraController2>().Confetti.SetActive(false);
                 isAnimating = false;
                 animationTimer = 0;
                 GameOver(result); // this ultimately sets gameRunning to true again
