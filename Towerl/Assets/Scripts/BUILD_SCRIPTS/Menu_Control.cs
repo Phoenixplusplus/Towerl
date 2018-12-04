@@ -8,7 +8,7 @@ public class Menu_Control : MonoBehaviour {
     public Transform ball;
     public float Bottom = -0.61f;
     public float MaxVel = 0.11f;
-    private Vector3 vel = new Vector3(0, 0.1f, 0);
+    private Vector3 vel = new Vector3(0f, 0f, 0f);
     public Vector3 G = new Vector3(0, -0.25f, 0);
     public RectTransform Title;
     public float PhaseInTime = 2f;
@@ -24,6 +24,7 @@ public class Menu_Control : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        // Move Ball
         vel += G * Time.deltaTime;
         ball.position += vel;
         if (vel.y < 0 && ball.position.y < Bottom)
@@ -31,7 +32,26 @@ public class Menu_Control : MonoBehaviour {
             ball.position = new Vector3(ball.position.x, Bottom + ball.transform.localScale.y / 2, ball.position.z);
             vel.y = MaxVel;
         }
-	}
+        // Process Input
+        Angle -= Input.GetAxis("Horizontal") * 80 * Time.deltaTime; // Keyboard input applied to TowerAngle                                                                                       // Normalise Tower angle to something between 0-360
+        if (Angle < 0f)
+        {
+            while (Angle < 0f) { Angle += 360f; }
+        }
+        if (Angle > 360f)
+        {
+            while (Angle > 360f) { Angle -= 360f; }
+        }
+        // rotate self (ie the column assembly)
+        transform.localEulerAngles = new Vector3(0, Angle, 0);
+    }
+
+    void GO()
+    {
+
+    }
+
+
 
     IEnumerator PhaseIn()
     {
