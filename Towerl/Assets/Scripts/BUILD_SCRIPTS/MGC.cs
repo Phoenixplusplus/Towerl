@@ -453,6 +453,7 @@ public class MGC : MonoBehaviour {
                     }
 
                     StopMe();
+                    Debug.Log(CurrentLevel);
                     camera.GetComponent<CameraController2>().EnableAdventureMap(true);
                 }
                 else

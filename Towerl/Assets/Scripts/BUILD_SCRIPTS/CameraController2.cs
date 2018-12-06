@@ -29,6 +29,8 @@ public class CameraController2 : MonoBehaviour {
     public float cameraMaxHeight = 67.0f;
     public float cameraMinHeight = 35.0f;
 
+    public int lastKnownLevel = 1;
+
 
     // Use this for initialization
     void Start () {
@@ -118,22 +120,16 @@ public class CameraController2 : MonoBehaviour {
     {
         if (localBool)
         {
+            Controller.SkinType = 0;
             transform.position = initialPosition;
             transform.eulerAngles = new Vector3(-30f, 180f, 0f);
             transform.GetChild(0).gameObject.SetActive(false);
             adventureBackdrop.SetActive(true);
             enableCameraPan = true;
-            for (int i = 0; i < 30; i++)
-            {
-                if (LevelManager.Instance.GetLevelStars(i) == 0 && i != 0)
-                {
-                    float buttonYPos = GameObject.Find("BTN_Level_" + i).transform.position.y;
-                    Vector3 tempPos;
-                    tempPos = new Vector3(transform.position.x, buttonYPos - 1f, transform.position.z);
-                    transform.position = tempPos;
-                    break;
-                }
-            }
+            float buttonYPos = GameObject.Find("BTN_Level_" + lastKnownLevel).transform.position.y;
+            Vector3 tempPos;
+            tempPos = new Vector3(transform.position.x, buttonYPos - 1f, transform.position.z);
+            transform.position = tempPos;
         }
         else
         {

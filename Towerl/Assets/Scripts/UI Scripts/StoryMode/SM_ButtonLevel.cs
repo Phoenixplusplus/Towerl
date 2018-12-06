@@ -73,4 +73,10 @@ public class SM_ButtonLevel : MonoBehaviour {
         GetComponent<Button>().enabled = true;
         GetComponent<Button>().interactable = true;
     }
+
+    public void UpdateCurrentLevel()
+    {
+        GameObject.Find("MGC").GetComponent<MGC>().CurrentLevel = level + 1;
+        GameObject.Find("Main Camera").GetComponent<CameraController2>().lastKnownLevel = level + 1;
+    }
 }
