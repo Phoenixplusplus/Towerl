@@ -42,14 +42,14 @@ public class SM_ButtonLevel : MonoBehaviour {
             }
 
             /** Activate button and load image "level is unlocked" */
-            m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsUnlockedSprite();
+            //m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsUnlockedSprite();
             GetComponent<Button>().enabled = true;
         }
         else
         {
             /** Deactivate button and load image "level is locked" */
-            m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsLockSprite();
-            GetComponent<Button>().enabled = false;
+            //m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsLockSprite();
+            GetComponent<Button>().interactable = false;
         }
     }
 
@@ -69,7 +69,8 @@ public class SM_ButtonLevel : MonoBehaviour {
         }
 
         /** Activate button and load image "level is unlocked" */
-        m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsUnlockedSprite();
+        //m_ButtonImage.sprite = LevelManager.Instance.userInterface.GetLevelIsUnlockedSprite();
         GetComponent<Button>().enabled = true;
+        GetComponent<Button>().interactable = true;
     }
 }

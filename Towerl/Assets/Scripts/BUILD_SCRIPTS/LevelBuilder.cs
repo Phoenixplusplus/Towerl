@@ -11,6 +11,7 @@ public class LevelBuilder : MonoBehaviour {
     public Transform Column;
     public Transform Seg15;
     public Transform TreeHazardMesh;
+    public Transform RockHazardMesh;
 
     [Header("Column Materials")]
     public Material casualColumnMaterial;
@@ -203,7 +204,7 @@ public class LevelBuilder : MonoBehaviour {
                     // rock
                     case 2:
                         segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(rockSafeMaterial);
-                        Seg0.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(rockSafeTransparentMaterial);
+                        segClone.gameObject.GetComponent<BreakawayAndDie>().safeTransparentMaterial = new Material(rockSafeTransparentMaterial);
                         break;
                     // neon
                     case 3:
@@ -246,8 +247,14 @@ public class LevelBuilder : MonoBehaviour {
                         // rock
                         case 2:
                             segClone.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
-                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(rockHazardMaterial);
-                            segClone.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = new Material(rockHazardTransparentMaterial);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material = new Material(invisibleMaterial);
+                            segClone.gameObject.GetComponentsInChildren<Renderer>()[0].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                            segClone.gameObject.GetComponent<BreakawayAndDie>().isInvisible = true; // THIS IS IMPORTANT
+                            Transform rockHazard = (Transform)Instantiate(RockHazardMesh, segClone.transform.position, segClone.transform.rotation);
+                            rockHazard.transform.localScale = Vector3.Scale(segClone.transform.localScale, Controller.HazardScaleModifier);
+                            rockHazard.gameObject.AddComponent<BreakawayAndDie>(); // add death script
+                            rockHazard.gameObject.GetComponent<BreakawayAndDie>().hazardTransparentMaterial = new Material(rockHazardTransparentMaterial); // give segment a transparent death material
+                            rockHazard.transform.parent = Seg0.transform;
                             break;
                         // neon
                         case 3:

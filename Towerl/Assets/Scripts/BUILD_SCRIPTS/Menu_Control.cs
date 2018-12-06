@@ -23,6 +23,9 @@ public class Menu_Control : MonoBehaviour {
     public float StartTime = 0f;
     public float Angle = 0;
 
+    public Image goButton;
+    public Sprite casualPlay, storyPlay, quitGame;
+
 
 	// Use this for initialization
 	void Start () {
@@ -83,6 +86,19 @@ public class Menu_Control : MonoBehaviour {
         // rotate self (ie the column assembly)
         transform.localEulerAngles = new Vector3(0, Angle, 0);
         // Debug.Log(Angle.ToString());
+
+        if (Angle >= 30f && Angle < 150f) // STORY MODE
+        {
+            if (goButton.sprite != storyPlay) goButton.sprite = storyPlay;
+        }
+        else if (Angle >= 150f && Angle < 270f) // QUIT
+        {
+            if (goButton.sprite != quitGame) goButton.sprite = quitGame;
+        }
+        else
+        {
+            if (goButton.sprite != casualPlay) goButton.sprite = casualPlay;
+        }
     }
 
     public void GO()

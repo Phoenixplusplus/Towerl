@@ -48,7 +48,7 @@ public class BreakawayAndDie : MonoBehaviour {
                 childMaterial.color = finalColour;
             }
 
-            // change every material on the bloody same object
+            // change every material on the same object
             if (childMaterials != null)
             {
                 for (int i = 0; i < childMaterials.Length; i++)
@@ -92,15 +92,24 @@ public class BreakawayAndDie : MonoBehaviour {
             {
                 if (gameObject.transform.childCount > 0)
                 {
-                    hazardTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
-                    gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
+                    Component[] childrenRenderers = gameObject.transform.GetComponentsInChildren<Renderer>();
+
+                    foreach (Renderer r in childrenRenderers)
+                    {
+                        hazardTransparentMaterial.color = r.material.color;
+                        r.material = hazardTransparentMaterial;
+                    }
+
+
+                    //hazardTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
+                    //gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
                 }
                 else // some custom meshes do not have children..
                 {
                     hazardTransparentMaterial.color = gameObject.GetComponent<Renderer>().material.color;
                     gameObject.GetComponent<Renderer>().material = hazardTransparentMaterial;
 
-                    // they also may have fucking more than 1 texture on them..
+                    // they also may have more than 1 texture on them..
                     Material[] newMats = new Material[gameObject.GetComponent<Renderer>().materials.Length];
                     childMaterials = new Material[gameObject.GetComponent<Renderer>().materials.Length];
                     if (gameObject.GetComponent<Renderer>().materials.Length > 0)
@@ -112,7 +121,7 @@ public class BreakawayAndDie : MonoBehaviour {
                         }
                     }
 
-                    // also cannot bloody change the materials in the array directly, must make a new array and overwrite..
+                    // also cannot change the materials in the array directly, must make a new array and overwrite..
                     gameObject.GetComponent<Renderer>().materials = newMats;
                 }
             }
@@ -121,6 +130,16 @@ public class BreakawayAndDie : MonoBehaviour {
             // some hazard segments do not have children, checking is a MUST
             if (gameObject.transform.childCount > 0) childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
             else childMaterial = gameObject.GetComponent<Renderer>().material;
+
+            if (gameObject.name.Contains("Stone"))
+            {
+                Component[] childrenRenderers2 = gameObject.transform.GetComponentsInChildren<Renderer>();
+
+                foreach (Renderer r in childrenRenderers2)
+                {
+                    r.material = childMaterial;
+                }
+            }
 
             timeout = segTimeout;
             lerpSpeed = segLerpSpeed;
@@ -164,15 +183,22 @@ public class BreakawayAndDie : MonoBehaviour {
         {
             if (gameObject.transform.childCount > 0)
             {
+                Component[] childrenRenderers = gameObject.transform.GetComponentsInChildren<Renderer>();
+
+                foreach (Renderer r in childrenRenderers)
+                {
+                    r.material = hazardTransparentMaterial;
+                    r.material.color = BallColour;
+                }
                 //hazardTransparentMaterial.color = gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color;
-                gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
-                gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color = BallColour;
+                //gameObject.transform.GetChild(0).GetComponent<Renderer>().material = hazardTransparentMaterial;
+                //gameObject.transform.GetChild(0).GetComponent<Renderer>().material.color = BallColour;
             }
             else // some custom meshes do not have children..
             {
                 gameObject.GetComponent<Renderer>().material = hazardTransparentMaterial;
 
-                // they also may have fucking more than 1 texture on them..
+                // they also may have more than 1 texture on them..
                 Material[] newMats = new Material[gameObject.GetComponent<Renderer>().materials.Length];
                 childMaterials = new Material[gameObject.GetComponent<Renderer>().materials.Length];
                 if (gameObject.GetComponent<Renderer>().materials.Length > 0)
@@ -185,13 +211,23 @@ public class BreakawayAndDie : MonoBehaviour {
                     }
                 }
 
-                // also cannot bloody change the materials in the array directly, must make a new array and overwrite..
+                // also cannot change the materials in the array directly, must make a new array and overwrite..
                 gameObject.GetComponent<Renderer>().materials = newMats;
             }
         }
         // grab this so that we can tint alpha over time after this function is called ~(saves us finding components per update)
         // some hazard segments do not have children, checking is a MUST
         if (gameObject.transform.childCount > 0) childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
+
+        if (gameObject.name.Contains("Stone"))
+        {
+            Component[] childrenRenderers2 = gameObject.transform.GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer r in childrenRenderers2)
+            {
+                r.material = childMaterial;
+            }
+        }
 
         timeout = segTimeout;
         lerpSpeed = segLerpSpeed;
