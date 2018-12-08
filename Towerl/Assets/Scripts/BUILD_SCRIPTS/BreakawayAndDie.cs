@@ -4,6 +4,7 @@ using UnityEditor;
 public class BreakawayAndDie : MonoBehaviour {
 
     private GameObject C_Controller;
+    private MGC theMGC;
     public Material safeTransparentMaterial;
     public Material hazardTransparentMaterial;
     private Material childMaterial;
@@ -22,6 +23,7 @@ public class BreakawayAndDie : MonoBehaviour {
     {
         // Get Game Controller reference
         C_Controller = GameObject.Find("Column");
+        theMGC = GameObject.Find("MGC").GetComponent<MGC>();
     }
 
     // Update is called once per frame
@@ -131,7 +133,7 @@ public class BreakawayAndDie : MonoBehaviour {
             if (gameObject.transform.childCount > 0) childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
             else childMaterial = gameObject.GetComponent<Renderer>().material;
 
-            if (gameObject.name.Contains("Stone"))
+            if (theMGC.SkinType == 2)
             {
                 Component[] childrenRenderers2 = gameObject.transform.GetComponentsInChildren<Renderer>();
 
@@ -219,7 +221,7 @@ public class BreakawayAndDie : MonoBehaviour {
         // some hazard segments do not have children, checking is a MUST
         if (gameObject.transform.childCount > 0) childMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;
 
-        if (gameObject.name.Contains("Stone"))
+        if (theMGC.SkinType == 2)
         {
             Component[] childrenRenderers2 = gameObject.transform.GetComponentsInChildren<Renderer>();
 
