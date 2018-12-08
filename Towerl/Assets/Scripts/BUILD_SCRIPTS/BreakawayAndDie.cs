@@ -1,4 +1,17 @@
-﻿using UnityEngine;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// BreakawayAndDie.cs                   //
+//////////////////////////////////////////
+
+using UnityEngine;
 using UnityEditor;
 
 public class BreakawayAndDie : MonoBehaviour {

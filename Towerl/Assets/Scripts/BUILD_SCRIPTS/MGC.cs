@@ -1,5 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// MGC.cs   (aka Max Game Controller)   //
+//////////////////////////////////////////
+
+using System.Collections;
 using UnityEngine;
 
 public class MGC : MonoBehaviour {

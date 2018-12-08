@@ -1,4 +1,16 @@
-﻿using UnityEngine;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// UI_Manager.cs                        //
+//////////////////////////////////////////
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
