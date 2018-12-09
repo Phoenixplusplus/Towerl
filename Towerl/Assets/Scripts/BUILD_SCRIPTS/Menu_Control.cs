@@ -30,7 +30,6 @@ public class Menu_Control : MonoBehaviour {
     public LevelManager Level_Manager;
     public MGC Controller;
     public CameraController2 CamCon2;
-    public Canvas Level_Choose;
     public float PhaseInTime = 2f;
     public float StartTime = 0f;
     public float Angle = 0;
@@ -129,7 +128,6 @@ public class Menu_Control : MonoBehaviour {
         if (Angle >= 30f && Angle < 150f) // STORY MODE
         {
             Leave();
-            Level_Choose.gameObject.SetActive(false);
             CamCon2.EnableAdventureMap(true);
         }
         else if (Angle >=150f && Angle < 270f) // QUIT

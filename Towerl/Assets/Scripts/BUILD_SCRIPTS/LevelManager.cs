@@ -133,7 +133,7 @@ public class LevelManager : MonoBehaviour
                 m_gameMode = (int)MODE_TYPE.CASUAL;
                 m_skinType = (int)SKIN_TYPE.CASUAL;
                 GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
-                userInterface.CNVS_mainMenu.gameObject.SetActive(false);
+                //userInterface.CNVS_mainMenu.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(true);
@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_ONE;
                 m_skinType = (int)SKIN_TYPE.TREE;
                 GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
-                userInterface.CNVS_ThemeOne.gameObject.SetActive(false);
+                //userInterface.CNVS_ThemeOne.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(true);
@@ -151,7 +151,7 @@ public class LevelManager : MonoBehaviour
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_TWO;
                 m_skinType = (int)SKIN_TYPE.ROCK;
                 GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
-                userInterface.CNVS_ThemeTwo.gameObject.SetActive(false);
+                //userInterface.CNVS_ThemeTwo.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(true);
@@ -160,7 +160,7 @@ public class LevelManager : MonoBehaviour
                 m_gameMode = (int)MODE_TYPE.STORY_MODE_THEME_THREE;
                 m_skinType = (int)SKIN_TYPE.NEON;
                 GameObject.Find("MGC").GetComponent<MGC>().SkinType = m_skinType;
-                userInterface.CNVS_ThemeThree.gameObject.SetActive(false);
+                //userInterface.CNVS_ThemeThree.gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(true);
@@ -179,7 +179,7 @@ public class LevelManager : MonoBehaviour
             case (int)MODE_TYPE.CASUAL:
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_MenuBackground").GetComponent<RectTransform>().anchoredPosition = new Vector2(844.47f, 0.46021f); // needs to be reset before setting active to false
                 //userInterface.CNVS_gameplay.gameObject.SetActive(false);
-                userInterface.CNVS_mainMenu.gameObject.SetActive(true);
+                //userInterface.CNVS_mainMenu.gameObject.SetActive(true);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("IMG_ProgressBarBackground").gameObject.SetActive(false);
                 userInterface.CNVS_gameplay.gameObject.transform.Find("Score").gameObject.SetActive(false);
                 GameObject.Find("Main Camera").GetComponent<CameraController2>().EnableAdventureMap(false);
