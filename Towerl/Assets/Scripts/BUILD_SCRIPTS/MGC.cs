@@ -777,14 +777,16 @@ public class MGC : MonoBehaviour {
     }
 
     // DANGER ... MAGIC NUMBER ALERT .. FIXED INTO 10 Background Music Tracks
+    // UPDATE, now hardwired to Prestige
     public void ChangeMusicTrack() 
     {
-        if (MusicChoice >= (Music)9)
-            { MusicChoice = 0; }
-        else
-        {
-            MusicChoice++;
-        }
+        MusicChoice = Music.Prestige;
+        //if (MusicChoice >= (Music)9)
+        //    { MusicChoice = 0; }
+        //else
+        //{
+        //    MusicChoice++;
+        //}
     }
     // END OF SOUND Changers
     ////////////////////////

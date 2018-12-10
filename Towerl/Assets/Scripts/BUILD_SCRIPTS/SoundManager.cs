@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviour
     private float MusicVol;
     private bool SFXON;
     private float SFXVol;
-    private Music PlayerPref;
+    private Music PlayerPref = Music.Prestige;
     private Music CurrentTrack;
     private float SaveTimer = 0;
 
@@ -56,6 +56,8 @@ public class SoundManager : MonoBehaviour
         Debug.Log("Sound Manager has " + SFXChannels.ToString() + " SFX Channels");
         MusicOn = Controller.Music_ON;
         SFXON = Controller.SFX_ON;
+        // Preference for Music choice now IGNORES MGC .... track 6 (Prestige) Hardwired in
+        Controller.MusicChoice = Music.Prestige;
         PlayerPref = Controller.MusicChoice;
         PlayMusic(PlayerPref);
     }
@@ -71,9 +73,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlayNextTrack()
     {
-        if (CurrentTrack >= (Music)9) CurrentTrack = 0;
-        CurrentTrack++;
-        sources[0].clip = MusicFiles[(int)CurrentTrack];
+        //if (CurrentTrack >= (Music)9) CurrentTrack = 0;
+        //CurrentTrack++;
+        //sources[0].clip = MusicFiles[(int)CurrentTrack];
+        // happy hacky fix for reduced number of tracks
+        sources[0].clip = MusicFiles[6];
         sources[0].loop = true;
         sources[0].Play(0);
         if (!MusicOn) PauseMusic();

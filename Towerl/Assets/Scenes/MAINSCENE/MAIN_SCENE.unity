@@ -6253,7 +6253,7 @@ MonoBehaviour:
   Music_Vol: 1
   SFX_ON: 1
   SFX_Vol: 1
-  MusicChoice: 6
+  MusicChoice: 7
 --- !u!4 &452659519
 Transform:
   m_ObjectHideFlags: 0
@@ -16523,11 +16523,6 @@ MonoBehaviour:
   m_LevelIsLocked: {fileID: 21300000, guid: c632e91d59185d946bb65a40cab442e2, type: 3}
   m_LevelIsUnlocked: {fileID: 21300000, guid: 55bfc13e14b812043b33bff3c6904f08, type: 3}
   CNVS_gameplay: {fileID: 342689003}
-  CNVS_mainMenu: {fileID: 0}
-  CNVS_LevelThemeChoose: {fileID: 0}
-  CNVS_ThemeOne: {fileID: 0}
-  CNVS_ThemeTwo: {fileID: 0}
-  CNVS_ThemeThree: {fileID: 0}
   Select_Menu: {fileID: 1691127910}
 --- !u!4 &1516238437
 Transform:
