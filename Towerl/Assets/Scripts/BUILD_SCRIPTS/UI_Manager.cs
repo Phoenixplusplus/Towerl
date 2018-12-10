@@ -1,4 +1,16 @@
-﻿using UnityEngine;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// UI_Manager.cs                        //
+//////////////////////////////////////////
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
@@ -32,11 +44,6 @@ public class UI_Manager : MonoBehaviour
 
     /** Canvases references */
     public Canvas CNVS_gameplay;
-    public Canvas CNVS_mainMenu;
-    public Canvas CNVS_LevelThemeChoose;
-    public Canvas CNVS_ThemeOne;
-    public Canvas CNVS_ThemeTwo;
-    public Canvas CNVS_ThemeThree;
 
     // And the NEW MENU
     public Menu_Control Select_Menu;
@@ -60,11 +67,6 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         m_buttonLevelArray = FindObjectsOfType(typeof(SM_ButtonLevel)) as SM_ButtonLevel[];
-
-        CNVS_LevelThemeChoose.gameObject.SetActive(false);
-        CNVS_ThemeOne.gameObject.SetActive(false);
-        CNVS_ThemeTwo.gameObject.SetActive(false);
-        CNVS_ThemeThree.gameObject.SetActive(false);
     }
 
     public void GetStarsButtons(int value)

@@ -1,4 +1,16 @@
-﻿using UnityEngine;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// SoundManager.cs                      //
+//////////////////////////////////////////
+using UnityEngine;
 
 public enum Music { Techno, Rock, Smooth, Groove, Indian, Noble, Prestige, Arcade, Punk, Spiritual }
 public enum SFX { Bang, Spring, Boom, Laser, Clang, Titter, Woohoo, Whip1, Whip2, Whoosh }

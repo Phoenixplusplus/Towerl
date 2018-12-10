@@ -1,5 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//////////////////////////////////////////
+// Kingston University: Module CI6530   //
+// Games Creation Processes             //
+// Coursework 1: Mobile Game            //
+//                                      //
+// Team Heron                           //
+//                                      //
+// December 2018                        //
+//                                      //
+// TOWERL Code                          //
+// Menu_Control.cs                      //
+//////////////////////////////////////////
+
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +30,20 @@ public class Menu_Control : MonoBehaviour {
     public LevelManager Level_Manager;
     public MGC Controller;
     public CameraController2 CamCon2;
-    public Canvas Level_Choose;
     public float PhaseInTime = 2f;
     public float StartTime = 0f;
     public float Angle = 0;
-
+    // Variables array for Bounce Function.  Declared here for efficiency
+    private float[] B = {  4.0f / 11.0f,
+                           6.0f / 11.0f,
+                           8.0f / 11.0f,
+                           3.0f / 4.0f,
+                           9.0f / 11.0f,
+                           10.0f / 11.0f,
+                           15.0f / 16.0f,
+                           21.0f / 22.0f,
+                           63.0f / 64.0f,
+                           1.0f / (4.0f / 11.0f) / (4.0f / 11.0f)};
     public Image goButton;
     public Sprite casualPlay, storyPlay, quitGame;
 
@@ -107,7 +128,6 @@ public class Menu_Control : MonoBehaviour {
         if (Angle >= 30f && Angle < 150f) // STORY MODE
         {
             Leave();
-            Level_Choose.gameObject.SetActive(false);
             CamCon2.EnableAdventureMap(true);
         }
         else if (Angle >=150f && Angle < 270f) // QUIT
@@ -124,17 +144,39 @@ public class Menu_Control : MonoBehaviour {
     }
 
 
-
     IEnumerator PhaseIn()
     {
         while (StartTime < PhaseInTime)
         {
             StartTime += Time.deltaTime;
-            float lerp = EaseLibSharp.EaseLibSharp.Bounce(StartTime / PhaseInTime);
+            float lerp = Bounce(StartTime / PhaseInTime);
             Title.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, lerp);
             yield return null;
         }
         StartTime = 0f;
         yield break;
     }
+
+    // Thanks to https://github.com/d3/d3-ease/blob/master/src/bounce.js#L12 (24 Nov 2018)
+    float Bounce(float t)
+    {
+        if (t < B[0]) return B[9] * t * t;
+        else if (t < B[2])
+            {
+                t = t - B[1];
+                return B[9] * t * t + B[3];
+            }
+        else if (t < B[5])
+            {
+                t = t - B[4];
+                return B[9] * t * t + B[6];
+            }
+        else
+            {
+                t = t - B[7];
+                return B[9] * t * t + B[8];
+            }
+    }
+
+
 }
