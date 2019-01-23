@@ -208,6 +208,7 @@ public class LevelBuilder : MonoBehaviour {
                     // casual
                     case 0:
                         segClone.gameObject.GetComponentsInChildren<Renderer>()[0].material.color = safeColour;
+                        segClone.gameObject.GetComponent<Shader>().
                         break;
                     // tree
                     case 1:
