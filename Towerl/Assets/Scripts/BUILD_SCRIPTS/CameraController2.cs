@@ -80,7 +80,7 @@ public class CameraController2 : MonoBehaviour {
         }
 
         // for adventure menu mode
-        if (enableCameraPan && transform.position.y < cameraMaxHeight && transform.position.y >= cameraMinHeight)
+        if (enableCameraPan && transform.position.y <= cameraMaxHeight && transform.position.y >= cameraMinHeight)
         {
             if (Input.GetKey("up"))
             {

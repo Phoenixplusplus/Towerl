@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: NeonSafeMaterial
   m_Shader: {fileID: 4800000, guid: 92d80884ed00b914fa6f25d04c7cd6c4, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON
